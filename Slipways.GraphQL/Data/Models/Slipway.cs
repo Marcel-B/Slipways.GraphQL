@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace com.b_velop.Slipways.GraphQL.Data.Models
 {
-    public class Slipway
+    public class Slipway : IEntity
     {
         [Key]
         public Guid Id { get; set; }

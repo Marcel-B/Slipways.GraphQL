@@ -1,6 +1,7 @@
 using System;
 using com.b_velop.Slipways.GraphQL.Data;
 using com.b_velop.Slipways.GraphQL.Data.GraphQLSchema;
+using com.b_velop.Slipways.GraphQL.Data.Repositories;
 using com.b_velop.Slipways.GraphQL.Services;
 using GraphQL;
 using GraphQL.Server;
@@ -24,9 +25,10 @@ namespace com.b_velop.Slipways.GraphQL
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+
             services.AddHttpClient<IWsvService, WsvService>(_ =>
             {
                 _.BaseAddress = new Uri("https://www.pegelonline.wsv.de");
@@ -36,6 +38,9 @@ namespace com.b_velop.Slipways.GraphQL
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AppSchema>();
             services.AddGraphQL(o => { o.ExposeExceptions = true; }).AddGraphTypes(ServiceLifetime.Scoped);
+            services.AddScoped<IWaterRepository, WaterRepository>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+
             services.Configure<KestrelServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
@@ -45,7 +50,6 @@ namespace com.b_velop.Slipways.GraphQL
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -53,7 +57,7 @@ namespace com.b_velop.Slipways.GraphQL
                 app.UseDeveloperExceptionPage();
             }
 
-            //UpdateDatabase(app);
+            UpdateDatabase(app);
 
             app.UseRouting();
 
@@ -66,7 +70,6 @@ namespace com.b_velop.Slipways.GraphQL
 
             app.UseGraphQL<AppSchema>();
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-
         }
 
         private static void UpdateDatabase(IApplicationBuilder app)
