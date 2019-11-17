@@ -3,5 +3,6 @@
     public interface IRepositoryWrapper
     {
         IWaterRepository Water { get; set; }
+        IStationRepository Station { get; set; }
     }
 }

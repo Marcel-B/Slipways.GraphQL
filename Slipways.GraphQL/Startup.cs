@@ -39,6 +39,7 @@ namespace com.b_velop.Slipways.GraphQL
             services.AddScoped<AppSchema>();
             services.AddGraphQL(o => { o.ExposeExceptions = true; }).AddGraphTypes(ServiceLifetime.Scoped);
             services.AddScoped<IWaterRepository, WaterRepository>();
+            services.AddScoped<IStationRepository, StationRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.Configure<KestrelServerOptions>(options =>

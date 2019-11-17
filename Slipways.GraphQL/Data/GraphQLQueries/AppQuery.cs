@@ -11,7 +11,11 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
         {
             FieldAsync<ListGraphType<WaterType>>(
              "waters",
-             resolve: async context => await rep.Water.SelectAllAsync());
+             resolve: async ctx => await rep.Water.SelectAllAsync());
+
+            FieldAsync<ListGraphType<StationType>>(
+                "stations",
+                resolve: async ctx => await rep.Station.SelectAllAsync());
         }
     }
 }

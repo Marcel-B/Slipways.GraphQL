@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,28 @@ namespace com.b_velop.Slipways.GraphQL.Data
             var str =  stream.ReadToEnd();
             var waters = JsonConvert.DeserializeObject<IEnumerable<Water>>(str);
             modelBuilder.Entity<Water>().HasData(waters);
+
+            file = new FileInfo(@"Data/stations.json");
+            stream = file.OpenText();
+            str = stream.ReadToEnd();
+            var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.Station>>(str);
+            var stations = new HashSet<Station>();
+            foreach (var station in stationsDto)
+            {
+                stations.Add(new Station
+                {
+                    Id = station.Id,
+                    Agency = station.Agency,
+                    Km = station.Km,
+                    Latitude = station.Latitude,
+                    Longitude = station.Longitude,
+                    Longname = station.Longname,
+                    Number = station.Number,
+                    Shortname = station.Shortname,
+                    WaterFk = waters.FirstOrDefault(_ => _.Shortname == station.Water.Shortname).Id
+                });
+            }
+            modelBuilder.Entity<Station>().HasData(stations);
         }
     }
 
