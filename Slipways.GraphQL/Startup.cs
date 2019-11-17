@@ -1,15 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using com.b_velop.Slipways.GraphQL.Data;
+using com.b_velop.Slipways.GraphQL.Data.GraphQLSchema;
+using com.b_velop.Slipways.GraphQL.Services;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace com.b_velop.Slipways.GraphQL
 {
@@ -25,7 +27,22 @@ namespace com.b_velop.Slipways.GraphQL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<IWsvService, WsvService>(_ =>
+            {
+                _.BaseAddress = new Uri("https://www.pegelonline.wsv.de");
+                _.Timeout = TimeSpan.FromSeconds(10);
+            });
+
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<AppSchema>();
+            services.AddGraphQL(o => { o.ExposeExceptions = true; }).AddGraphTypes(ServiceLifetime.Scoped);
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
             services.AddControllers();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +53,7 @@ namespace com.b_velop.Slipways.GraphQL
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //UpdateDatabase(app);
 
             app.UseRouting();
 
@@ -46,6 +63,23 @@ namespace com.b_velop.Slipways.GraphQL
             {
                 endpoints.MapControllers();
             });
+
+            app.UseGraphQL<AppSchema>();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<SlipwaysContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }
