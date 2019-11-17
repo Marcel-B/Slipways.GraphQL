@@ -21,7 +21,8 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
       },
       "applicationUrl": "http://localhost:5000"
     }

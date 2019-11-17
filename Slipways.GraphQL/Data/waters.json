@@ -1,0 +1,492 @@
+﻿[
+  {
+    "id": "bac6f0b5-34e1-4425-a1d6-05624aa72fdd",
+    "shortname": "OSTE",
+    "longname": "OSTE"
+  },
+  {
+    "id": "87724dc3-a0e4-4fe3-af64-0c174951d58e",
+    "shortname": "STÖR",
+    "longname": "STÖR"
+  },
+  {
+    "id": "529fc755-8b44-44be-a56f-0d751b82e76a",
+    "shortname": "Orlice",
+    "longname": "ORLICE"
+  },
+  {
+    "id": "de958aa1-aa8c-482b-8d76-11c9b8c68c47",
+    "shortname": "MGS",
+    "longname": "MÜGGELSPREE"
+  },
+  {
+    "id": "1a23b4ab-db97-4f74-bce9-151db100b0b0",
+    "shortname": "PVK",
+    "longname": "PAREYER VERBINDUNGSKANAL"
+  },
+  {
+    "id": "808af9be-2074-40a7-96b1-17973bd59449",
+    "shortname": "WERRA",
+    "longname": "WERRA"
+  },
+  {
+    "id": "f5d543c2-b584-40e4-afa0-19435627e3ff",
+    "shortname": "ESK",
+    "longname": "ELBESEITENKANAL"
+  },
+  {
+    "id": "fb88f5b1-2248-45ca-bd47-1a2213b82fd3",
+    "shortname": "PEENE",
+    "longname": "PEENE"
+  },
+  {
+    "id": "9e207d14-f5a8-43b0-b7b0-1d4c484e5444",
+    "shortname": "NSK",
+    "longname": "NEUHAUSER SPEISEKANAL"
+  },
+  {
+    "id": "a88ea916-5e6c-4d83-83a9-1d4fdfef25ec",
+    "shortname": "RHEIN",
+    "longname": "RHEIN"
+  },
+  {
+    "id": "3883de67-ab59-458a-9de1-1e1026e27bf0",
+    "shortname": "ORKE",
+    "longname": "ORKE"
+  },
+  {
+    "id": "63e486cf-7366-4c56-8d33-1f5f1874434b",
+    "shortname": "WARNOW",
+    "longname": "WARNOW"
+  },
+  {
+    "id": "821630fc-d361-458f-b69c-2115a1c10b24",
+    "shortname": "LEINE",
+    "longname": "LEINE"
+  },
+  {
+    "id": "be09d030-9c00-4a2d-83cf-222a469b317a",
+    "shortname": "BSK",
+    "longname": "BERLIN-SPANDAUER-SCHIFFFAHRTSKANAL"
+  },
+  {
+    "id": "2e1a8e9d-983f-445b-8f31-270510396d90",
+    "shortname": "KRÜCKAU",
+    "longname": "KRÜCKAU"
+  },
+  {
+    "id": "2f14ff08-2c57-4da3-9c69-2978efd4ac6e",
+    "shortname": "MAIN",
+    "longname": "MAIN"
+  },
+  {
+    "id": "c821c96d-eebc-4f9c-8bd8-2aa4a304fb23",
+    "shortname": "RÜG",
+    "longname": "RÜDERSDORFER GEWÄSSER"
+  },
+  {
+    "id": "2063f11b-3b00-41a6-baea-2de71e34e5da",
+    "shortname": "ITTER EDER",
+    "longname": "ITTER ZUR EDER"
+  },
+  {
+    "id": "7eef13f6-e9be-4ca4-8f03-30c4aa75e493",
+    "shortname": "ELBE-LÜBECK-KANAL",
+    "longname": "ELK"
+  },
+  {
+    "id": "450a71cf-f2db-4932-96d9-33afcb7e1272",
+    "shortname": "SKH",
+    "longname": "STICHKANAL HILDESHEIM"
+  },
+  {
+    "id": "8c8c8518-d59b-4512-b75c-36a67f95c260",
+    "shortname": "MHW",
+    "longname": "MÜRITZ-HAVEL-WASSERSTRASSE"
+  },
+  {
+    "id": "e9b9cd69-3073-4002-a0f6-37c2153c53ec",
+    "shortname": "HAMME",
+    "longname": "HAMME"
+  },
+  {
+    "id": "a8aca94c-fe23-43e0-93a7-39a6614b5d87",
+    "shortname": "MZK",
+    "longname": "MALZER KANAL"
+  },
+  {
+    "id": "fea68b1b-7080-428d-9180-3a2fabf95d71",
+    "shortname": "Freiburger Hafenpriel",
+    "longname": "FREIBURGER HAFENPRIEL"
+  },
+  {
+    "id": "90398d4a-b576-431d-ad9a-3a632a333daa",
+    "shortname": "ILM",
+    "longname": "ILM"
+  },
+  {
+    "id": "b61e88e8-9c3e-4ffa-8265-3c1053df076e",
+    "shortname": "SAALE",
+    "longname": "SAALE"
+  },
+  {
+    "id": "0f4ceb73-146d-474e-8232-3cabbccc27e7",
+    "shortname": "ILMENAU",
+    "longname": "ILMENAU"
+  },
+  {
+    "id": "f965ecf6-2057-479d-a571-3f4e30c1e493",
+    "shortname": "WESER",
+    "longname": "WESER"
+  },
+  {
+    "id": "283901d1-24a4-4e8e-94f6-3fa3dfb4720a",
+    "shortname": "KÜSTENKANAL",
+    "longname": "KÜSTENKANAL"
+  },
+  {
+    "id": "3a2495f2-4581-43c1-8061-426525b1815a",
+    "shortname": "BODENSEE",
+    "longname": "BODENSEE"
+  },
+  {
+    "id": "e2b58ea1-969f-4f72-a2a6-429c7fdd8f37",
+    "shortname": "EIDER",
+    "longname": "EIDER"
+  },
+  {
+    "id": "09a03b1f-9ece-4086-94d8-462f98985851",
+    "shortname": "MLK",
+    "longname": "MITTELLANDKANAL"
+  },
+  {
+    "id": "30081c46-bbe9-4ac7-894c-4852476d66e5",
+    "shortname": "RHK",
+    "longname": "RHEIN-HERNE-KANAL"
+  },
+  {
+    "id": "c656debb-f595-41af-8234-48f3c4c19a51",
+    "shortname": "Wischhafener Süderelbe",
+    "longname": "WISCHHAFENER SÜDERELBE"
+  },
+  {
+    "id": "b22c66a1-fedc-4822-83c7-5918ef35d35d",
+    "shortname": "Jizera",
+    "longname": "JIZERA"
+  },
+  {
+    "id": "89658af6-0df5-42bf-b550-5923fadc6f33",
+    "shortname": "OHW",
+    "longname": "OBERE HAVEL-WASSERSTRASSE"
+  },
+  {
+    "id": "fb9b6f64-a7a6-4744-a12f-5bdf31e6f0af",
+    "shortname": "HOW",
+    "longname": "HAVEL-ODER-WASSERSTRASSE"
+  },
+  {
+    "id": "7bd20795-fa24-4a48-ac2a-5c5c8510ea97",
+    "shortname": "VKH",
+    "longname": "VERBINDUNGSKANAL HOHENSAATEN"
+  },
+  {
+    "id": "fadeb941-fe23-40f4-b1cd-5c949dc8372f",
+    "shortname": "Bützflether Süderelbe",
+    "longname": "BÜTZFLETHER SÜDERELBE"
+  },
+  {
+    "id": "10415159-e774-4431-8de1-5ce83324718f",
+    "shortname": "STW",
+    "longname": "STÖR-WASSERSTRASSE"
+  },
+  {
+    "id": "5980613c-07da-44b7-bda4-5de17f9c20e5",
+    "shortname": "LÜHE",
+    "longname": "LÜHE"
+  },
+  {
+    "id": "ffa035bd-4c18-4a12-9bc7-5e66fc29e149",
+    "shortname": "ALLER",
+    "longname": "ALLER"
+  },
+  {
+    "id": "9752610e-8cf8-4ef9-b820-666df89a720a",
+    "shortname": "RBG",
+    "longname": "RHEINSBERGER GEWÄSSER"
+  },
+  {
+    "id": "fd74ae1f-78c3-4efa-8449-6ecc1fb482ab",
+    "shortname": "LAHN",
+    "longname": "LAHN"
+  },
+  {
+    "id": "96423534-6b1a-4af8-93d7-6f99af296ecd",
+    "shortname": "DEK",
+    "longname": "DORTMUND-EMS-KANAL"
+  },
+  {
+    "id": "b35aa52d-9188-4489-8189-73f4e6b9841e",
+    "shortname": "EHK",
+    "longname": "ELBE-HAVEL-KANAL"
+  },
+  {
+    "id": "def28f4a-9a97-4659-85f4-7a0f47ec3309",
+    "shortname": "TeK",
+    "longname": "TELTOWKANAL"
+  },
+  {
+    "id": "48052b97-14e6-43a6-b096-7e7b4e95ee66",
+    "shortname": "LEDA",
+    "longname": "LEDA"
+  },
+  {
+    "id": "dcc5eb65-dee4-4bd5-a61b-80d3dfa54c41",
+    "shortname": "KLEINES HAFF",
+    "longname": "KLEINES HAFF"
+  },
+  {
+    "id": "28e2b1b8-e353-4174-99a5-816229c68bd1",
+    "shortname": "RUHR",
+    "longname": "RUHR"
+  },
+  {
+    "id": "f68a87eb-4812-4075-a29c-82831687c30f",
+    "shortname": "UHW",
+    "longname": "UNTERE HAVEL-WASSERSTRASSE"
+  },
+  {
+    "id": "2b224064-51d8-451c-806a-836f4d7e707a",
+    "shortname": "MOLDAU",
+    "longname": "VLATAVA"
+  },
+  {
+    "id": "aabc9e69-6dae-4f35-9250-8427eaedf15c",
+    "shortname": "OrK",
+    "longname": "ORANIENBURGER KANAL"
+  },
+  {
+    "id": "7314670d-020b-4c64-9870-84d5e2eb0ba4",
+    "shortname": "Ruthenstrom",
+    "longname": "RUTHENSTROM"
+  },
+  {
+    "id": "d54f6551-d1f2-4856-a873-86a6e17eebb4",
+    "shortname": "HvK",
+    "longname": "HAVELKANAL"
+  },
+  {
+    "id": "e54e5839-5fc8-4494-9360-8989442a2242",
+    "shortname": "MEW",
+    "longname": "MÜRITZ-ELDE-WASSERSTRASSE"
+  },
+  {
+    "id": "262436f8-2a32-434b-9d19-90d1922daadc",
+    "shortname": "SQF",
+    "longname": "SCHWEDTER QUERFAHRT"
+  },
+  {
+    "id": "aa74ebd7-e4b1-4ea4-83e2-989d94b90d6a",
+    "shortname": "ITTER_DIEMEL",
+    "longname": "ITTER ZUR DIEMEL"
+  },
+  {
+    "id": "6ce9c61c-ab43-4084-bd62-9ad5e2ab6cf9",
+    "shortname": "ODER",
+    "longname": "ODER"
+  },
+  {
+    "id": "28cdf699-e727-447b-b3ee-9d10f8b2a5b2",
+    "shortname": "DHK",
+    "longname": "DATTELN-HAMM-KANAL"
+  },
+  {
+    "id": "afc18147-790a-4af0-bffa-a54156c6ba7c",
+    "shortname": "NECKAR",
+    "longname": "NECKAR"
+  },
+  {
+    "id": "177835d3-9d2a-42ef-88fd-a572ba3df9ca",
+    "shortname": "TlG",
+    "longname": "TEMPLINER GEWÄSSER"
+  },
+  {
+    "id": "171de910-9dbe-4b30-a4d7-a79e231fc411",
+    "shortname": "LESUM",
+    "longname": "LESUM"
+  },
+  {
+    "id": "966076cc-19e7-4922-921d-aad15d5164b1",
+    "shortname": "FULDA",
+    "longname": "FULDA"
+  },
+  {
+    "id": "2f810727-4e7b-40ac-8356-ad1477d49150",
+    "shortname": "SAAR",
+    "longname": "SAAR"
+  },
+  {
+    "id": "1a191392-64f3-408e-87f0-b91e10545b57",
+    "shortname": "NORDSEE",
+    "longname": "NORDSEE"
+  },
+  {
+    "id": "1e045f5d-abab-4826-85ea-b9c3fcafc271",
+    "shortname": "WDK",
+    "longname": "WESEL-DATTELN-KANAL"
+  },
+  {
+    "id": "ba4ac402-5733-4608-acd0-bc1edfd1a157",
+    "shortname": "DAW",
+    "longname": "DAHME-WASSERSTRASSE"
+  },
+  {
+    "id": "714b47c3-c63b-426f-accc-bcb7ebdde0e3",
+    "shortname": "Schwinge",
+    "longname": "SCHWINGE"
+  },
+  {
+    "id": "d30e6e98-5a25-40af-a625-be880ef69a9b",
+    "shortname": "WtG",
+    "longname": "WENTOW-GEWÄSSER"
+  },
+  {
+    "id": "afc35e3e-2400-4e4d-82d1-c11e3b3274d2",
+    "shortname": "EDER",
+    "longname": "EDER"
+  },
+  {
+    "id": "acb1b45d-4161-4c4a-a518-c508ed5a03b5",
+    "shortname": "PHv",
+    "longname": "POTSDAMER HAVEL"
+  },
+  {
+    "id": "75a1d3e7-c6e7-4b50-85e9-c74ca31b0b5f",
+    "shortname": "DIEMEL",
+    "longname": "DIEMEL"
+  },
+  {
+    "id": "f1c53a5e-5205-4f4b-8463-c9c074919477",
+    "shortname": "WbG",
+    "longname": "WERBELLINER GEWÄSSER"
+  },
+  {
+    "id": "512a905c-fbd5-4e1f-ad61-caba44d8b0f9",
+    "shortname": "SOW",
+    "longname": "SPREE-ODER-WASSERSTRASSE"
+  },
+  {
+    "id": "d7818e64-186b-435f-a871-cdb9f75d4459",
+    "shortname": "LWK",
+    "longname": "LANDWEHRKANAL"
+  },
+  {
+    "id": "637cbed8-f8a3-41a4-a649-cfed2613c6cb",
+    "shortname": "FiK",
+    "longname": "FINOWKANAL"
+  },
+  {
+    "id": "0c5ecb8f-5c72-4e55-82c5-cff6a068f5a4",
+    "shortname": "OSTSEE",
+    "longname": "OSTSEE"
+  },
+  {
+    "id": "8eb3c12d-029c-48f7-8995-d04f2d76f815",
+    "shortname": "PINNAU",
+    "longname": "PINNAU"
+  },
+  {
+    "id": "744e0bc7-0946-41ea-bc82-d0cea5cbf4c1",
+    "shortname": "WOD",
+    "longname": "WESTODER"
+  },
+  {
+    "id": "3a151fd0-81a0-4b01-a439-d2aa553b0b38",
+    "shortname": "TREENE",
+    "longname": "TREENE"
+  },
+  {
+    "id": "e5c5d288-6a87-42ec-81c1-d58f1a6fcf1b",
+    "shortname": "Nord-Ostsee-Kanal",
+    "longname": "NORD-OSTSEE-KANAL"
+  },
+  {
+    "id": "ed0e2086-7425-4d2d-b372-d9b219d5638b",
+    "shortname": "EMS",
+    "longname": "EMS"
+  },
+  {
+    "id": "de3724fd-80a8-46f9-8b5b-db378a84048c",
+    "shortname": "ELBE",
+    "longname": "ELBE"
+  },
+  {
+    "id": "aae1f1d4-f79f-4c3a-83d5-debffd711981",
+    "shortname": "MOSEL",
+    "longname": "MOSEL"
+  },
+  {
+    "id": "1836bb37-423e-444b-bf2e-df21fed87fb1",
+    "shortname": "ESTE",
+    "longname": "ESTE"
+  },
+  {
+    "id": "4f626d5c-3e9d-4fe4-839a-df9eb0262ba0",
+    "shortname": "WÜMME",
+    "longname": "WÜMME"
+  },
+  {
+    "id": "5963233a-8e39-459e-931c-e27c057a49b6",
+    "shortname": "NVK",
+    "longname": "NIEGRIPPER VERBINDUNGSKANAL"
+  },
+  {
+    "id": "c23322c5-ad2a-4050-9e64-e377341617a9",
+    "shortname": "DYHRSSENMOOR",
+    "longname": "DYHRSSENMOOR"
+  },
+  {
+    "id": "d19708ca-ac42-4ad4-8d62-e85722f946f6",
+    "shortname": "DONAU",
+    "longname": "DONAU"
+  },
+  {
+    "id": "40c51e0c-d21c-492a-bbab-e9af3acc0187",
+    "shortname": "LyG",
+    "longname": "LYCHENER GEWÄSSER"
+  },
+  {
+    "id": "a237b616-e51b-4c6c-8fe2-ef485b0a3879",
+    "shortname": "JADE",
+    "longname": "JADE"
+  },
+  {
+    "id": "e47bbf30-f087-49dc-a85d-f097d829a39a",
+    "shortname": "TRAVE",
+    "longname": "TRAVE"
+  },
+  {
+    "id": "5f6f4fcf-e1cb-472e-8fd3-f331875e5153",
+    "shortname": "MDK",
+    "longname": "MAIN-DONAU-KANAL"
+  },
+  {
+    "id": "c309f510-67ec-4d13-912d-f703231458cc",
+    "shortname": "SKG",
+    "longname": "STORKOWER GEWAESSER"
+  },
+  {
+    "id": "e9f60b79-5fde-4026-b6a2-fb27112135e7",
+    "shortname": "EGER",
+    "longname": "OHRE"
+  },
+  {
+    "id": "c486d5cb-772b-41b8-90f4-fc382cc8414b",
+    "shortname": "RVK",
+    "longname": "ROTHENSEER-VERBINDUNGSKANAL"
+  },
+  {
+    "id": "0bc5bdb3-7e62-4c28-b4d3-fd4d3e7580c8",
+    "shortname": "HUNTE",
+    "longname": "HUNTE"
+  }
+]
