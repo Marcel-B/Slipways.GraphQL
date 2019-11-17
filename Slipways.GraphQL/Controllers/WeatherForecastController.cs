@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Slipways.GraphQL.Controllers
+namespace com.b_velop.Slipways.GraphQL.Controllers
 {
     [ApiController]
     [Route("[controller]")]

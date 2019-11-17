@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Slipways.GraphQL
+namespace com.b_velop.Slipways.GraphQL
 {
     public class Startup
     {

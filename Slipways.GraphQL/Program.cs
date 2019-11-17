@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Slipways.GraphQL
+namespace com.b_velop.Slipways.GraphQL
 {
     public class Program
     {
