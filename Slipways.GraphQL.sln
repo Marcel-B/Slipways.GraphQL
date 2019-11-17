@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slipways.GraphQL", "Slipways.GraphQL\Slipways.GraphQL.csproj", "{87DB8E92-DE7B-4A70-B4B1-6A11EDF12BF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87DB8E92-DE7B-4A70-B4B1-6A11EDF12BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87DB8E92-DE7B-4A70-B4B1-6A11EDF12BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87DB8E92-DE7B-4A70-B4B1-6A11EDF12BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87DB8E92-DE7B-4A70-B4B1-6A11EDF12BF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
