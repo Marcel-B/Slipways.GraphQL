@@ -16,10 +16,14 @@ namespace com.b_velop.Slipways.GraphQL
         public static void Main(string[] args)
         {
             var file = "nlog.config";
-            var server = new MetricServer(
-                hostname: "slipways.graphql",
-                port: 1234);
-            server.Start();
+            var metricPusher = new MetricPusher(new MetricPusherOptions
+            {
+                Endpoint = "https://push.qaybe.de/metrics",
+                Job = "slipwaysql",
+                Instance = Environment.MachineName
+            });
+
+            metricPusher.Start();
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try

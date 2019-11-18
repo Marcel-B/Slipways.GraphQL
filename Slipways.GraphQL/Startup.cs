@@ -2,6 +2,7 @@ using System;
 using com.b_velop.Slipways.GraphQL.Data;
 using com.b_velop.Slipways.GraphQL.Data.GraphQLSchema;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using com.b_velop.Slipways.GraphQL.Middlewares;
 using com.b_velop.Slipways.GraphQL.Services;
 using GraphQL;
 using GraphQL.Server;
@@ -57,6 +58,7 @@ namespace com.b_velop.Slipways.GraphQL
         {
             app.UseMetricServer();
             app.UseHttpMetrics();
+            app.UseMetricsMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
