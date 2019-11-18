@@ -4,6 +4,7 @@ using com.b_velop.Slipways.GraphQL.Data.Models;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
 using GraphQL.Types;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 using System;
 
 namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
@@ -14,21 +15,24 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
             IRepositoryWrapper rep,
             ILogger<AppMutation> logger)
         {
-            Name = "Mutation";
+            using (Metrics.CreateHistogram("slipwaysql_duration_graphql_mutation_seconds", "").NewTimer())
+            {
+                Name = "Mutation";
 
-            FieldAsync<SlipwayType>(
-                "createSlipway",
-                "Creates a new Slipway",
-                new QueryArguments(
-                    new QueryArgument<SlipwayInputType> { Name = "slipway" }),
-                resolve: async ctx =>
-                {
-                    var slipway = ctx.GetArgument<Slipway>("slipway");
+                FieldAsync<SlipwayType>(
+                    "createSlipway",
+                    "Creates a new Slipway",
+                    new QueryArguments(
+                        new QueryArgument<SlipwayInputType> { Name = "slipway" }),
+                    resolve: async ctx =>
+                    {
+                        var slipway = ctx.GetArgument<Slipway>("slipway");
 
-                    slipway.Id = Guid.NewGuid();
+                        slipway.Id = Guid.NewGuid();
 
-                    return await rep.Slipway.InsertAsync(slipway);
-                });
+                        return await rep.Slipway.InsertAsync(slipway);
+                    });
+            }
         }
     }
 }
