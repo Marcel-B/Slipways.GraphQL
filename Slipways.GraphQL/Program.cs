@@ -11,11 +11,12 @@ namespace com.b_velop.Slipways.GraphQL
 {
     public class Program
     {
+        private static NLog.Logger logger;
         public static void Main(string[] args)
         {
             var file = "nlog.config";
 
-            var logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
+            logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try
             {
                 logger.Debug("init main");
@@ -47,6 +48,8 @@ namespace com.b_velop.Slipways.GraphQL
                 .ConfigureServices((hostingContet, services) =>
                     {
                         var str = Environment.GetEnvironmentVariable("CON_STR");
+                        var pw = Environment.GetEnvironmentVariable("PW");
+                        str = $"Server=sqlserver,1433;Database=Slipways;User Id=sa;Password={pw}";
 #if DEBUG
                         str = "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
