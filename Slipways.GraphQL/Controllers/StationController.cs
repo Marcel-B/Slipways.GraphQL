@@ -33,7 +33,8 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_seconds", "Histogram").NewTimer())
             {
-                return await _rep.Station.SelectAllAsync();
+                var result = await _rep.Station.SelectAllAsync();
+                return result.OrderBy(_ => _.Longname);
             }
         }
 
