@@ -16,6 +16,10 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
             FieldAsync<ListGraphType<StationType>>(
                 "stations",
                 resolve: async ctx => await rep.Station.SelectAllAsync());
+
+            FieldAsync<ListGraphType<SlipwayType>>(
+                "slipways",
+                resolve: async ctx => await rep.Slipway.SelectAllAsync());
         }
     }
 }
