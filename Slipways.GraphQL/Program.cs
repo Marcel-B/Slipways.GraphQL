@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using Prometheus;
 
 namespace com.b_velop.Slipways.GraphQL
 {
@@ -15,6 +16,10 @@ namespace com.b_velop.Slipways.GraphQL
         public static void Main(string[] args)
         {
             var file = "nlog.config";
+            var server = new MetricServer(
+                hostname: "slipways.graphql",
+                port: 1234);
+            server.Start();
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try
