@@ -27,7 +27,7 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
 
                     slipway.Id = Guid.NewGuid();
 
-                    return await rep.Slipway.Create(slipway);
+                    return await rep.Slipway.InsertAsync(slipway);
                 });
         }
     }
