@@ -6,6 +6,7 @@ using com.b_velop.Slipways.GraphQL.Data.Models;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Prometheus;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,7 +31,10 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
         [HttpGet]
         public async Task<IEnumerable<Station>> GetAsync()
         {
-            return await _rep.Station.SelectAllAsync();
+            using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_seconds", "Histogram").NewTimer())
+            {
+                return await _rep.Station.SelectAllAsync();
+            }
         }
 
         // GET api/values/5
@@ -38,7 +42,10 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
         public async Task<ActionResult<Station>> GetAsync(
             Guid id)
         {
-            return await _rep.Station.SelectByIdAsync(id);
+            using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_id_seconds", "Histogram").NewTimer())
+            {
+                return await _rep.Station.SelectByIdAsync(id);
+            }
         }
 
         //// POST api/values

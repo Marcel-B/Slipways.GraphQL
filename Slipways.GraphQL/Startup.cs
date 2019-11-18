@@ -2,6 +2,7 @@ using System;
 using com.b_velop.Slipways.GraphQL.Data;
 using com.b_velop.Slipways.GraphQL.Data.GraphQLSchema;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using com.b_velop.Slipways.GraphQL.Middlewares;
 using com.b_velop.Slipways.GraphQL.Services;
 using GraphQL;
 using GraphQL.Server;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Prometheus;
 
 namespace com.b_velop.Slipways.GraphQL
 {
@@ -54,6 +56,9 @@ namespace com.b_velop.Slipways.GraphQL
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMetricServer();
+            app.UseHttpMetrics();
+            app.UseMetricsMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
