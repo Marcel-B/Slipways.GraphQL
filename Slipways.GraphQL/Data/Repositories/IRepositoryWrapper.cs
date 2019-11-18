@@ -4,5 +4,6 @@
     {
         IWaterRepository Water { get; set; }
         IStationRepository Station { get; set; }
+        ISlipwayRepository Slipway { get; set; }
     }
 }
