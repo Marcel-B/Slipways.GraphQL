@@ -22,13 +22,11 @@
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Data\GraphQLTypes\" />
     <Folder Include="Data\Models\" />
     <Folder Include="Services\" />
     <Folder Include="Data\Dtos\" />
     <Folder Include="Data\GraphQLSchema\" />
     <Folder Include="Data\GraphQLQueries\" />
-    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 </Project>
