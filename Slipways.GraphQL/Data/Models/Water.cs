@@ -10,8 +10,5 @@ namespace com.b_velop.Slipways.GraphQL.Data.Models
         public Guid Id { get; set; }
         public string Shortname { get; set; }
         public string Longname { get; set; }
-
-        public IEnumerable<Station> Stations { get; set; }
-        public IEnumerable<Slipway> Slipways { get; set; }
     }
 }
