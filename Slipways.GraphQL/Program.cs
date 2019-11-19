@@ -56,9 +56,8 @@ namespace com.b_velop.Slipways.GraphQL
                     })
                 .ConfigureServices((hostingContet, services) =>
                     {
-                        var str = Environment.GetEnvironmentVariable("CON_STR");
                         var pw = Environment.GetEnvironmentVariable("PW");
-                        str = $"Server=sqlserver,1433;Database=Slipways;User Id=sa;Password={pw}";
+                        var str = $"Server=sqlserver,1433;Database=Slipways;User Id=sa;Password={pw}";
 #if DEBUG
                         str = "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
