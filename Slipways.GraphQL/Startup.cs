@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Prometheus;
 
 namespace com.b_velop.Slipways.GraphQL
@@ -44,7 +45,10 @@ namespace com.b_velop.Slipways.GraphQL
             services.AddScoped<IStationRepository, StationRepository>();
             services.AddScoped<ISlipwayRepository, SlipwayRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
+            services.AddSwaggerGen(_ =>
+            {
+                _.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Slipway API", Version = "v1" });
+            });
             services.Configure<KestrelServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
@@ -63,7 +67,11 @@ namespace com.b_velop.Slipways.GraphQL
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(_ =>
+            {
+                _.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Slipways API v1");
+            });
             UpdateDatabase(app);
 
             app.UseRouting();
