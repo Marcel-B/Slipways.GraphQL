@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,15 @@ namespace com.b_velop.Slipways.GraphQL.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<Station>> SelectStationsIncludeAllAsync()
+
+        public async Task<IEnumerable<Station>> SelectIncludeAllAsync()
             => await Db.Stations.Include(_ => _.Water).ToListAsync();
+
+        public async Task<Station> SelectIncludeAsync(
+            Guid id)
+            => await Db
+                .Stations
+                .Include(_ => _.Water)
+                .FirstOrDefaultAsync(_ => _.Id == id);
     }
 }

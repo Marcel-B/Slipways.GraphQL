@@ -33,7 +33,7 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_seconds", "Histogram").NewTimer())
             {
-                var result = await _rep.Station.SelectStationsIncludeAllAsync();
+                var result = await _rep.Station.SelectIncludeAllAsync();
                 return result.OrderBy(_ => _.Longname);
             }
         }
@@ -45,26 +45,8 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_id_seconds", "Histogram").NewTimer())
             {
-                return await _rep.Station.SelectByIdAsync(id);
+                return await _rep.Station.SelectIncludeAsync(id);
             }
         }
-
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
