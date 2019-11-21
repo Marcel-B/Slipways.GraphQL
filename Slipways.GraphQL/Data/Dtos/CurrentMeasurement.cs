@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GraphQL.Data.Dtos
 {
@@ -8,19 +8,19 @@ namespace com.b_velop.Slipways.GraphQL.Data.Dtos
         /// <summary>
         /// Zeitpunkt codiert im ISO_8601 Format.
         /// </summary>
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         public DateTime Timestamp { get; set; }
 
         /// <summary>
         ///Wert als Dezimalzahl in der Einheit, welche durch die Timeseries der Station vorgegeben ist.
         /// </summary>
-        [JsonProperty("value")]
+        [JsonPropertyName("value")]
         public double Value { get; set; }
 
         /// <summary>
         /// Drückt numerisch aus, ob es sich um steigende (1), fallende (-1) oder gleichbleibende (0) Tendenz handelt. Kann die Tendenz nicht ermittelt werden, so ist trend -999.
         /// </summary>
-        [JsonProperty("trend")]
+        [JsonPropertyName("trend")]
         public int Trend { get; set; }
 
         /// <summary>
@@ -33,9 +33,10 @@ namespace com.b_velop.Slipways.GraphQL.Data.Dtos
         // out-dated: Aktueller Wasserstand veraltet (älter als 25 Stunden)
         // Siehe auch die Hilfe zu den Grenzwerten.
         /// </summary>
-        [JsonProperty("stateMnwMhw")]
+        [JsonPropertyName("stateMnwMhw")]
         public string StateMnwMhw { get; set; }
-        [JsonProperty("stateNswHsw")]
+
+        [JsonPropertyName("stateNswHsw")]
         public string StateNswHsw { get; set; }
     }
 }

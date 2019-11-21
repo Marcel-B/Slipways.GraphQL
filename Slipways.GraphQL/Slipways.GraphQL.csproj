@@ -34,4 +34,9 @@
     <Folder Include="Data\Repositories\" />
     <Folder Include="Data\GraphQLQueries\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Data\stations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

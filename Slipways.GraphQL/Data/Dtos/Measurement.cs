@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GraphQL.Data.Dtos
 {
@@ -8,13 +8,13 @@ namespace com.b_velop.Slipways.GraphQL.Data.Dtos
         /// <summary>
         /// Zeitpunkt codiert im ISO_8601 Format.
         /// </summary>
-        [JsonProperty("timestamp")]
+        [JsonPropertyName("timestamp")]
         public DateTime Timestamp { get; set; }
 
         /// <summary>
         /// Wert als Dezimalzahl in der Einheit, welche durch die Timeseries der Station vorgegeben ist.
         /// </summary>
-        [JsonProperty("value")]
+        [JsonPropertyName("value")]
         public double Value { get; set; }
     }
 }
