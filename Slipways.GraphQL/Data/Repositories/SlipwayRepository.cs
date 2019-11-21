@@ -23,7 +23,7 @@ namespace com.b_velop.Slipways.GraphQL.Data.Repositories
                 .Include(_ => _.Water)
                 .ToListAsync();
 
-        public async Task<Slipway> SelectIncludeAsync(
+        public async Task<Slipway> SelectByIdIncludeAsync(
             Guid id)
             => await Db
                 .Slipways

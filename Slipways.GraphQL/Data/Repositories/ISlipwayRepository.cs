@@ -8,6 +8,6 @@ namespace com.b_velop.Slipways.GraphQL.Data.Repositories
     public interface ISlipwayRepository : IRepositoryBase<Slipway>
     {
         Task<IEnumerable<Slipway>> SelectIncludeAllAsync();
-        Task<Slipway> SelectIncludeAsync(Guid id);
+        Task<Slipway> SelectByIdIncludeAsync(Guid id);
     }
 }

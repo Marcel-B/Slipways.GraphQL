@@ -38,14 +38,14 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
             }
         }
 
-        // GET api/values/5
+        // GET api/values/8177a148-5674-4b8f-8ded-050907f640f3
         [HttpGet("{id}")]
         public async Task<ActionResult<Station>> GetAsync(
             Guid id)
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_id_seconds", "Histogram").NewTimer())
             {
-                return await _rep.Station.SelectIncludeAsync(id);
+                return await _rep.Station.SelectByIdIncludeAsync(id);
             }
         }
     }
