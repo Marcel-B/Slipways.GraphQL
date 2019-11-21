@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GraphQL.Data.Dtos
 {
     public class Station
     {
+        [JsonProperty("uuid")]
         [JsonPropertyName("uuid")]
         public Guid Id { get; set; }
 
