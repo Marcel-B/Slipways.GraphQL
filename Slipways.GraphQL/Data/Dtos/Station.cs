@@ -1,28 +1,35 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GraphQL.Data.Dtos
 {
     public class Station
     {
-        [JsonProperty("uuid")]
+        [JsonPropertyName("uuid")]
         public Guid Id { get; set; }
-        [JsonProperty("number")]
+
+        [JsonPropertyName("number")]
         public string Number { get; set; }
-        [JsonProperty("shortname")]
+
+        [JsonPropertyName("shortname")]
         public string Shortname { get; set; }
-        [JsonProperty("longname")]
+
+        [JsonPropertyName("longname")]
         public string Longname { get; set; }
-        [JsonProperty("km")]
+
+        [JsonPropertyName("km")]
         public double Km { get; set; }
-        [JsonProperty("agency")]
+
+        [JsonPropertyName("agency")]
         public string Agency { get; set; }
-        [JsonProperty("longitude")]
+
+        [JsonPropertyName("longitude")]
         public double Longitude { get; set; }
-        [JsonProperty("latitude")]
+
+        [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
 
-        [JsonProperty("water")]
+        [JsonPropertyName("water")]
         public Water Water { get; set; }
     }
 }

@@ -2,29 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace com.b_velop.Slipways.GraphQL.Data
 {
     public static class ModelBuilderExtensions
     {
-        public static void Seed(
+        public async static Task Seed(
             this ModelBuilder modelBuilder)
         {
             var file = new FileInfo(@"Data/waters.json");
-            var stream = file.OpenText();
-            var str =  stream.ReadToEnd();
-            var waters = JsonConvert.DeserializeObject<IEnumerable<Water>>(str);
-            modelBuilder.Entity<Water>().HasData(waters);
+            var stream = file.Open(FileMode.Open);
+            var waters = await JsonSerializer.DeserializeAsync<IEnumerable<Water>>(stream);
 
+            modelBuilder.Entity<Water>().HasData(waters);
             file = new FileInfo(@"Data/stations.json");
-            stream = file.OpenText();
-            str = stream.ReadToEnd();
-            var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.Station>>(str);
+            stream = file.Open(FileMode.Open);
+            var stationsDto = await JsonSerializer.DeserializeAsync<IEnumerable<Data.Dtos.Station>>(stream);
             var stations = new HashSet<Station>();
             foreach (var station in stationsDto)
             {
@@ -60,11 +58,11 @@ namespace com.b_velop.Slipways.GraphQL.Data
             _logger = logger;
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected async override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null)
                 throw new ArgumentNullException(nameof(modelBuilder));
-           modelBuilder.Seed();
+            await modelBuilder.Seed();
         }
     }
 }

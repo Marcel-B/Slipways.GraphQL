@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GraphQL.Data.Dtos
 {
@@ -7,31 +7,31 @@ namespace com.b_velop.Slipways.GraphQL.Data.Dtos
         /// <summary>
         /// Kurzbezeichnung, maximal 40 Zeichen.
         /// </summary>
-        [JsonProperty("shortname")]
+        [JsonPropertyName("shortname")]
         public string Shortname { get; set; }
 
         /// <summary>
         /// Langbezeichnung, maximal 255 Zeichen.
         /// </summary>
-        [JsonProperty("longname")]
+        [JsonPropertyName("longname")]
         public string Longname { get; set; }
 
         /// <summary>
         /// Maßeinheit.
         /// </summary>
-        [JsonProperty("unit")]
+        [JsonPropertyName("unit")]
         public string Unit { get; set; }
 
         /// <summary>
         /// Abstand der Messwerte in Minuten.
         /// </summary>
-        [JsonProperty("equidistance")]
+        [JsonPropertyName("equidistance")]
         public int Equidistance { get; set; }
 
-        [JsonProperty("currentMeasurement")]
+        [JsonPropertyName("currentMeasurement")]
         public CurrentMeasurement CurrentMeasurement { get; set; }
 
-        [JsonProperty("gaugeZero")]
+        [JsonPropertyName("gaugeZero")]
         public GaugeZero GaugeZero { get; set; }
     }
 }

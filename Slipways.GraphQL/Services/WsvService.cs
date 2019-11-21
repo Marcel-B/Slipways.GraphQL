@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Dtos;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace com.b_velop.Slipways.GraphQL.Services
 {
@@ -23,8 +23,8 @@ namespace com.b_velop.Slipways.GraphQL.Services
             var response = await _client.GetAsync("/webservices/rest-api/v2/stations/KETZIN/W.json?includeCurrentMeasurement=true");
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<CurrentMeasurementResponse>(content);
+                var content = await response.Content.ReadAsStreamAsync();
+                var result = await JsonSerializer.DeserializeAsync<CurrentMeasurementResponse>(content);
 
                 return result;
             }
