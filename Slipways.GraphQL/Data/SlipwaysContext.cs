@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace com.b_velop.Slipways.GraphQL.Data
 {
@@ -16,13 +17,13 @@ namespace com.b_velop.Slipways.GraphQL.Data
             this ModelBuilder modelBuilder)
         {
             var file = new FileInfo(@"Data/waters.json");
-            var stream = file.Open(FileMode.Open);
-            var waters = await JsonSerializer.DeserializeAsync<IEnumerable<Water>>(stream);
+            var stream = await file.OpenText().ReadToEndAsync();
+            var waters = JsonConvert.DeserializeObject<IEnumerable<Water>>(stream);
 
             modelBuilder.Entity<Water>().HasData(waters);
             file = new FileInfo(@"Data/stations.json");
-            stream = file.Open(FileMode.Open);
-            var stationsDto = await JsonSerializer.DeserializeAsync<IEnumerable<Data.Dtos.Station>>(stream);
+            stream = await file.OpenText().ReadToEndAsync();
+            var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.Station>>(stream);
             var stations = new HashSet<Station>();
             foreach (var station in stationsDto)
             {
