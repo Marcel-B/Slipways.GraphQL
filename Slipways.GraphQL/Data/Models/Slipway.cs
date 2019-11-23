@@ -17,6 +17,7 @@ namespace com.b_velop.Slipways.GraphQL.Data.Models
 
         public int Rating { get; set; }
         public string Comment { get; set; }
+        public string Street { get; set; }
         public string Postalcode { get; set; }
         public string City { get; set; }
         public decimal Costs { get; set; }

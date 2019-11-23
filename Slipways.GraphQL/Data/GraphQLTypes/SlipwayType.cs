@@ -13,6 +13,7 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLTypes
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Name);
+            Field(_ => _.Street);
             Field(_ => _.City);
             Field(_ => _.Postalcode);
             Field(_ => _.Costs);

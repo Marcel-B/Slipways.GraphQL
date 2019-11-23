@@ -16,6 +16,7 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLInputTypes
             Field(_ => _.Costs);
             Field(_ => _.WaterFk, type: typeof(NonNullGraphType<IdGraphType>));
 
+            Field(_ => _.Street, nullable: true);
             Field(_ => _.City, nullable: true);
             Field(_ => _.Postalcode, nullable: true);
             Field(_ => _.Pro, nullable: true);
