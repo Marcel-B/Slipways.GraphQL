@@ -4,13 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Models;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 
 namespace Slipways.GraphQL.Controllers
 {
+    public class SlipwayDto
+    {
+        public string Name { get; set; }
+        public string City { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public Guid Water { get; set; }
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     public class SlipwayController : ControllerBase
@@ -45,6 +53,26 @@ namespace Slipways.GraphQL.Controllers
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_slipway_id_seconds", "Histogram").NewTimer())
             {
                 return await _rep.Slipway.SelectByIdIncludeAsync(id);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostAsync(
+            SlipwayDto slipwayDto)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_POST_api_slipway_seconds", "Histogram").NewTimer())
+            {
+                var slipway = new Slipway
+                {
+                    Id = Guid.NewGuid(),
+                    City = slipwayDto.City,
+                    Name = slipwayDto.Name,
+                    Longitude = slipwayDto.Longitude,
+                    Latitude = slipwayDto.Latitude,
+                    WaterFk = slipwayDto.Water
+                };
+                var result = await _rep.Slipway.InsertAsync(slipway);
+                return Ok();
             }
         }
     }
