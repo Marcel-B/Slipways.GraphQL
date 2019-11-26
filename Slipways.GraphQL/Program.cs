@@ -22,7 +22,7 @@ namespace com.b_velop.Slipways.GraphQL
                 Job = "slipwaysql",
                 Instance = Environment.MachineName
             });
-
+            
             metricPusher.Start();
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
