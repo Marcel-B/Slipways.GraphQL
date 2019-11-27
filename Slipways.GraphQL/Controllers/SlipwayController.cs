@@ -22,7 +22,7 @@ namespace Slipways.GrQl.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class SlipwayController : ControllerBase
     {
         private readonly IRepositoryWrapper _rep;

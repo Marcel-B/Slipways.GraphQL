@@ -21,7 +21,7 @@ namespace Slipways.GrQl.Controllers
         public string Query { get; set; }
         public JObject Variables { get; set; }
     }
-
+    /*
     [Route("graphql")]
     [ApiController]
     public class GraphQLController : ControllerBase
@@ -60,6 +60,6 @@ namespace Slipways.GrQl.Controllers
             }
 
             return Ok(result);
-        }
-    }
+        }*/
 }
+

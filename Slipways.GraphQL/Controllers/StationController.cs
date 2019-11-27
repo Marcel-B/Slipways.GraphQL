@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using com.b_velop.Slipways.GrQl.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Prometheus;
@@ -14,7 +15,7 @@ namespace com.b_velop.Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class StationController : Controller
     {
         private readonly IRepositoryWrapper _rep;

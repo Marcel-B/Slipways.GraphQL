@@ -22,9 +22,9 @@
       "launchBrowser": true,
       "environmentVariables": {
         "API_RESOURCE": "com.bvelop.slilpways",
-        "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!",
+        "AUTHORITY": "https://newidentity.qaybe.de",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AUTHORITY": "https://newidentity.qaybe.de"
+        "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
       },
       "applicationUrl": "http://localhost:5000/ui/playground"
     }
