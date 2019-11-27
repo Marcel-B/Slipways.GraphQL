@@ -122,7 +122,7 @@ namespace com.b_velop.Slipways.GraphQL
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseRouting();
-            app.UseGraphQLAuth();
+            //app.UseGraphQLAuth();
             app.UseMetricServer();
             app.UseHttpMetrics();
             app.UseMetricsMiddleware();

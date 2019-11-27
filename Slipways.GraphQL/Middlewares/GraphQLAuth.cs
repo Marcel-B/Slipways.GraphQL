@@ -26,7 +26,9 @@ namespace com.b_velop.Slipways.GraphQL.Middlewares
                 AuthorizationResult authorizationResult =
                     await authorizationService.AuthorizeAsync(httpContext.User, null, "myPolicy");
                 if (authorizationResult.Succeeded)
+                {
                     await _next(httpContext);
+                }
                 else
                 {
                     httpContext.Response.StatusCode = 401;
