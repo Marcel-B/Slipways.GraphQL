@@ -119,9 +119,9 @@ namespace com.b_velop.Slipways.GraphQL
             IApplicationBuilder app,
             IWebHostEnvironment env)
         {
-            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseRouting();
             app.UseGraphQLAuth();
             app.UseMetricServer();
             app.UseHttpMetrics();
