@@ -15,7 +15,7 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class StationController : Controller
     {
         private readonly IRepositoryWrapper _rep;

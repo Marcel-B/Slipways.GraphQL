@@ -1,5 +1,6 @@
 ﻿using com.b_velop.Slipways.GraphQL.Data.GraphQLTypes;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using GraphQL.Authorization;
 using GraphQL.Types;
 using Prometheus;
 
