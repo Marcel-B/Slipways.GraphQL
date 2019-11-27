@@ -1,4 +1,5 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using com.b_velop.Slipways.GraphQL.Data;
 using com.b_velop.Slipways.GraphQL.Data.GraphQLSchema;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
@@ -21,22 +22,42 @@ namespace com.b_velop.Slipways.GraphQL
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(
+            IConfiguration configuration,
+            IWebHostEnvironment env)
         {
             Configuration = configuration;
+            WebHostEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(
+            IServiceCollection services)
         {
             services.AddMemoryCache();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddHttpClient<IWsvService, WsvService>(_ =>
             {
                 _.BaseAddress = new Uri("https://www.pegelonline.wsv.de");
                 _.Timeout = TimeSpan.FromSeconds(10);
             });
+
+            var authority = Environment.GetEnvironmentVariable("AUTHORITY");
+            var apiResource = Environment.GetEnvironmentVariable("API_RESOURCE");
+            
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = authority;
+                    if (WebHostEnvironment.IsDevelopment())
+                        options.RequireHttpsMetadata = false;
+                    else
+                        options.RequireHttpsMetadata = true;
+                    options.ApiName = apiResource;
+                });
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AppSchema>();
@@ -58,7 +79,9 @@ namespace com.b_velop.Slipways.GraphQL
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env)
         {
             app.UseMetricServer();
             app.UseHttpMetrics();
@@ -67,6 +90,9 @@ namespace com.b_velop.Slipways.GraphQL
             {
                 app.UseDeveloperExceptionPage();
             }
+          
+            app.UseAuthentication();
+
             app.UseSwagger();
             app.UseSwaggerUI(_ =>
             {
