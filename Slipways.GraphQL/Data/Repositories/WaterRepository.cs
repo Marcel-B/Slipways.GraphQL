@@ -1,9 +1,9 @@
 ﻿using System;
-using com.b_velop.Slipways.GraphQL.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace com.b_velop.Slipways.GraphQL.Data.Repositories
+namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
     public class WaterRepository : RepositoryBase<Water>, IWaterRepository
     {

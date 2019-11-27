@@ -1,9 +1,8 @@
-﻿using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
-using GraphQL.Authorization;
+﻿using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using GraphQL.Types;
 
-namespace com.b_velop.Slipways.GraphQL.Data.GraphQLTypes
+namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 {
     public class SlipwayType : ObjectGraphType<Slipway>
     {

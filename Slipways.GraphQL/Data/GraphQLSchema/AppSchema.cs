@@ -1,8 +1,8 @@
-﻿using com.b_velop.Slipways.GraphQL.Data.GraphQLQueries;
+﻿using com.b_velop.Slipways.GrQl.Data.GraphQLQueries;
 using GraphQL;
 using GraphQL.Types;
 
-namespace com.b_velop.Slipways.GraphQL.Data.GraphQLSchema
+namespace com.b_velop.Slipways.GrQl.Data.GraphQLSchema
 {
     public class AppSchema : Schema
     {

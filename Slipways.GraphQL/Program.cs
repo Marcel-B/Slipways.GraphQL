@@ -1,5 +1,5 @@
 using System;
-using com.b_velop.Slipways.GraphQL.Data;
+using com.b_velop.Slipways.GrQl.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using Prometheus;
 
-namespace com.b_velop.Slipways.GraphQL
+namespace com.b_velop.Slipways.GrQl
 {
     public class Program
     {

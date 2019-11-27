@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
-using Microsoft.AspNetCore.Authorization;
+using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace com.b_velop.Slipways.GraphQL.Controllers
+namespace com.b_velop.Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

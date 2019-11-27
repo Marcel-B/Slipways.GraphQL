@@ -1,4 +1,4 @@
-﻿namespace com.b_velop.Slipways.GraphQL.Data.Repositories
+﻿namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
     public interface IRepositoryWrapper
     {

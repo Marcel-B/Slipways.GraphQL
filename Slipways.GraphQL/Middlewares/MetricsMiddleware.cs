@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -20,12 +21,16 @@ namespace com.b_velop.Slipways.GraphQL.Middlewares
             _next = next;
         }
 
-        public Task Invoke(
+        public async Task Invoke(
             HttpContext httpContext)
         {
+            //using (var reader = new StreamReader(httpContext.Request.Body))
+            //{
+            //    var result = await reader.ReadToEndAsync();
+            //}
             using (Metrics.CreateHistogram($"slipwaysql_duration_{httpContext.Request.Method}_seconds", "Histogram").NewTimer())
             {
-                return _next(httpContext);
+                await  _next(httpContext);
             }
         }
     }

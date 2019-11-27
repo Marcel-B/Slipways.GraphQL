@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace com.b_velop.Slipways.GraphQL.Migrations
+namespace com.b_velop.Slipways.GrQl.Migrations
 {
     public partial class AddStreetColumnToSlipways : Migration
     {

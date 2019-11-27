@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace com.b_velop.Slipways.GraphQL.Data.Repositories
+namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {

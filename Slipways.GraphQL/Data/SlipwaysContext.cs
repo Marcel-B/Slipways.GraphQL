@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace com.b_velop.Slipways.GraphQL.Data
+namespace com.b_velop.Slipways.GrQl.Data
 {
     public static class ModelBuilderExtensions
     {

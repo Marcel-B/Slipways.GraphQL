@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace com.b_velop.Slipways.GraphQL.Data.Repositories
+namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {

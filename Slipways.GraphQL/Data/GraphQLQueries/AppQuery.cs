@@ -1,10 +1,9 @@
-﻿using com.b_velop.Slipways.GraphQL.Data.GraphQLTypes;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
-using GraphQL.Authorization;
+﻿using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using GraphQL.Types;
 using Prometheus;
 
-namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
+namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
 {
     public class AppQuery : ObjectGraphType
     {

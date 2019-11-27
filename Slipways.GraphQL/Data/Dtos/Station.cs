@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace com.b_velop.Slipways.GraphQL.Data.Dtos
+namespace com.b_velop.Slipways.GrQl.Data.Dtos
 {
     public class Station
     {

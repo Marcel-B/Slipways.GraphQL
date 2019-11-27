@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using com.b_velop.Slipways.GraphQL.Data;
+using com.b_velop.Slipways.GrQl.Data;
 
-namespace com.b_velop.Slipways.GraphQL.Migrations
+namespace com.b_velop.Slipways.GrQl.Migrations
 {
     [DbContext(typeof(SlipwaysContext))]
     [Migration("20191123095633_AddStreetColumnToSlipways")]
@@ -21,7 +21,7 @@ namespace com.b_velop.Slipways.GraphQL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("com.b_velop.Slipways.GraphQL.Data.Models.Slipway", b =>
+            modelBuilder.Entity("com.b_velop.Slipways.GrQl.Data.Models.Slipway", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace com.b_velop.Slipways.GraphQL.Migrations
                     b.ToTable("Slipways");
                 });
 
-            modelBuilder.Entity("com.b_velop.Slipways.GraphQL.Data.Models.Station", b =>
+            modelBuilder.Entity("com.b_velop.Slipways.GrQl.Data.Models.Station", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -8197,7 +8197,7 @@ namespace com.b_velop.Slipways.GraphQL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("com.b_velop.Slipways.GraphQL.Data.Models.Water", b =>
+            modelBuilder.Entity("com.b_velop.Slipways.GrQl.Data.Models.Water", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -8804,18 +8804,18 @@ namespace com.b_velop.Slipways.GraphQL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("com.b_velop.Slipways.GraphQL.Data.Models.Slipway", b =>
+            modelBuilder.Entity("com.b_velop.Slipways.GrQl.Data.Models.Slipway", b =>
                 {
-                    b.HasOne("com.b_velop.Slipways.GraphQL.Data.Models.Water", "Water")
+                    b.HasOne("com.b_velop.Slipways.GrQl.Data.Models.Water", "Water")
                         .WithMany()
                         .HasForeignKey("WaterFk")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("com.b_velop.Slipways.GraphQL.Data.Models.Station", b =>
+            modelBuilder.Entity("com.b_velop.Slipways.GrQl.Data.Models.Station", b =>
                 {
-                    b.HasOne("com.b_velop.Slipways.GraphQL.Data.Models.Water", "Water")
+                    b.HasOne("com.b_velop.Slipways.GrQl.Data.Models.Water", "Water")
                         .WithMany()
                         .HasForeignKey("WaterFk")
                         .OnDelete(DeleteBehavior.Cascade)

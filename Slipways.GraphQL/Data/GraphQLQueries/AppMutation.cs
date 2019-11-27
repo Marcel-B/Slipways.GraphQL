@@ -1,13 +1,13 @@
-﻿using com.b_velop.Slipways.GraphQL.Data.GraphQLInputTypes;
-using com.b_velop.Slipways.GraphQL.Data.GraphQLTypes;
-using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
+﻿using com.b_velop.Slipways.GrQl.Data.GraphQLInputTypes;
+using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
+using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
 using GraphQL.Types;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 using System;
 
-namespace com.b_velop.Slipways.GraphQL.Data.GraphQLQueries
+namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
 {
     public class AppMutation : ObjectGraphType
     {

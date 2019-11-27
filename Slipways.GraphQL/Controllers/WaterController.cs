@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 
-namespace Slipways.GraphQL.Controllers
+namespace Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace com.b_velop.Slipways.GraphQL.Data.Models
+namespace com.b_velop.Slipways.GrQl.Data.Models
 {
     public class Water : IEntity
     {
