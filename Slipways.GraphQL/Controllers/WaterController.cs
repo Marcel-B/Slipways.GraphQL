@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GraphQL.Data.Models;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Prometheus;
@@ -12,6 +13,7 @@ namespace Slipways.GraphQL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WaterController : ControllerBase
     {
         private readonly IRepositoryWrapper _rep;

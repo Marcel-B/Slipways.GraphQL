@@ -22,8 +22,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AUTHORITY": "http://foo.bar",
-        "API_RESOURCE": "test.it",
+        "AUTHORITY": "https://newidentity.qaybe.de",
+        "API_RESOURCE": "com.bvelop.slilpways",
         "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
       },
       "applicationUrl": "http://localhost:5000"

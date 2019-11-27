@@ -51,10 +51,10 @@ namespace com.b_velop.Slipways.GraphQL
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = authority;
-                    if (WebHostEnvironment.IsDevelopment())
-                        options.RequireHttpsMetadata = false;
-                    else
+                   options.Authority = authority;
+                   // if (WebHostEnvironment.IsDevelopment())
+                   //     options.RequireHttpsMetadata = false;
+                   // else
                         options.RequireHttpsMetadata = true;
                     options.ApiName = apiResource;
                 });
@@ -90,8 +90,7 @@ namespace com.b_velop.Slipways.GraphQL
             {
                 app.UseDeveloperExceptionPage();
             }
-          
-            app.UseAuthentication();
+             
 
             app.UseSwagger();
             app.UseSwaggerUI(_ =>
@@ -102,6 +101,7 @@ namespace com.b_velop.Slipways.GraphQL
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
