@@ -1,5 +1,6 @@
 ﻿using com.b_velop.Slipways.GraphQL.Data.Models;
 using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using GraphQL.Authorization;
 using GraphQL.Types;
 
 namespace com.b_velop.Slipways.GraphQL.Data.GraphQLTypes
@@ -10,7 +11,6 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLTypes
             IRepositoryWrapper rep)
         {
             Name = "Slipway";
-
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Name);
             Field(_ => _.Street);

@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -8,6 +7,7 @@
       "sslPort": 44378
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -21,12 +21,12 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "AUTHORITY": "https://newidentity.qaybe.de",
         "API_RESOURCE": "com.bvelop.slilpways",
-        "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
+        "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AUTHORITY": "https://newidentity.qaybe.de"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5000/ui/playground"
     }
   }
 }

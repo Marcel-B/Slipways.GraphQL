@@ -20,7 +20,7 @@ namespace com.b_velop.Slipways.GraphQL.Data
             var stream = await file.OpenText().ReadToEndAsync();
             var waters = JsonConvert.DeserializeObject<IEnumerable<Water>>(stream);
 
-            modelBuilder.Entity<Water>().HasData(waters);
+            //modelBuilder.Entity<Water>().HasData(waters);
             file = new FileInfo(@"Data/stations.json");
             stream = await file.OpenText().ReadToEndAsync();
             var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.Station>>(stream);
