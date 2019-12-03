@@ -8,8 +8,8 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'com.b_velop.Slipways.GraphQL' ">
     <StartAction>Project</StartAction>
     <EnvironmentVariables>
-      <Variable name="API_RESOURCE" value="com.bvelop.slilpways" />
-      <Variable name="AUTHORITY" value="https://newidentity.qaybe.de" />
+      <Variable name="API_RESOURCE" value="slipways.api" />
+      <Variable name="AUTHORITY" value="https://identity.qaybe.de" />
       <Variable name="ASPNETCORE_ENVIRONMENT" value="Development" />
       <Variable name="CON_STR" value="Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!" />
     </EnvironmentVariables>

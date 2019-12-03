@@ -15,7 +15,6 @@ namespace com.b_velop.Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class StationController : Controller
     {
         private readonly IRepositoryWrapper _rep;
@@ -31,6 +30,7 @@ namespace com.b_velop.Slipways.GrQl.Controllers
 
         // GET: api/values
         [HttpGet]
+        [Authorize("reader")]
         public async Task<IEnumerable<Station>> GetAsync()
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_seconds", "Histogram").NewTimer())
@@ -42,6 +42,7 @@ namespace com.b_velop.Slipways.GrQl.Controllers
 
         // GET api/values/8177a148-5674-4b8f-8ded-050907f640f3
         [HttpGet("{id}")]
+        [Authorize("reader")]
         public async Task<ActionResult<Station>> GetAsync(
             Guid id)
         {

@@ -17,12 +17,20 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "com.b_velop.Slipways.GrQl": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
     "com.b_velop.Slipways.GraphQL": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "API_RESOURCE": "com.bvelop.slilpways",
-        "AUTHORITY": "https://newidentity.qaybe.de",
+        "API_RESOURCE": "slipways.api",
+        "AUTHORITY": "https://identity.qaybe.de",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
       },

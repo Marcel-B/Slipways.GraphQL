@@ -22,7 +22,6 @@ namespace Slipways.GrQl.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class SlipwayController : ControllerBase
     {
         private readonly IRepositoryWrapper _rep;
@@ -38,6 +37,7 @@ namespace Slipways.GrQl.Controllers
 
         // GET: api/slipway
         [HttpGet]
+        [Authorize("reader")]
         public async Task<IEnumerable<Slipway>> GetAsync()
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_slipway_seconds", "Histogram").NewTimer())
@@ -49,6 +49,7 @@ namespace Slipways.GrQl.Controllers
 
         // GET api/slipway/8177a148-5674-4b8f-8ded-050907f640f3
         [HttpGet("{id}")]
+        [Authorize("reader")]
         public async Task<ActionResult<Slipway>> GetAsync(
             Guid id)
         {
@@ -59,6 +60,7 @@ namespace Slipways.GrQl.Controllers
         }
 
         [HttpPost]
+        [Authorize("allin")]
         public async Task<ActionResult> PostAsync(
             SlipwayDto slipwayDto)
         {

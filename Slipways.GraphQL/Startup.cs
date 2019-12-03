@@ -1,7 +1,4 @@
 using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data;
 using com.b_velop.Slipways.GrQl.Data.GraphQLSchema;
 using com.b_velop.Slipways.GrQl.Data.Repositories;
@@ -9,22 +6,19 @@ using com.b_velop.Slipways.GraphQL.Middlewares;
 using com.b_velop.Slipways.GrQl.Services;
 using GraphQL;
 using GraphQL.Server;
-using GraphQL.Server.Transports.AspNetCore;
-using GraphQL.Server.Transports.AspNetCore.Internal;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Prometheus;
-using GraphQL.Core.Authorization;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using IdentityServer4.AccessTokenValidation;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -45,7 +39,6 @@ namespace com.b_velop.Slipways.GrQl
             IServiceCollection services)
         {
             services.AddMemoryCache();
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddHttpClient<IWsvService, WsvService>(_ =>
             {
@@ -84,37 +77,27 @@ namespace com.b_velop.Slipways.GrQl
 
             services.AddControllers();
 
-            //services.AddMvcCore(options =>
-            //{
-            //    var policy = ScopePolicy.Create("slipways.writer");
-            //    options.Filters.Add(new AuthorizeFilter(policy));
-            //}).AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("myPolicy", builder =>
-            //    {
-            //        builder.RequireScope("slipways.writer");
-            //    });
-            //});
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //      .AddJwtBearer(options =>
-            //      {
-            //          // base-address of your identityserver
-            //          options.Authority = authority;
-
-            //          // name of the API resource
-            //          options.Audience = apiResource;
-            //      });
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("reader", builder =>
                 {
-                    options.Authority = authority;
-                    // if (WebHostEnvironment.IsDevelopment())
-                    //     options.RequireHttpsMetadata = false;
-                    // else
-                    options.RequireHttpsMetadata = true;
-                    options.ApiName = apiResource;
+                    builder.RequireScope("slipways.api.reader");
                 });
+                options.AddPolicy("allin", builder =>
+                {
+                    builder.RequireScope("slipways.api.allaccess");
+                });
+            });
+
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            .AddIdentityServerAuthentication(options =>
+            {
+                // base-address of your identityserver
+                options.Authority = authority;
+                options.RequireHttpsMetadata = true;
+                // name of the API resource
+                options.ApiName = apiResource;
+            });
         }
 
         public void Configure(
@@ -122,10 +105,8 @@ namespace com.b_velop.Slipways.GrQl
             IWebHostEnvironment env)
         {
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-            // this is required for websockets support
             app.UseWebSockets();
 
             app.UseMetricServer();

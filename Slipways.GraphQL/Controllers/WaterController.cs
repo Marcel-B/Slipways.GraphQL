@@ -13,7 +13,6 @@ namespace Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class WaterController : ControllerBase
     {
         private readonly IRepositoryWrapper _rep;
@@ -29,6 +28,7 @@ namespace Slipways.GrQl.Controllers
 
         // GET: api/water
         [HttpGet]
+        [Authorize("reader")]
         public async Task<IEnumerable<Water>> GetAsync()
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_water_seconds", "Histogram").NewTimer())
@@ -40,6 +40,7 @@ namespace Slipways.GrQl.Controllers
 
         // GET api/water/8177a148-5674-4b8f-8ded-050907f640f3
         [HttpGet("{id}")]
+        [Authorize("reader")]
         public async Task<ActionResult<Water>> GetAsync(
             Guid id)
         {
