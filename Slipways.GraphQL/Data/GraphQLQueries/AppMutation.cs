@@ -19,19 +19,19 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
             {
                 Name = "Mutation";
 
-                FieldAsync<SlipwayType>(
-                    "createSlipway",
-                    "Creates a new Slipway",
-                    new QueryArguments(
-                        new QueryArgument<SlipwayInputType> { Name = "slipway" }),
-                    resolve: async ctx =>
-                    {
-                        var slipway = ctx.GetArgument<Slipway>("slipway");
+                //FieldAsync<SlipwayType>(
+                //    "createSlipway",
+                //    "Creates a new Slipway",
+                //    new QueryArguments(
+                //        new QueryArgument<SlipwayInputType> { Name = "slipway" }),
+                //    resolve: async ctx =>
+                //    {
+                //        var slipway = ctx.GetArgument<Slipway>("slipway");
 
-                        slipway.Id = Guid.NewGuid();
+                //        slipway.Id = Guid.NewGuid();
 
-                        return await rep.Slipway.InsertAsync(slipway);
-                    });
+                //        return await rep.Slipway.InsertAsync(slipway);
+                //    });
             }
         }
     }
