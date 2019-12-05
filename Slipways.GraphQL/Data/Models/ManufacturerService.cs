@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace com.b_velop.Slipways.GrQl.Data.Models
 {
@@ -17,6 +14,5 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public Guid ServiceFk { get; set; }
 
         public Guid ManufacturerFk { get; set; }
-
     }
 }

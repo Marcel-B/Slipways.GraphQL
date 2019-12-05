@@ -18,9 +18,20 @@ namespace com.b_velop.Slipways.GrQl.Data
         {
             var file = new FileInfo(@"Data/waters.json");
             var stream = await file.OpenText().ReadToEndAsync();
-            var waters = JsonConvert.DeserializeObject<IEnumerable<Water>>(stream);
+            var input = JsonConvert.DeserializeObject<IEnumerable<Water>>(stream);
+            var waters = new HashSet<Water>();
 
-            //modelBuilder.Entity<Water>().HasData(waters);
+            foreach (var water in input)
+            {
+                waters.Add(new Water
+                {
+                    Id = water.Id,
+                    Created = DateTime.Now,
+                    Longname = water.Longname,
+                    Shortname = water.Shortname
+                });
+            }
+            modelBuilder.Entity<Water>().HasData(waters);
             file = new FileInfo(@"Data/stations.json");
             stream = await file.OpenText().ReadToEndAsync();
             var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.Station>>(stream);
@@ -30,6 +41,7 @@ namespace com.b_velop.Slipways.GrQl.Data
                 stations.Add(new Station
                 {
                     Id = station.Id,
+                    Created = DateTime.Now,
                     Agency = station.Agency,
                     Km = station.Km,
                     Latitude = station.Latitude,
@@ -40,6 +52,134 @@ namespace com.b_velop.Slipways.GrQl.Data
                     WaterFk = waters.FirstOrDefault(_ => _.Shortname == station.Water.Shortname).Id
                 });
             }
+
+            modelBuilder.Entity<Slipway>().HasData(
+                new Slipway
+                {
+                    Id = Guid.Parse("11ACB81E-0B41-46AA-A079-18C13CDE3F3D"),
+                    Created = DateTime.Now,
+                    Name = "Zur Alten Fähre, Essen",
+                    City = "Essen Kettwig",
+                    Postalcode = "45219",
+                    Costs = 0.00M,
+                    Longitude = 6.9355,
+                    Latitude = 51.36,
+                    Street = "Zur Alten Fähre 31",
+                    WaterFk = Guid.Parse("28E2B1B8-E353-4174-99A5-816229C68BD1"),
+                    Rating = -1
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("C6E16AAA-733B-4E1E-AB0E-19BB82669E0D"),
+                    Created = DateTime.Now,
+                    Name = "Fährstraße 7, Landesbergen",
+                    Postalcode = "31628",
+                    City = "Landesbergen",
+                    Costs = 0,
+                    Longitude = 9.1123,
+                    Latitude = 52.5534,
+                    Street = "Fährstraße 7",
+                    WaterFk = Guid.Parse("F965ECF6-2057-479D-A571-3F4E30C1E493"),
+                    Rating = -1
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("600EEBCE-5DD4-4DE1-9068-401744A74C01"),
+                    Created = DateTime.Now,
+                    Name = "Crefelder Yachtclub",
+                    City = "Krefeld, Gellep-Stratum",
+                    Costs = 10M,
+                    Postalcode = "47809",
+                    Longitude = 6.69,
+                    Rating = -1,
+                    Latitude = 51.3366,
+                    Street = "Bataverstraße",
+                    WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("F0CAA49C-2D84-437A-A1F2-53F56A4E48FD"),
+                    Created = DateTime.Now,
+                    Name = "Rheinfähre Walsum",
+                    Postalcode = "47179",
+                    Rating = -1,
+                    City = "Alt-Walsum",
+                    Costs = 0,
+                    Longitude = 6.7,
+                    Latitude = 51.5262,
+                    Street = "Rheinstraße",
+                    WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("BFD617FD-29C5-4614-B976-65320C0F5ECC"),
+                    Created = DateTime.Now,
+                    Name = "Bootshaus Krekels",
+                    City = "Krefeld, Gellep-Stratum",
+                    Costs = -1,
+                    Postalcode = "47809",
+                    Rating = -1,
+                    Longitude = 6.6823,
+                    Latitude = 51.3412,
+                    Street = "Bataverstraße",
+                    WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("4EA84C51-A84C-4AEC-BD52-7C9FBA0C0E92"),
+                    Created = DateTime.Now,
+                    Name = "Pontwert",
+                    City = "Duisburg, Ruhrort",
+                    Costs = 10.00M,
+                    Postalcode = "47059",
+                    Rating = -1,
+                    Longitude = 6.7243,
+                    Latitude = 51.4474,
+                    Street = "Am Bört",
+                    WaterFk = Guid.Parse("28E2B1B8-E353-4174-99A5-816229C68BD1")
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("3EC52114-07DF-4E6F-83E7-8CB0C6A5E7D7"),
+                    Created = DateTime.Now,
+                    Name = "An der Bleiche, Meppen",
+                    City = "Meppen, Altstadt",
+                    Costs = -1M,
+                    Postalcode = "49716",
+                    Rating = -1,
+                    Longitude = 7.2885,
+                    Latitude = 52.6936,
+                    Street = "",
+                    WaterFk = Guid.Parse("ED0E2086-7425-4D2D-B372-D9B219D5638B")
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("18DB0434-5D5E-48E4-8C4C-C7B25B3ED45F"),
+                    Created = DateTime.Now,
+                    Name = "Alter Fähranleger",
+                    City = "Alt-Walsum",
+                    Costs = 0,
+                    Postalcode = "47179",
+                    Rating = -1,
+                    Longitude = 6.7067,
+                    Latitude = 51.5238,
+                    Street = "Fährstraße",
+                    WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
+                },
+                new Slipway
+                {
+                    Id = Guid.Parse("9F232734-8907-4A21-9B76-DE97FEB54A3D"),
+                    Created = DateTime.Now,
+                    Name = "Woltershof",
+                    City = "Baerl",
+                    Costs = 0,
+                    Postalcode = "47199",
+                    Rating = -1,
+                    Longitude = 6.7147,
+                    Latitude = 51.4985,
+                    Street = "Woltershofer Straße 18",
+                    WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
+                });
 
             modelBuilder.Entity<Extra>().HasData(
                 new Extra
@@ -92,7 +232,6 @@ namespace com.b_velop.Slipways.GrQl.Data
                     Created = DateTime.Now,
                     Name = "Johnson",
                 });
-
             modelBuilder.Entity<Station>().HasData(stations);
         }
     }
@@ -106,7 +245,6 @@ namespace com.b_velop.Slipways.GrQl.Data
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<ManufacturerService> ManufacturerServices { get; set; }
         public DbSet<Port> Ports { get; set; }
-        public DbSet<SlipwayExtra> SlipwayExtras { get; set; }
         public DbSet<Extra> Extras { get; set; }
 
         private readonly ILogger<SlipwaysContext> _logger;

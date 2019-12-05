@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace com.b_velop.Slipways.GrQl.Data.Models
 {
     public class Slipway : Locationable, IEntity
     {
+        public Slipway()
+        {
+            Extras = new HashSet<Extra>();
+        }
+
         public string Name { get; set; }
         public Guid WaterFk { get; set; }
 
@@ -19,5 +25,8 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public decimal Costs { get; set; }
         public string Pro { get; set; }
         public string Contra { get; set; }
+
+        [NotMapped]
+        public ICollection<Extra> Extras { get; set; }
     }
 }
