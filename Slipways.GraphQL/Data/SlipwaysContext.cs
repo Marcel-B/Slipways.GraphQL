@@ -44,16 +44,19 @@ namespace com.b_velop.Slipways.GrQl.Data
             modelBuilder.Entity<Extra>().HasData(
                 new Extra
                 {
+                    Id = Guid.Parse("f5836f04-e23b-475a-a079-1e4f3c9c4d87"),
                     Created = DateTime.Now,
                     Name = "Campingplatz"
                 },
                 new Extra
                 {
+                    Id = Guid.Parse("8976ceb5-19d6-4f5c-a34d-a43801667b40"),
                     Created = DateTime.Now,
                     Name = "Parkplatz"
                 },
                 new Extra
                 {
+                    Id = Guid.Parse("06448fd8-dcc1-4579-947a-8a7b18bc1aab"),
                     Created = DateTime.Now,
                     Name = "Steg"
                 });
@@ -61,26 +64,31 @@ namespace com.b_velop.Slipways.GrQl.Data
             modelBuilder.Entity<Manufacturer>().HasData(
                 new Manufacturer
                 {
+                    Id = Guid.Parse("45a1882c-4822-4cd1-9621-cebda51bfa05"),
                     Created = DateTime.Now,
                     Name = "Mercury",
                 },
                 new Manufacturer
                 {
+                    Id = Guid.Parse("d07683a9-2ffa-4763-a047-31214e8eb9c9"),
                     Created = DateTime.Now,
                     Name = "Yamaha",
                 },
                 new Manufacturer
                 {
+                    Id = Guid.Parse("8baa7bf4-cb1d-4d5e-b3c8-ef190dac1c3c"),
                     Created = DateTime.Now,
                     Name = "Suzuki",
                 },
                 new Manufacturer
                 {
+                    Id = Guid.Parse("75ee4dd3-5933-4904-9020-5836ec757f02"),
                     Created = DateTime.Now,
                     Name = "Honda",
                 },
                 new Manufacturer
                 {
+                    Id = Guid.Parse("102a6d4b-bd31-4428-bc16-e6991a1a9a1d"),
                     Created = DateTime.Now,
                     Name = "Johnson",
                 });
