@@ -1,5 +1,6 @@
 using System;
 using com.b_velop.Slipways.GrQl.Data;
+using com.b_velop.Slipways.GrQl.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ namespace com.b_velop.Slipways.GrQl
                 Job = "slipwaysql",
                 Instance = Environment.MachineName
             });
-            
+
             metricPusher.Start();
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
@@ -56,7 +57,8 @@ namespace com.b_velop.Slipways.GrQl
                     })
                 .ConfigureServices((hostingContet, services) =>
                     {
-                        var pw = Environment.GetEnvironmentVariable("PW");
+                        var secretProvider = new SecretProvider();
+                        var pw = secretProvider.GetSecret("sqlserver");
                         var str = $"Server=sqlserver,1433;Database=Slipways;User Id=sa;Password={pw}";
 #if DEBUG
                         str = "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
