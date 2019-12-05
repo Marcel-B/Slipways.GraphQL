@@ -40,6 +40,51 @@ namespace com.b_velop.Slipways.GrQl.Data
                     WaterFk = waters.FirstOrDefault(_ => _.Shortname == station.Water.Shortname).Id
                 });
             }
+
+            modelBuilder.Entity<Extra>().HasData(
+                new Extra
+                {
+                    Created = DateTime.Now,
+                    Name = "Campingplatz"
+                },
+                new Extra
+                {
+                    Created = DateTime.Now,
+                    Name = "Parkplatz"
+                },
+                new Extra
+                {
+                    Created = DateTime.Now,
+                    Name = "Steg"
+                });
+
+            modelBuilder.Entity<Manufacturer>().HasData(
+                new Manufacturer
+                {
+                    Created = DateTime.Now,
+                    Name = "Mercury",
+                },
+                new Manufacturer
+                {
+                    Created = DateTime.Now,
+                    Name = "Yamaha",
+                },
+                new Manufacturer
+                {
+                    Created = DateTime.Now,
+                    Name = "Suzuki",
+                },
+                new Manufacturer
+                {
+                    Created = DateTime.Now,
+                    Name = "Honda",
+                },
+                new Manufacturer
+                {
+                    Created = DateTime.Now,
+                    Name = "Johnson",
+                });
+
             modelBuilder.Entity<Station>().HasData(stations);
         }
     }
@@ -49,6 +94,12 @@ namespace com.b_velop.Slipways.GrQl.Data
         public DbSet<Water> Waters { get; set; }
         public DbSet<Slipway> Slipways { get; set; }
         public DbSet<Station> Stations { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<ManufacturerService> ManufacturerServices { get; set; }
+        public DbSet<Port> Ports { get; set; }
+        public DbSet<SlipwayExtra> SlipwayExtras { get; set; }
+        public DbSet<Extra> Extras { get; set; }
 
         private readonly ILogger<SlipwaysContext> _logger;
 

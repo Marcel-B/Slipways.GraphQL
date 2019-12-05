@@ -1,14 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace com.b_velop.Slipways.GrQl.Data.Models
 {
-    public class Slipway : IEntity
+    public class Slipway : Locationable, IEntity
     {
-        [Key]
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
         public Guid WaterFk { get; set; }
 
@@ -23,7 +19,5 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public decimal Costs { get; set; }
         public string Pro { get; set; }
         public string Contra { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
     }
 }
