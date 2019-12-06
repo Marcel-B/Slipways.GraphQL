@@ -53,4 +53,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\SlipwaysContextModelSnapshot.cs" />
+  </ItemGroup>
 </Project>
