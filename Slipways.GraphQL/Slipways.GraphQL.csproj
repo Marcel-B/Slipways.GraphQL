@@ -45,7 +45,6 @@
     <Folder Include="Services\" />
     <Folder Include="Data\Dtos\" />
     <Folder Include="Data\GraphQLSchema\" />
-    <Folder Include="Data\Repositories\" />
     <Folder Include="Data\GraphQLQueries\" />
   </ItemGroup>
   <ItemGroup>
