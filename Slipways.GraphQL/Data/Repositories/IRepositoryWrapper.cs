@@ -5,5 +5,7 @@
         IWaterRepository Water { get; set; }
         IStationRepository Station { get; set; }
         ISlipwayRepository Slipway { get; set; }
+        IExtraRepository Extra { get; }
+        IServiceRepository Service { get; }
     }
 }

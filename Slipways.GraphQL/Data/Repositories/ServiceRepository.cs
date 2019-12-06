@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,11 @@ using Microsoft.Extensions.Logging;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
-    public interface IServiceRepository : IRepositoryBase<Service> { }
-    public class ServiceRepository : RepositoryBase<Service>,  IServiceRepository
+    public interface IServiceRepository : IRepositoryBase<Service>
+    {
+        Task<IEnumerable<Service>> GetAllIncludeAsync();
+    }
+    public class ServiceRepository : RepositoryBase<Service>, IServiceRepository
     {
         public ServiceRepository(
             SlipwaysContext db,
@@ -20,7 +24,20 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
 
         public async Task<IEnumerable<Service>> GetAllIncludeAsync()
         {
-            var services = await Db.Services.Include(_ => _.Manufacturers).ToListAsync();
+            var services = await Db.Services.ToListAsync();
+            var mans = new List<Manufacturer>();
+
+            foreach (var service in services)
+            {
+                service
+                    .Manufacturers
+                    .AddRange(
+                        Db.Manufacturers
+                            .Where(_ => Db
+                            .ManufacturerServices
+                            .Where(_ => _.ServiceFk == service.Id)
+                            .Select(_ => _.ManufacturerFk).Contains(_.Id)));
+            }
             return services;
         }
     }

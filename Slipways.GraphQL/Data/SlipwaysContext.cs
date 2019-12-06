@@ -179,6 +179,19 @@ namespace com.b_velop.Slipways.GrQl.Data
                     Latitude = 51.4985,
                     Street = "Woltershofer Straße 18",
                     WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
+                },
+                new Slipway {
+                    Id = Guid.Parse("1fe7ee5a-e9af-4e86-9664-04a0165ce838"),
+                    Created = DateTime.Now,
+                    Name = "Stellplatz, Enkirch",
+                    City = "Enkirch",
+                    Costs = 0M,
+                    Postalcode = "56850",
+                    Rating = 5,
+                    Street = "",
+                    Latitude = 49.983731,
+                    Longitude = 7.119855,
+                    WaterFk = Guid.Parse("AAE1F1D4-F79F-4C3A-83D5-DEBFFD711981")
                 });
 
             modelBuilder.Entity<Extra>().HasData(
@@ -199,6 +212,14 @@ namespace com.b_velop.Slipways.GrQl.Data
                     Id = Guid.Parse("06448fd8-dcc1-4579-947a-8a7b18bc1aab"),
                     Created = DateTime.Now,
                     Name = "Steg"
+                });
+
+            modelBuilder.Entity<SlipwayExtra>().HasData(
+                new SlipwayExtra {
+                    Id = Guid.Parse("dee3ec64-6f87-4a52-b73d-b974c4213a1f"),
+                    Created = DateTime.Now,
+                    SlipwayFk = Guid.Parse("1fe7ee5a-e9af-4e86-9664-04a0165ce838"),
+                    ExtraFk = Guid.Parse("f5836f04-e23b-475a-a079-1e4f3c9c4d87")
                 });
 
             modelBuilder.Entity<Manufacturer>().HasData(
@@ -246,6 +267,7 @@ namespace com.b_velop.Slipways.GrQl.Data
         public DbSet<ManufacturerService> ManufacturerServices { get; set; }
         public DbSet<Port> Ports { get; set; }
         public DbSet<Extra> Extras { get; set; }
+        public DbSet<SlipwayExtra> SlipwayExtras { get; set; }
 
         private readonly ILogger<SlipwaysContext> _logger;
 

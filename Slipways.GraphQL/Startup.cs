@@ -64,6 +64,8 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<IWaterRepository, WaterRepository>();
             services.AddScoped<IStationRepository, StationRepository>();
             services.AddScoped<ISlipwayRepository, SlipwayRepository>();
+            services.AddScoped<IExtraRepository, ExtraRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.AddSwaggerGen(_ =>

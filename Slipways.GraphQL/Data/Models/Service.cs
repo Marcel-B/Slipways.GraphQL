@@ -7,7 +7,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
     {
         public Service()
         {
-            Manufacturers = new HashSet<Manufacturer>();
+            Manufacturers = new List<Manufacturer>();
         }
 
         public string Name { get; set; }
@@ -19,6 +19,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public string Email { get; set; }
 
         [NotMapped]
-        public ICollection<Manufacturer> Manufacturers { get; set; }
+        public List<Manufacturer> Manufacturers { get; set; }
     }
 }
