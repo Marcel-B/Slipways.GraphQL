@@ -8,7 +8,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
     {
         public Slipway()
         {
-            Extras = new HashSet<Extra>();
+            Extras = new List<Extra>();
         }
 
         public string Name { get; set; }
@@ -27,6 +27,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public string Contra { get; set; }
 
         [NotMapped]
-        public ICollection<Extra> Extras { get; set; }
+        public List<Extra> Extras { get; set; }
     }
 }

@@ -7,11 +7,11 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
     {
         public Extra()
         {
-            Slipways = new HashSet<Slipway>();
+            Slipways = new List<Slipway>();
         }
         public string Name { get; set; }
 
         [NotMapped]
-        public ICollection<Slipway> Slipways { get; set; }
+        public List<Slipway> Slipways { get; set; }
     }
 }

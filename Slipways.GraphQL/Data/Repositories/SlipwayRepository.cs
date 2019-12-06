@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
@@ -18,16 +19,40 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         }
 
         public async Task<IEnumerable<Slipway>> SelectIncludeAllAsync()
-            => await Db
-                .Slipways
-                .Include(_ => _.Water)
-                .ToListAsync();
+        {
+            var slipways = await Db
+                  .Slipways
+                  .Include(_ => _.Water)
+                  .ToListAsync();
+
+            foreach (var slipway in slipways)
+            {
+                slipway.Extras.AddRange(
+                  Db.Extras
+                      .Where(_ =>
+                          Db.SlipwayExtras
+                              .Where(_ => _.SlipwayFk == slipway.Id)
+                              .Select(_ => _.ExtraFk)
+                              .Contains(_.Id)));
+            }
+            return slipways;
+        }
 
         public async Task<Slipway> SelectByIdIncludeAsync(
             Guid id)
-            => await Db
-                .Slipways
-                .Include(_ => _.Water)
-                .FirstOrDefaultAsync(_ => _.Id == id);
+        {
+            var slipway = await Db.Slipways
+              .Include(_ => _.Water)
+              .FirstOrDefaultAsync(_ => _.Id == id);
+
+            slipway.Extras.AddRange(
+                Db.Extras
+                    .Where(_ =>
+                        Db.SlipwayExtras
+                            .Where(_ => _.SlipwayFk == slipway.Id)
+                            .Select(_ => _.ExtraFk)
+                            .Contains(_.Id)));
+            return slipway;
+        }
     }
 }

@@ -9,23 +9,17 @@ using Microsoft.Extensions.Logging;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
-    public interface IServiceRepository : IRepositoryBase<Service>
-    {
-        Task<IEnumerable<Service>> GetAllIncludeAsync();
-    }
     public class ServiceRepository : RepositoryBase<Service>, IServiceRepository
     {
         public ServiceRepository(
             SlipwaysContext db,
             IMemoryCache cache,
             ILogger<RepositoryBase<Service>> logger) : base(db, cache, logger)
-        {
-        }
+        { }
 
         public async Task<IEnumerable<Service>> GetAllIncludeAsync()
         {
             var services = await Db.Services.ToListAsync();
-            var mans = new List<Manufacturer>();
 
             foreach (var service in services)
             {
@@ -36,7 +30,8 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
                             .Where(_ => Db
                             .ManufacturerServices
                             .Where(_ => _.ServiceFk == service.Id)
-                            .Select(_ => _.ManufacturerFk).Contains(_.Id)));
+                            .Select(_ => _.ManufacturerFk)
+                            .Contains(_.Id)));
             }
             return services;
         }
