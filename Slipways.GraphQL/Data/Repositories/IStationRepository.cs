@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
-    public interface IStationRepository : IRepositoryBase<Station>
+    public interface IStationRepository : ICachedRepositoryBase<Station>
     {
         Task<IEnumerable<Station>> SelectIncludeAllAsync();
         Task<Station> SelectByIdIncludeAsync(Guid id);

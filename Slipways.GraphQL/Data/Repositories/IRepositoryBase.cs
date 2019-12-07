@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
-    public interface IRepositoryBase<T> where T : class, IEntity
+    public interface IRepositoryBase<T> 
     {
         Task<T> InsertAsync(T entity);
         Task<IEnumerable<T>> SelectAllAsync();

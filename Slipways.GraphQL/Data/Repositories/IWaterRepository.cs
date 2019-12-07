@@ -2,7 +2,7 @@
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
-    public interface IWaterRepository : IRepositoryBase<Water>
+    public interface IWaterRepository : ICachedRepositoryBase<Water>
     {
     }
 }

@@ -11,11 +11,14 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
     public class SlipwayRepository : RepositoryBase<Slipway>, ISlipwayRepository
     {
+        private IExtraRepository _extraRepository;
+
         public SlipwayRepository(
             SlipwaysContext db,
-            IMemoryCache cache,
-            ILogger<RepositoryBase<Slipway>> logger) : base(db, cache, logger)
+            IExtraRepository extraRepository,
+            ILogger<RepositoryBase<Slipway>> logger) : base(db, logger)
         {
+            _extraRepository = extraRepository;
         }
 
         public async Task<IEnumerable<Slipway>> SelectIncludeAllAsync()
@@ -28,7 +31,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             foreach (var slipway in slipways)
             {
                 slipway.Extras.AddRange(
-                  Db.Extras
+                  (await _extraRepository.SelectAllAsync())
                       .Where(_ =>
                           Db.SlipwayExtras
                               .Where(_ => _.SlipwayFk == slipway.Id)
@@ -46,7 +49,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
               .FirstOrDefaultAsync(_ => _.Id == id);
 
             slipway.Extras.AddRange(
-                Db.Extras
+                (await _extraRepository.SelectAllAsync())
                     .Where(_ =>
                         Db.SlipwayExtras
                             .Where(_ => _.SlipwayFk == slipway.Id)

@@ -16,6 +16,10 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
 
         public IServiceRepository Service { get; private set; }
 
+        public IManufacturerRepository Manufacturer { get; private set; }
+
+        public IPortRepository Port { get; private set; }
+
         public RepositoryWrapper(
             SlipwaysContext db,
             IWaterRepository waterRepository,
@@ -23,6 +27,8 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             ISlipwayRepository slipwayRepository,
             IExtraRepository extraRepository,
             IServiceRepository serviceRepository,
+            IManufacturerRepository manufacturerRepository,
+            IPortRepository portRepository,
             ILogger<RepositoryWrapper> logger)
         {
             _db = db;
@@ -31,6 +37,8 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             Slipway = slipwayRepository;
             Extra = extraRepository;
             Service = serviceRepository;
+            Manufacturer = manufacturerRepository;
+            Port = portRepository;
             _logger = logger;
         }
     }

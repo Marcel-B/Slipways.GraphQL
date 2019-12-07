@@ -2,10 +2,12 @@
 {
     public interface IRepositoryWrapper
     {
-        IWaterRepository Water { get; set; }
-        IStationRepository Station { get; set; }
-        ISlipwayRepository Slipway { get; set; }
+        IWaterRepository Water { get; }
+        IStationRepository Station { get; }
+        ISlipwayRepository Slipway { get; }
         IExtraRepository Extra { get; }
         IServiceRepository Service { get; }
+        IManufacturerRepository Manufacturer { get; }
+        IPortRepository Port { get; }
     }
 }

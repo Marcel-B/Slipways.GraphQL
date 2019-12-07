@@ -2,5 +2,7 @@
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
-    public interface IExtraRepository : ICachedRepositoryBase<Extra> { }
+    public interface IManufacturerRepository : ICachedRepositoryBase<Manufacturer>
+    {
+    }
 }

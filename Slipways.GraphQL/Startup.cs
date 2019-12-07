@@ -66,6 +66,8 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<ISlipwayRepository, SlipwayRepository>();
             services.AddScoped<IExtraRepository, ExtraRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+            services.AddScoped<IPortRepository, PortRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.AddSwaggerGen(_ =>
@@ -78,7 +80,6 @@ namespace com.b_velop.Slipways.GrQl
             });
 
             services.AddControllers();
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("reader", builder =>
@@ -100,6 +101,7 @@ namespace com.b_velop.Slipways.GrQl
                 // name of the API resource
                 options.ApiName = apiResource;
             });
+
         }
 
         public void Configure(
@@ -107,8 +109,10 @@ namespace com.b_velop.Slipways.GrQl
             IWebHostEnvironment env)
         {
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseWebSockets();
 
             app.UseMetricServer();

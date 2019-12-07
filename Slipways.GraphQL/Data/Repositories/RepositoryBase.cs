@@ -13,30 +13,27 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {
         protected SlipwaysContext Db;
-        private IMemoryCache _cache;
         private ILogger<RepositoryBase<T>> _logger;
 
         public RepositoryBase(
             SlipwaysContext db,
-            IMemoryCache cache,
             ILogger<RepositoryBase<T>> logger)
         {
             Db = db;
-            _cache = cache;
             _logger = logger;
         }
 
-        public async Task<IEnumerable<T>> SelectAllAsync()
+        public virtual async Task<IEnumerable<T>> SelectAllAsync()
             => await Db.Set<T>().ToListAsync();
 
-        public async Task<T> SelectByIdAsync(
+        public virtual async Task<T> SelectByIdAsync(
             Guid id)
             => await Db.Set<T>().FirstOrDefaultAsync(_ => _.Id == id);
 
-        public async Task<IEnumerable<T>> SelectByConditionAsync(Expression<Func<T, bool>> expression)
+        public virtual async Task<IEnumerable<T>> SelectByConditionAsync(Expression<Func<T, bool>> expression)
             => await Db.Set<T>().Where(expression).ToListAsync();
 
-        public async Task<T> InsertAsync(
+        public virtual async Task<T> InsertAsync(
             T entity)
         {
             var result = await Db.Set<T>().AddAsync(entity);
@@ -44,7 +41,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             return result.Entity;
         }
 
-        public T Update(
+        public virtual T Update(
             T entity)
         {
             var result = Db.Set<T>().Update(entity);
