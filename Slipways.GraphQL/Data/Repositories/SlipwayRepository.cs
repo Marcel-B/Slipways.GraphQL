@@ -41,14 +41,34 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             var slipways = await SelectAllAsync();
             var slipwayExtras = Db.SlipwayExtras.Where(_ => extraIds.Contains(_.ExtraFk));
 
-            var result = new Dictionary<Guid, Slipway>();
+            var result = new List<Slipway>();
 
             foreach (var slipwayExtra in slipwayExtras)
             {
                 var slipway = slipways.First(_ => _.Id == slipwayExtra.SlipwayFk);
-                result[slipwayExtra.ExtraFk] = slipway; 
+
+                slipway.ExtraFk = slipwayExtra.ExtraFk;
+                result.Add(new Slipway
+                {
+                    Id = slipway.Id,
+                    ExtraFk = slipwayExtra.ExtraFk,
+                    City = slipway.City,
+                    Latitude = slipway.Latitude,
+                    Longitude = slipway.Longitude,
+                    Name = slipway.Name,
+                    Postalcode   = slipway.Postalcode,
+                    WaterFk = slipway.WaterFk,
+                    Updated = slipway.Updated,
+                    Street = slipway.Street,
+                    Rating = slipway.Rating,
+                    Pro = slipway.Pro,
+                    Created = slipway.Created,
+                    Costs = slipway.Costs,
+                    Contra = slipway.Contra,
+                    Comment = slipway.Comment
+                });
             }
-            return result.ToLookup(x => x.Key, x => x.Value);
+            return result.ToLookup(x => x.ExtraFk);
         }
 
         public async Task<IEnumerable<Slipway>> SelectByExtraIdAsync(

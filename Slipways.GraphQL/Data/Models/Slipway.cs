@@ -27,6 +27,9 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public string Contra { get; set; }
 
         [NotMapped]
+        public Guid ExtraFk { get; set; }
+
+        [NotMapped]
         public List<Extra> Extras { get; set; }
     }
 }
