@@ -7,5 +7,6 @@
         ISlipwayRepository Slipway { get; set; }
         IExtraRepository Extra { get; }
         IServiceRepository Service { get; }
+        ISlipwayExtraRepository SlipwayExtra { get; }
     }
 }

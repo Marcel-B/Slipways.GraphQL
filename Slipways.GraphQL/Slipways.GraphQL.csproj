@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\GraphQLAuthorization\" />
-    <Folder Include="Data\GraphQLTypes\" />
     <Folder Include="Services\" />
     <Folder Include="Data\Dtos\" />
     <Folder Include="Data\GraphQLSchema\" />
