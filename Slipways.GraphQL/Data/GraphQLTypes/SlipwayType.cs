@@ -2,7 +2,9 @@
 using com.b_velop.Slipways.GrQl.Data.Repositories;
 using GraphQL.DataLoader;
 using GraphQL.Types;
+using GraphQLParser.AST;
 using System;
+using System.Collections.Generic;
 
 namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 {
@@ -33,11 +35,16 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 description: "Angaben zum Gewässer",
                 resolve: async ctx =>
                 {
-                    // Get or add a batch loader with the key "GetUsersById"
-                    // The loader will call GetUsersByIdAsync for each batch of keys
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", rep.Water.GetWatersByIdAsync);
-                    // Add this UserId to the pending keys to fetch
-                    // The task will complete once the GetUsersByIdAsync() returns with the batched results
+                    return await loader.LoadAsync(ctx.Source.WaterFk);
+                });
+
+            FieldAsync<ListGraphType<ExtraType>, IEnumerable<Extra>>(
+                "Extras",
+                "Extras",
+                resolve: async ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Extra>("GetExtrasBySlipwayId", rep.Extra.GetExtrasBySlipwayIdAsync);
                     return await loader.LoadAsync(ctx.Source.Id);
                 });
         }

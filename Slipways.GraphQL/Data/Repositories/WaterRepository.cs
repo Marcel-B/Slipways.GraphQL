@@ -29,19 +29,16 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             }
             return waters;
         }
-        // This will be called by the loader for all pending keys
-        // Note that fetch delegates can accept a CancellationToken parameter or not
+
         public async Task<IDictionary<Guid, Water>> GetWatersByIdAsync(
             IEnumerable<Guid> waterIds,
             CancellationToken cancellationToken)
         {
-            var waters = await Db.Waters.ToListAsync();
+            var waters = await SelectAllAsync();
             var result = new Dictionary<Guid, Water>();
             foreach (var water in waters)
-            {
                 if (waterIds.Contains(water.Id))
                     result[water.Id] = water;
-            }
             return result;
         }
     }

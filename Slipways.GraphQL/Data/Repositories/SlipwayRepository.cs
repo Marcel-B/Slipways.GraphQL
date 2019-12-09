@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
@@ -21,6 +22,31 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             _extraRepository = extraRepository;
         }
 
+        public async Task<ILookup<Guid, Slipway>> GetSlipwayByWaterIdAsync(
+         IEnumerable<Guid> waterIds,
+         CancellationToken cancellationToken)
+        {
+            var slipways = await SelectAllAsync();
+            var result = new List<Slipway>();
+            foreach (var slipway in slipways)
+                if (waterIds.Contains(slipway.WaterFk))
+                    result.Add(slipway);
+            return result.ToLookup(x => x.WaterFk);
+        }
+
+        //public async Task<ILookup<Guid, Slipway>> GetSlipwaysByExtraIdAsync(
+        //     IEnumerable<Guid> slipwayIds,
+        //     CancellationToken cancellationToken)
+        //{
+        //    var slipways = await SelectAllAsync();
+        //    var result = new List<Slipway>();
+
+        //    foreach (var slipway in slipways)
+        //        if (waterIds.Contains(slipway.WaterFk))
+        //            result.Add(slipway);
+        //    return result.ToLookup(x => x.Extras);
+        //}
+        
         public async Task<IEnumerable<Slipway>> SelectByExtraIdAsync(
             Guid extraId)
         {
