@@ -21,6 +21,14 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             _extraRepository = extraRepository;
         }
 
+        public async Task<IEnumerable<Slipway>> SelectByExtraIdAsync(
+            Guid extraId)
+        {
+            var extras = Db.SlipwayExtras.Where(_ => _.ExtraFk == extraId).Select(_ => _.SlipwayFk);
+            var allSlips = await SelectIncludeAllAsync();
+            return allSlips.Where(_ => extras.Contains(extraId));
+        }
+
         public async Task<IEnumerable<Slipway>> SelectIncludeAllAsync()
         {
             var slipways = await Db

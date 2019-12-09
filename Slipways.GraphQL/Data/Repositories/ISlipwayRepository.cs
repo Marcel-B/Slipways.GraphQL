@@ -9,5 +9,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
     {
         Task<IEnumerable<Slipway>> SelectIncludeAllAsync();
         Task<Slipway> SelectByIdIncludeAsync(Guid id);
+        Task<IEnumerable<Slipway>> SelectByExtraIdAsync(Guid extraId);
     }
 }

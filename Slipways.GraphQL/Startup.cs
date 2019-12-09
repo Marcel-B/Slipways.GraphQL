@@ -19,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using IdentityServer4.AccessTokenValidation;
+using GraphQL.DataLoader;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -50,6 +51,8 @@ namespace com.b_velop.Slipways.GrQl
             var apiResource = Environment.GetEnvironmentVariable("API_RESOURCE");
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+            services.AddSingleton<DataLoaderDocumentListener>();
             services.AddScoped<AppSchema>();
 
             services.AddGraphQL(options =>
@@ -68,6 +71,7 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
             services.AddScoped<IPortRepository, PortRepository>();
+            services.AddScoped<ISlipwayExtraRepository, SlipwayExtraRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.AddSwaggerGen(_ =>
@@ -140,6 +144,7 @@ namespace com.b_velop.Slipways.GrQl
             // use HTTP middleware for ChatSchema at path /graphql
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            //app.UseGraphQLAuth();
         }
 
         private static void UpdateDatabase(IApplicationBuilder app)
