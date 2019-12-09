@@ -20,14 +20,14 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Updated, nullable: true);
             Field(_ => _.Name);
 
-            //FieldAsync<ListGraphType<SlipwayType>, IEnumerable<Slipway>>(
-            //    "Slipways",
-            //    "Slipways",
-            //    resolve: async ctx =>
-            //    {
-            //        var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByExtraIds", rep.Slipway.GetSlipwaysByExtraIdAsync);
-            //        return await loader.LoadAsync(ctx.Source.Id);
-            //    });
+            FieldAsync<ListGraphType<SlipwayType>, IEnumerable<Slipway>>(
+                "Slipways",
+                "Slipways",
+                resolve: async ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByExtraIds", rep.Slipway.GetSlipwaysByExtraIdAsync);
+                    return await loader.LoadAsync(ctx.Source.Id);
+                });
         }
     }
 }

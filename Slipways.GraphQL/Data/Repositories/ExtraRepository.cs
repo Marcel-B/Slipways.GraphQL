@@ -31,8 +31,8 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         }
 
         public async Task<ILookup<Guid, Extra>> GetExtrasBySlipwayIdAsync(
-        IEnumerable<Guid> slipwaysIds,
-        CancellationToken cancellationToken)
+            IEnumerable<Guid> slipwaysIds,
+            CancellationToken cancellationToken)
         {
             var extras = await SelectAllAsync();
             var extraIds = Db.SlipwayExtras.Where(_ => slipwaysIds.Contains(_.SlipwayFk));

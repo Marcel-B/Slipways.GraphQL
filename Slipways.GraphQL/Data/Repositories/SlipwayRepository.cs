@@ -34,19 +34,23 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             return result.ToLookup(x => x.WaterFk);
         }
 
-        //public async Task<ILookup<Guid, Slipway>> GetSlipwaysByExtraIdAsync(
-        //     IEnumerable<Guid> slipwayIds,
-        //     CancellationToken cancellationToken)
-        //{
-        //    var slipways = await SelectAllAsync();
-        //    var result = new List<Slipway>();
+        public async Task<ILookup<Guid, Slipway>> GetSlipwaysByExtraIdAsync(
+             IEnumerable<Guid> extraIds,
+             CancellationToken cancellationToken)
+        {
+            var slipways = await SelectAllAsync();
+            var slipwayExtras = Db.SlipwayExtras.Where(_ => extraIds.Contains(_.ExtraFk));
 
-        //    foreach (var slipway in slipways)
-        //        if (waterIds.Contains(slipway.WaterFk))
-        //            result.Add(slipway);
-        //    return result.ToLookup(x => x.Extras);
-        //}
-        
+            var result = new Dictionary<Guid, Slipway>();
+
+            foreach (var slipwayExtra in slipwayExtras)
+            {
+                var slipway = slipways.First(_ => _.Id == slipwayExtra.SlipwayFk);
+                result[slipwayExtra.ExtraFk] = slipway; 
+            }
+            return result.ToLookup(x => x.Key, x => x.Value);
+        }
+
         public async Task<IEnumerable<Slipway>> SelectByExtraIdAsync(
             Guid extraId)
         {

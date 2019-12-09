@@ -2,7 +2,6 @@
 using com.b_velop.Slipways.GrQl.Data.Repositories;
 using GraphQL.DataLoader;
 using GraphQL.Types;
-using GraphQLParser.AST;
 using System;
 using System.Collections.Generic;
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using com.b_velop.Slipways.GrQl.Data;
 
 namespace com.b_velop.Slipways.GrQl.Migrations
 {
     [DbContext(typeof(SlipwaysContext))]
-    partial class SlipwaysContextModelSnapshot : ModelSnapshot
+    [Migration("20191209224624_AddSlipways")]
+    partial class AddSlipways
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

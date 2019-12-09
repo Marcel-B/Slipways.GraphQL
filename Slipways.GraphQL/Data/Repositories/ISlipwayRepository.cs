@@ -13,5 +13,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         Task<Slipway> SelectByIdIncludeAsync(Guid id);
         Task<IEnumerable<Slipway>> SelectByExtraIdAsync(Guid extraId);
         Task<ILookup<Guid, Slipway>> GetSlipwayByWaterIdAsync(IEnumerable<Guid> waterIds, CancellationToken cancellationToken);
+        Task<ILookup<Guid, Slipway>> GetSlipwaysByExtraIdAsync(IEnumerable<Guid> extraIds, CancellationToken cancellationToken);
     }
 }

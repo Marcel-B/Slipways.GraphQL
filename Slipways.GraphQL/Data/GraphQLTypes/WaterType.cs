@@ -13,7 +13,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             IRepositoryWrapper rep,
             IDataLoaderContextAccessor accessor)
         {
-            Name = "Water";
+            Name = nameof(Water);
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Shortname);
@@ -25,6 +25,15 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 resolve: async ctx =>
                 {
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByWaterId", rep.Slipway.GetSlipwayByWaterIdAsync);
+                    return await loader.LoadAsync(ctx.Source.Id);
+                });
+
+            FieldAsync<ListGraphType<StationType>, IEnumerable<Station>>(
+                "Stations",
+                "Stations",
+                resolve: async ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Station>("GetStationsByWaterId", rep.Station.GetStationsByWaterIdAsync);
                     return await loader.LoadAsync(ctx.Source.Id);
                 });
         }

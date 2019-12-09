@@ -180,7 +180,22 @@ namespace com.b_velop.Slipways.GrQl.Data
                     Street = "Woltershofer Straße 18",
                     WaterFk = Guid.Parse("A88EA916-5E6C-4D83-83A9-1D4FDFEF25EC")
                 },
-                new Slipway {
+                     new Slipway
+                     {
+                         Id = Guid.Parse("c25cfffb-bc8d-430e-b005-3fe5654967b0"),
+                         Created = DateTime.Now,
+                         Name = "Campingplatz Cammerzell",
+                         City = "Essen, Werde",
+                         Costs = -1,
+                         Postalcode = "45219",
+                         Rating = -1,
+                         Longitude = 6.950825,
+                         Latitude = 51.359049,
+                         Street = "Werdener Str.",
+                         WaterFk = Guid.Parse("28E2B1B8-E353-4174-99A5-816229C68BD1")
+                     },
+                new Slipway
+                {
                     Id = Guid.Parse("1fe7ee5a-e9af-4e86-9664-04a0165ce838"),
                     Created = DateTime.Now,
                     Name = "Stellplatz, Enkirch",
@@ -215,13 +230,28 @@ namespace com.b_velop.Slipways.GrQl.Data
                 });
 
             modelBuilder.Entity<SlipwayExtra>().HasData(
-                new SlipwayExtra {
+                new SlipwayExtra
+                {
                     Id = Guid.Parse("dee3ec64-6f87-4a52-b73d-b974c4213a1f"),
                     Created = DateTime.Now,
                     SlipwayFk = Guid.Parse("1fe7ee5a-e9af-4e86-9664-04a0165ce838"),
                     ExtraFk = Guid.Parse("f5836f04-e23b-475a-a079-1e4f3c9c4d87")
+                },
+                new SlipwayExtra
+                {
+                    Id = Guid.Parse("aee36a4e-ef66-4a75-b5da-c6650b701690"),
+                    Created = DateTime.Now,
+                    SlipwayFk = Guid.Parse("c25cfffb-bc8d-430e-b005-3fe5654967b0"),
+                    ExtraFk = Guid.Parse("f5836f04-e23b-475a-a079-1e4f3c9c4d87")
+                },
+                new SlipwayExtra
+                {
+                    Id = Guid.Parse("0d4b7439-1da5-4447-b0a4-f87d825a6835"),
+                    Created = DateTime.Now,
+                    SlipwayFk = Guid.Parse("11ACB81E-0B41-46AA-A079-18C13CDE3F3D"),
+                    ExtraFk = Guid.Parse("06448fd8-dcc1-4579-947a-8a7b18bc1aab")
                 });
-
+            
             modelBuilder.Entity<Manufacturer>().HasData(
                 new Manufacturer
                 {
