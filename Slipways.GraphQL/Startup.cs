@@ -152,7 +152,7 @@ namespace com.b_velop.Slipways.GrQl
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<SlipwaysContext>();
-            context.Database.Migrate();
+            //context.Database.Migrate();
         }
     }
 }

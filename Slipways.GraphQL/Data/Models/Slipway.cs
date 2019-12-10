@@ -36,6 +36,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
 
         public Guid WaterFk { get; set; }
 
+        [ForeignKey("WaterFk")]
         public Water Water { get; set; }
 
         public int Rating { get; set; }
