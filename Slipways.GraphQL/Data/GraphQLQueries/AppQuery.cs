@@ -27,6 +27,18 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
                 FieldAsync<ListGraphType<ExtraType>>(
                     "extras",
                     resolve: async ctx => await rep.Extra.SelectAllAsync());
+
+                FieldAsync<ListGraphType<PortType>>(
+                   "ports",
+                   resolve: async ctx => await rep.Port.SelectAllAsync());
+
+                FieldAsync<ListGraphType<ServiceType>>(
+                    "services",
+                    resolve: async ctx => await rep.Service.SelectAllAsync());
+
+                FieldAsync<ListGraphType<ManufacturerType>>(
+                    "manufacturers",
+                    resolve: async ctx => await rep.Manufacturer.SelectAllAsync());
             }
         }
     }

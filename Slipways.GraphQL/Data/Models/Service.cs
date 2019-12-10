@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace com.b_velop.Slipways.GrQl.Data.Models
@@ -17,6 +18,9 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
         public string City { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+
+        [NotMapped]
+        public Guid ManufacturerFk { get; set; }
 
         [NotMapped]
         public List<Manufacturer> Manufacturers { get; set; }

@@ -12,7 +12,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             IDataLoaderContextAccessor accessor,
             IRepositoryWrapper rep)
         {
-            Name = "Station";
+            Name = nameof(Station);
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>)).Description("Eindeutige unveränderliche ID.");
             Field(_ => _.Number).Description("Pegelnummer");

@@ -13,7 +13,8 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             IDataLoaderContextAccessor accessor,
             IRepositoryWrapper rep)
         {
-            Name = "Slipway";
+            Name = nameof(Slipway);
+
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Created);
             Field(_ => _.Updated, nullable: true);

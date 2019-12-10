@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using com.b_velop.Slipways.GrQl.Infrastructure;
@@ -13,6 +16,30 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             SlipwaysContext db,
             IMemoryCache cache,
             ILogger<RepositoryBase<Manufacturer>> logger) : base(db, cache, logger) { }
+
+
+        public async Task<ILookup<Guid, Manufacturer>> GetManufacturerByServiceIdAsync(
+            IEnumerable<Guid> serviceIds,
+            CancellationToken cancellationToken)
+        {
+            var manufacturers = await SelectAllAsync();
+            var manufacturerServices = Db.ManufacturerServices.Where(_ => serviceIds.Contains(_.ServiceFk));
+            var result = new List<Manufacturer>();
+
+            foreach (var manufacturerService in manufacturerServices)
+            {
+                var manufacturer = manufacturers.FirstOrDefault(_ => _.Id == manufacturerService.ManufacturerFk);
+                result.Add(new Manufacturer
+                {
+                    Id = manufacturer.Id,
+                    Name = manufacturer.Name,
+                    Updated = manufacturer.Updated,
+                    Created = manufacturer.Created,
+                    ServiceFk = manufacturerService.ManufacturerFk
+                });
+            }
+            return result.ToLookup(_ => _.ServiceFk);
+        }
 
         public override async Task<IEnumerable<Manufacturer>> SelectAllAsync()
         {

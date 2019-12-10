@@ -36,14 +36,21 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         {
             var extras = await SelectAllAsync();
             var extraIds = Db.SlipwayExtras.Where(_ => slipwaysIds.Contains(_.SlipwayFk));
-            var result = new Dictionary<Guid,Extra>();
+            var result = new List<Extra>();
 
-            foreach (var id in extraIds)
+            foreach (var extraId in extraIds)
             {
-                var extra = extras.FirstOrDefault(_ => _.Id == id.ExtraFk);
-                result[id.SlipwayFk] = extra;
+                var extra = extras.FirstOrDefault(_ => _.Id == extraId.ExtraFk);
+                result.Add(new Extra
+                {
+                    Id = extra.Id,
+                    Name = extra.Name,
+                    Created = extra.Created,
+                    Updated = extra.Updated,
+                    SlipwayFk = extraId.SlipwayFk
+                });
             }
-            return result.ToLookup(_ => _.Key, _ => _.Value);
+            return result.ToLookup(_ => _.SlipwayFk);
         }
     }
 }
