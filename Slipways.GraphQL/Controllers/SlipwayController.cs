@@ -19,6 +19,7 @@ namespace Slipways.GrQl.Controllers
         public double Latitude { get; set; }
         public decimal Costs { get; set; }
         public int Rating { get; set; }
+        public string Street { get; set; }
         public Guid Water { get; set; }
         public IEnumerable<Guid> Extras { get; set; }
     }
