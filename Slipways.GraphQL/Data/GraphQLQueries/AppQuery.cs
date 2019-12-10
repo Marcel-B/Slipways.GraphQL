@@ -1,4 +1,6 @@
-﻿using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
+﻿using System;
+using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
+using com.b_velop.Slipways.GrQl.Data.Models;
 using com.b_velop.Slipways.GrQl.Data.Repositories;
 using GraphQL.Types;
 using Prometheus;
@@ -39,6 +41,19 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
                 FieldAsync<ListGraphType<ManufacturerType>>(
                     "manufacturers",
                     resolve: async ctx => await rep.Manufacturer.SelectAllAsync());
+
+
+                FieldAsync<SlipwayType>(
+                    nameof(Slipway),
+                    "Select Slipway by ID",
+                    new QueryArguments(
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = nameof(Slipway.Id), Description = "The unique identifier of the unit" }),
+                    resolve: async ctx =>
+                    {
+                        var id = ctx.GetArgument<Guid>(nameof(Slipway.Id));
+                        var slipway = await rep.Slipway.SelectByIdAsync(id);
+                        return slipway;
+                    });
             }
         }
     }
