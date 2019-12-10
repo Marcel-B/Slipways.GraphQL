@@ -13,15 +13,21 @@ namespace Slipways.GrQl.Controllers
 {
     public class SlipwayDto
     {
-        public string Name { get; set; }
-        public string City { get; set; }
-        public double Longitude { get; set; }
+        public Guid Id { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? Updated { get; set; }
         public double Latitude { get; set; }
-        public decimal Costs { get; set; }
+        public double Longitude { get; set; }
+        public string Name { get; set; }
+        public Guid WaterFk { get; set; }
         public int Rating { get; set; }
+        public string Comment { get; set; }
         public string Street { get; set; }
         public string Postalcode { get; set; }
-        public Guid Water { get; set; }
+        public string City { get; set; }
+        public decimal Costs { get; set; }
+        public string Pro { get; set; }
+        public string Contra { get; set; }
         public IEnumerable<Guid> Extras { get; set; }
     }
 
@@ -73,19 +79,11 @@ namespace Slipways.GrQl.Controllers
             {
                 try
                 {
-                    var slipway = new Slipway
+                    var slipway = new Slipway(slipwayDto)
                     {
-                        Id = Guid.NewGuid(),
-                        City = slipwayDto.City,
-                        Name = slipwayDto.Name,
-                        Longitude = slipwayDto.Longitude,
-                        Latitude = slipwayDto.Latitude,
-                        WaterFk = slipwayDto.Water,
-                        Costs = slipwayDto.Costs,
-                        Rating = slipwayDto.Rating,
-                        Street = slipwayDto.Street,
-                        Postalcode = slipwayDto.Postalcode
+                        Id = Guid.NewGuid()
                     };
+
                     var result = await _rep.Slipway.InsertAsync(slipway);
                     if (result != null)
                     {
