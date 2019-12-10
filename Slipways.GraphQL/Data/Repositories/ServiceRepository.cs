@@ -32,20 +32,23 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             foreach (var manufacturerService in manufacturerServices)
             {
                 var service = services.FirstOrDefault(_ => _.Id == manufacturerService.ServiceFk);
-                result.Add(new Service {
-                Id = service.Id,
-                Name = service.Name,
-                Street = service.Street,
-                Postalcode = service.Postalcode,
-                City = service.City,
-                Phone = service.Phone,
-                Url = service.Url,
-                Updated = service.Updated,
-                Longitude = service.Longitude,
-                Latitude = service.Latitude,
-                Email = service.Email,
-                Created = service.Created,
-                ManufacturerFk = manufacturerService.ManufacturerFk});
+                if (service != null)
+                    result.Add(new Service
+                    {
+                        Id = service.Id,
+                        Name = service.Name,
+                        Street = service.Street,
+                        Postalcode = service.Postalcode,
+                        City = service.City,
+                        Phone = service.Phone,
+                        Url = service.Url,
+                        Updated = service.Updated,
+                        Longitude = service.Longitude,
+                        Latitude = service.Latitude,
+                        Email = service.Email,
+                        Created = service.Created,
+                        ManufacturerFk = manufacturerService.ManufacturerFk
+                    });
             }
             return result.ToLookup(_ => _.ManufacturerFk);
         }

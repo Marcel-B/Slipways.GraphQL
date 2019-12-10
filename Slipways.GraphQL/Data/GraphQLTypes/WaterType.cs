@@ -36,6 +36,15 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Station>("GetStationsByWaterId", rep.Station.GetStationsByWaterIdAsync);
                     return await loader.LoadAsync(ctx.Source.Id);
                 });
+
+            FieldAsync<ListGraphType<PortType>, IEnumerable<Port>>(
+                "Ports",
+                "Ports",
+                resolve: async ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Port>("GetPortsByWaterId", rep.Port.GetPortsByWaterIdAsync);
+                    return await loader.LoadAsync(ctx.Source.Id);
+                });
         }
     }
 }

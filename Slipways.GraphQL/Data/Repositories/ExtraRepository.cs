@@ -41,14 +41,15 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             foreach (var extraId in extraIds)
             {
                 var extra = extras.FirstOrDefault(_ => _.Id == extraId.ExtraFk);
-                result.Add(new Extra
-                {
-                    Id = extra.Id,
-                    Name = extra.Name,
-                    Created = extra.Created,
-                    Updated = extra.Updated,
-                    SlipwayFk = extraId.SlipwayFk
-                });
+                if (extra != null)
+                    result.Add(new Extra
+                    {
+                        Id = extra.Id,
+                        Name = extra.Name,
+                        Created = extra.Created,
+                        Updated = extra.Updated,
+                        SlipwayFk = extraId.SlipwayFk
+                    });
             }
             return result.ToLookup(_ => _.SlipwayFk);
         }

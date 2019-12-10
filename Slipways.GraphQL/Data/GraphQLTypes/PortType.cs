@@ -16,6 +16,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
 
+            Field(_ => _.Name);
             Field(_ => _.Created);
             Field(_ => _.Updated, nullable: true);
             Field(_ => _.Longitude);

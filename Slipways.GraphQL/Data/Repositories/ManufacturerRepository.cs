@@ -29,14 +29,15 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             foreach (var manufacturerService in manufacturerServices)
             {
                 var manufacturer = manufacturers.FirstOrDefault(_ => _.Id == manufacturerService.ManufacturerFk);
-                result.Add(new Manufacturer
-                {
-                    Id = manufacturer.Id,
-                    Name = manufacturer.Name,
-                    Updated = manufacturer.Updated,
-                    Created = manufacturer.Created,
-                    ServiceFk = manufacturerService.ManufacturerFk
-                });
+                if (manufacturer != null)
+                    result.Add(new Manufacturer
+                    {
+                        Id = manufacturer.Id,
+                        Name = manufacturer.Name,
+                        Updated = manufacturer.Updated,
+                        Created = manufacturer.Created,
+                        ServiceFk = manufacturerService.ManufacturerFk
+                    });
             }
             return result.ToLookup(_ => _.ServiceFk);
         }
