@@ -49,5 +49,24 @@ namespace Slipways.GrQl.Controllers
                 return await _rep.Water.SelectByIdAsync(id);
             }
         }
+
+        [HttpPost]
+        [Authorize("allin")]
+        public async Task<ActionResult> PostAsync(
+            com.b_velop.Slipways.GrQl.Data.Dtos.Water waterDto)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_POST_api_water_seconds", "Histogram").NewTimer())
+            {
+                var water = new Water
+                {
+                    Id = Guid.NewGuid(),
+                    Longname = waterDto.Longname.ToUpper(),
+                    Shortname = waterDto.Shortname.ToUpper(),
+                    Created = DateTime.Now
+                };
+                var result = await _rep.Water.InsertAsync(water);
+                return Ok();
+            }
+        }
     }
 }

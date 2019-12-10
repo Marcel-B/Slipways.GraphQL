@@ -31,6 +31,15 @@ namespace com.b_velop.Slipways.GrQl.Data
                     Shortname = water.Shortname
                 });
             }
+
+            waters.Add(new Water
+            {
+                Id = Guid.Parse("B1E19997-22AD-4413-89C0-5ADDCDD6E96A"),
+                Created = DateTime.Now,
+                Longname = "APER TIEF",
+                Shortname = "APER TIEF"
+            });
+
             modelBuilder.Entity<Water>().HasData(waters);
             file = new FileInfo(@"Data/stations.json");
             stream = await file.OpenText().ReadToEndAsync();
