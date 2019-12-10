@@ -219,24 +219,25 @@ namespace com.b_velop.Slipways.GrQl.Data
                 });
 
             modelBuilder.Entity<Extra>().HasData(
-                new Extra
-                {
-                    Id = Guid.Parse("f5836f04-e23b-475a-a079-1e4f3c9c4d87"),
-                    Created = DateTime.Now,
-                    Name = "Campingplatz"
-                },
-                new Extra
-                {
-                    Id = Guid.Parse("8976ceb5-19d6-4f5c-a34d-a43801667b40"),
-                    Created = DateTime.Now,
-                    Name = "Parkplatz"
-                },
-                new Extra
-                {
-                    Id = Guid.Parse("06448fd8-dcc1-4579-947a-8a7b18bc1aab"),
-                    Created = DateTime.Now,
-                    Name = "Steg"
-                });
+                 new Extra
+                 {
+                     Id = Guid.Parse("f5836f04-e23b-475a-a079-1e4f3c9c4d87"),
+                     Created = DateTime.Now,
+                     Name = "Campingplatz"
+                 },
+                 new Extra
+                 {
+                     Id = Guid.Parse("8976ceb5-19d6-4f5c-a34d-a43801667b40"),
+                     Created = DateTime.Now,
+                     Name = "Parkplatz"
+                 },
+                 new Extra
+                 {
+                     Id = Guid.Parse("06448fd8-dcc1-4579-947a-8a7b18bc1aab"),
+                     Created = DateTime.Now,
+                     Name = "Steg"
+                 });
+
 
             modelBuilder.Entity<SlipwayExtra>().HasData(
                 new SlipwayExtra
@@ -260,7 +261,7 @@ namespace com.b_velop.Slipways.GrQl.Data
                     SlipwayFk = Guid.Parse("11ACB81E-0B41-46AA-A079-18C13CDE3F3D"),
                     ExtraFk = Guid.Parse("06448fd8-dcc1-4579-947a-8a7b18bc1aab")
                 });
-            
+
             modelBuilder.Entity<Manufacturer>().HasData(
                 new Manufacturer
                 {

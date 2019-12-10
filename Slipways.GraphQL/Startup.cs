@@ -143,7 +143,6 @@ namespace com.b_velop.Slipways.GrQl
             // use HTTP middleware for ChatSchema at path /graphql
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-            //app.UseGraphQLAuth();
         }
 
         private static void UpdateDatabase(IApplicationBuilder app)
