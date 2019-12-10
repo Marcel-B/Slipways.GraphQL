@@ -17,6 +17,8 @@ namespace Slipways.GrQl.Controllers
         public string City { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+        public decimal Costs { get; set; }
+        public int Rating { get; set; }
         public Guid Water { get; set; }
         public IEnumerable<Guid> Extras { get; set; }
     }
@@ -76,7 +78,9 @@ namespace Slipways.GrQl.Controllers
                         Name = slipwayDto.Name,
                         Longitude = slipwayDto.Longitude,
                         Latitude = slipwayDto.Latitude,
-                        WaterFk = slipwayDto.Water
+                        WaterFk = slipwayDto.Water,
+                        Costs = slipwayDto.Costs,
+                        Rating = slipwayDto.Rating
                     };
                     var result = await _rep.Slipway.InsertAsync(slipway);
                     if (result != null)
