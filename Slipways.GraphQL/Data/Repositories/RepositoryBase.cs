@@ -40,6 +40,13 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             _ = Db.SaveChanges();
             return result.Entity;
         }
+        public virtual async Task<int> InsertRangeAsync(
+            IEnumerable<T> entity)
+        {
+            await Db.Set<T>().AddRangeAsync(entity);
+            var count = Db.SaveChanges();
+            return count;
+        }
 
         public virtual T Update(
             T entity)

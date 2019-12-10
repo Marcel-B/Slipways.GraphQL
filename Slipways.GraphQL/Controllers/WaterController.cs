@@ -65,7 +65,7 @@ namespace Slipways.GrQl.Controllers
                     Created = DateTime.Now
                 };
                 var result = await _rep.Water.InsertAsync(water);
-                return Ok();
+                return new JsonResult(result);
             }
         }
     }

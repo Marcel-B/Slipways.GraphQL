@@ -18,6 +18,7 @@ namespace Slipways.GrQl.Controllers
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public Guid Water { get; set; }
+        public IEnumerable<Guid> Extras { get; set; }
     }
 
     [Route("api/[controller]")]
@@ -66,17 +67,41 @@ namespace Slipways.GrQl.Controllers
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_POST_api_slipway_seconds", "Histogram").NewTimer())
             {
-                var slipway = new Slipway
+                try
                 {
-                    Id = Guid.NewGuid(),
-                    City = slipwayDto.City,
-                    Name = slipwayDto.Name,
-                    Longitude = slipwayDto.Longitude,
-                    Latitude = slipwayDto.Latitude,
-                    WaterFk = slipwayDto.Water
-                };
-                var result = await _rep.Slipway.InsertAsync(slipway);
-                return Ok();
+                    var slipway = new Slipway
+                    {
+                        Id = Guid.NewGuid(),
+                        City = slipwayDto.City,
+                        Name = slipwayDto.Name,
+                        Longitude = slipwayDto.Longitude,
+                        Latitude = slipwayDto.Latitude,
+                        WaterFk = slipwayDto.Water
+                    };
+                    var result = await _rep.Slipway.InsertAsync(slipway);
+                    if (result != null)
+                    {
+                        var extras = new HashSet<SlipwayExtra>();
+                        foreach (var extra in slipwayDto.Extras)
+                        {
+                            var slipwayExtra = new SlipwayExtra
+                            {
+                                Id = Guid.NewGuid(),
+                                Created = DateTime.Now,
+                                ExtraFk = extra,
+                                SlipwayFk = result.Id,
+                            };
+                            extras.Add(slipwayExtra);
+                        }
+                        _ = await _rep.SlipwayExtra.InsertRangeAsync(extras);
+                    }
+                    return new JsonResult(result);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(6666, $"Error occurred while insert Slipway", e);
+                    return new StatusCodeResult(500);
+                }
             }
         }
     }
