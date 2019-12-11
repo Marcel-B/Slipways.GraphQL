@@ -15,7 +15,10 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public ManufacturerRepository(
             SlipwaysContext db,
             IMemoryCache cache,
-            ILogger<RepositoryBase<Manufacturer>> logger) : base(db, cache, logger) { }
+            ILogger<RepositoryBase<Manufacturer>> logger) : base(db, cache, logger)
+        {
+            Key = Cache.Manufacturer;
+        }
 
 
         public async Task<ILookup<Guid, Manufacturer>> GetManufacturerByServiceIdAsync(

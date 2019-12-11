@@ -18,6 +18,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             IMemoryCache cache,
             ILogger<RepositoryBase<Extra>> logger) : base(db, cache, logger)
         {
+            Key = Cache.Extras;
         }
 
         public override async Task<IEnumerable<Extra>> SelectAllAsync()
