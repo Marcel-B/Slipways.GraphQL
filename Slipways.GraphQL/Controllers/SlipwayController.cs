@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
@@ -133,7 +134,13 @@ namespace Slipways.GrQl.Controllers
                     }
                     slipwayDto.Id = slipway.Id;
                     slipwayDto.Created = result.Created;
-                    return new JsonResult(slipwayDto);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        WriteIndented = true
+                    };
+                    var modelJson = JsonSerializer.Serialize(slipway, options);
+                    return new JsonResult(modelJson);
                 }
                 catch (Exception e)
                 {
