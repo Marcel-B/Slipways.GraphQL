@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using com.b_velop.Slipways.GrQl.Data.Repositories;
@@ -13,21 +14,52 @@ namespace Slipways.GrQl.Controllers
 {
     public class SlipwayDto
     {
+        [JsonPropertyName("id")]
         public Guid Id { get; set; }
+
+        [JsonPropertyName("created")]
         public DateTime Created { get; set; }
+
+        [JsonPropertyName("updated")]
         public DateTime? Updated { get; set; }
+
+        [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
+
+        [JsonPropertyName("longitude")]
         public double Longitude { get; set; }
+
+        [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        [JsonPropertyName("waterFk")]
         public Guid WaterFk { get; set; }
+
+        [JsonPropertyName("rating")]
         public int Rating { get; set; }
+
+        [JsonPropertyName("comment")]
         public string Comment { get; set; }
+
+        [JsonPropertyName("street")]
         public string Street { get; set; }
+
+        [JsonPropertyName("postalcode")]
         public string Postalcode { get; set; }
+
+        [JsonPropertyName("city")]
         public string City { get; set; }
+
+        [JsonPropertyName("costs")]
         public decimal Costs { get; set; }
+
+        [JsonPropertyName("pro")]
         public string Pro { get; set; }
+
+        [JsonPropertyName("contra")]
         public string Contra { get; set; }
+
+        [JsonPropertyName("extras")]
         public IEnumerable<Guid> Extras { get; set; }
     }
 
@@ -99,7 +131,9 @@ namespace Slipways.GrQl.Controllers
                         }
                         _ = await _rep.SlipwayExtra.InsertRangeAsync(extras);
                     }
-                    return new JsonResult(result);
+                    slipwayDto.Id = slipway.Id;
+                    slipwayDto.Created = result.Created;
+                    return new JsonResult(slipwayDto);
                 }
                 catch (Exception e)
                 {
