@@ -79,10 +79,8 @@ namespace Slipways.GrQl.Controllers
             {
                 try
                 {
-                    var slipway = new Slipway(slipwayDto)
-                    {
-                        Id = Guid.NewGuid()
-                    };
+                    var slipway = new Slipway(slipwayDto);
+                    slipway.Id = Guid.NewGuid();
 
                     var result = await _rep.Slipway.InsertAsync(slipway);
                     if (result != null)

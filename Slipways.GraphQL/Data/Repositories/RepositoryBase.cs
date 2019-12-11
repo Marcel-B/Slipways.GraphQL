@@ -35,6 +35,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public virtual async Task<T> InsertAsync(
             T entity)
         {
+            entity.Created = DateTime.Now;
             var result = await Db.Set<T>().AddAsync(entity);
             _ = Db.SaveChanges();
             return result.Entity;
