@@ -137,10 +137,11 @@ namespace Slipways.GrQl.Controllers
                     var options = new JsonSerializerOptions
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                        WriteIndented = true
+                        WriteIndented = true,
+                        IgnoreNullValues = true
                     };
                     var modelJson = JsonSerializer.Serialize(slipway, options);
-                    return new JsonResult(modelJson);
+                    return new ObjectResult(modelJson);
                 }
                 catch (Exception e)
                 {
