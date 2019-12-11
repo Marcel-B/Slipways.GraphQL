@@ -43,6 +43,10 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             Guid id)
         {
             var result = await base.DeleteAsync(id);
+
+            if (result == null)
+                return null;
+
             if (_cache.TryGetValue(Key, out IEnumerable<T> values))
             {
                 var newValues = values.ToList();

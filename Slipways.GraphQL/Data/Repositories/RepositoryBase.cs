@@ -60,7 +60,13 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public virtual async Task<T> DeleteAsync(
             Guid id)
         {
-            var result = Db.Set<T>().Remove(await Db.Set<T>().FirstOrDefaultAsync(_ => _.Id == id));
+            var tmp = await Db.Set<T>().FirstOrDefaultAsync(_ => _.Id == id);
+            if (tmp == null)
+            {
+                _logger.LogWarning(5555, $"Can't delete Entity with ID '{id}'. Entity not exsists");
+                return null;
+            }
+            var result = Db.Set<T>().Remove(tmp);
             _ = Db.SaveChanges();
             return result.Entity;
         }
