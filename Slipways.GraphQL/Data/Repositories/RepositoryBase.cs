@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
@@ -53,6 +52,14 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             T entity)
         {
             var result = Db.Set<T>().Update(entity);
+            _ = Db.SaveChanges();
+            return result.Entity;
+        }
+
+        public virtual async Task<T> DeleteAsync(
+            Guid id)
+        {
+            var result = Db.Set<T>().Remove(await Db.Set<T>().FirstOrDefaultAsync(_ => _.Id == id));
             _ = Db.SaveChanges();
             return result.Entity;
         }

@@ -110,5 +110,25 @@ namespace Slipways.GrQl.Controllers
                 }
             }
         }
+
+        [HttpDelete]
+        [Authorize("allin")]
+        public async Task<ActionResult> DeleteSlipwayAsync(
+            Guid id)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_DELETE_api_slipway_seconds", "Histogram").NewTimer())
+            {
+                try
+                {
+                    var result = await _rep.Slipway.DeleteAsync(id);
+                    return new JsonResult(result);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(6666, $"Error occurred while deleting Slipway with id '{id}'", e);
+                    return new StatusCodeResult(500);
+                }
+            }
+        }
     }
 }

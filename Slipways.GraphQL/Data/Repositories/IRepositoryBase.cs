@@ -1,5 +1,4 @@
-﻿using com.b_velop.Slipways.GrQl.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -14,5 +13,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         Task<IEnumerable<T>> SelectByConditionAsync(Expression<Func<T, bool>> expression);
         Task<T> SelectByIdAsync(Guid id);
         T Update(T entity);
+        Task<T> DeleteAsync(Guid id);
     }
 }
