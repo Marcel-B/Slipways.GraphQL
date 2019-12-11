@@ -68,6 +68,7 @@ namespace Slipways.GrQl.Controllers
     [ApiController]
     public class SlipwayController : ControllerBase
     {
+        private readonly JsonSerializerOptions _options;
         private readonly IRepositoryWrapper _rep;
         private readonly ILogger<SlipwayController> _logger;
 
@@ -75,6 +76,12 @@ namespace Slipways.GrQl.Controllers
             IRepositoryWrapper rep,
             ILogger<SlipwayController> logger)
         {
+            _options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+                IgnoreNullValues = true
+            };
             _rep = rep;
             _logger = logger;
         }
@@ -134,14 +141,7 @@ namespace Slipways.GrQl.Controllers
                     }
                     slipwayDto.Id = slipway.Id;
                     slipwayDto.Created = result.Created;
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                        WriteIndented = true,
-                        IgnoreNullValues = true
-                    };
-                    var modelJson = JsonSerializer.Serialize(slipway, options);
-                    return new ObjectResult(modelJson);
+                    return new JsonResult(slipway, _options);
                 }
                 catch (Exception e)
                 {
@@ -161,7 +161,7 @@ namespace Slipways.GrQl.Controllers
                 try
                 {
                     var result = await _rep.Slipway.DeleteAsync(id);
-                    return new JsonResult(result);
+                    return new JsonResult(result, _options);
                 }
                 catch (Exception e)
                 {

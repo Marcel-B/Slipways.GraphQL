@@ -76,7 +76,7 @@ namespace com.b_velop.Slipways.GrQl
 
             services.AddSwaggerGen(_ =>
             {
-                _.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Slipway API", Version = "v1" });
+                _.SwaggerDoc(name: "v2", new OpenApiInfo { Title = "Slipway API", Version = "v2" });
             });
             services.Configure<KestrelServerOptions>(options =>
             {
@@ -131,7 +131,7 @@ namespace com.b_velop.Slipways.GrQl
             app.UseSwagger();
             app.UseSwaggerUI(_ =>
             {
-                _.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Slipways API v1");
+                _.SwaggerEndpoint(url: "/swagger/v2/swagger.json", name: "Slipways API v2");
             });
             UpdateDatabase(app);
 

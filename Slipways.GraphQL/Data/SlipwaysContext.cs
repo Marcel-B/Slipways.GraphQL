@@ -43,7 +43,7 @@ namespace com.b_velop.Slipways.GrQl.Data
             modelBuilder.Entity<Water>().HasData(waters);
             file = new FileInfo(@"Data/stations.json");
             stream = await file.OpenText().ReadToEndAsync();
-            var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.Station>>(stream);
+            var stationsDto = JsonConvert.DeserializeObject<IEnumerable<Data.Dtos.StationDto>>(stream);
             var stations = new HashSet<Station>();
             foreach (var station in stationsDto)
             {

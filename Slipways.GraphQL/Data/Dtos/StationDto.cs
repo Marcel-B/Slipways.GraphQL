@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GrQl.Data.Dtos
 {
-    public class Station
+    public class StationDto
     {
         [JsonProperty("uuid")]
         [JsonPropertyName("uuid")]
@@ -32,6 +32,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Dtos
         public double Latitude { get; set; }
 
         [JsonPropertyName("water")]
-        public Water Water { get; set; }
+        public WaterDto Water { get; set; }
     }
 }
