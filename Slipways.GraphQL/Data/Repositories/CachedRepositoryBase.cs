@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
 {
 
-    public interface ICachedRepositoryBase<T> : IRepositoryBase<T>
-    {
-    }
+    public interface ICachedRepositoryBase<T> : IRepositoryBase<T> { }
 
     public class CachedRepositoryBase<T> : RepositoryBase<T>, ICachedRepositoryBase<T> where T : class, IEntity, new()
     {
@@ -34,6 +32,27 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             {
                 var newValues = values.ToList();
                 newValues.Add(result);
+                _cache.Set(Key, newValues);
+            }
+            return result;
+        }
+
+        public override T Update(
+            T entity)
+        {
+            var result = base.Update(entity);
+
+            if (result == null)
+                return null;
+
+            if (_cache.TryGetValue(Key, out IEnumerable<T> values))
+            {
+                var tmp = values.FirstOrDefault(_ => _.Id == entity.Id);
+                var newValues = values.ToList();
+
+                newValues.Remove(tmp);
+                newValues.Add(result);
+
                 _cache.Set(Key, newValues);
             }
             return result;

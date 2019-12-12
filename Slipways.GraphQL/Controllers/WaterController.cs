@@ -95,7 +95,7 @@ namespace Slipways.GrQl.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize("allin")]
         public async Task<ActionResult> DeleteAsync(
             Guid id)

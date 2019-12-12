@@ -8,8 +8,6 @@ namespace Slipways.GraphQL.Controllers
     {
         public ExtraController()
         {
-
         }
-
     }
 }
