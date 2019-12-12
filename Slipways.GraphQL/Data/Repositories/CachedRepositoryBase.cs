@@ -32,6 +32,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             {
                 var newValues = values.ToList();
                 newValues.Add(result);
+                _logger.LogInformation($"Add entity '{entity.Id}' to cache {typeof(T)}");
                 _cache.Set(Key, newValues);
             }
             return result;
@@ -52,7 +53,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
 
                 newValues.Remove(tmp);
                 newValues.Add(result);
-
+                _logger.LogInformation($"Updated entity '{entity.Id}' in cache {typeof(T)}");
                 _cache.Set(Key, newValues);
             }
             return result;
@@ -71,6 +72,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
                 var newValues = values.ToList();
                 newValues.Remove(result);
                 _cache.Set(Key, newValues);
+                _logger.LogInformation($"Removed entity '{id}' from cache {typeof(T)}");
             }
             return result;
         }

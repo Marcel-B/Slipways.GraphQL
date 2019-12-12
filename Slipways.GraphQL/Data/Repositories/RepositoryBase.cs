@@ -12,7 +12,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {
         protected SlipwaysContext Db;
-        private ILogger<RepositoryBase<T>> _logger;
+        protected ILogger<RepositoryBase<T>> _logger;
 
         public RepositoryBase(
             SlipwaysContext db,
