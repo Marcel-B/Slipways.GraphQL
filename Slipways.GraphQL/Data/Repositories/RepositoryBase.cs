@@ -52,6 +52,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public virtual T Update(
             T entity)
         {
+            entity.Updated = DateTime.Now;
             var result = Db.Set<T>().Update(entity);
             _ = Db.SaveChanges();
             return result.Entity;

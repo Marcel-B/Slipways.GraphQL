@@ -79,6 +79,22 @@ namespace Slipways.GrQl.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Authorize("allin")]
+        public async Task<ActionResult> PutAsync(
+            Guid id,
+            WaterDto waterDto)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_PUT_api_water_seconds", "Histogram").NewTimer())
+            {
+                var water = await _rep.Water.SelectByIdAsync(id);
+                water.Longname = waterDto.Longname;
+                water.Shortname = waterDto.Shortname;
+                var result = _rep.Water.Update(water);
+                return new JsonResult(waterDto, _options);
+            }
+        }
+
         [HttpDelete]
         [Authorize("allin")]
         public async Task<ActionResult> DeleteAsync(
