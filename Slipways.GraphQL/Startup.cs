@@ -74,6 +74,8 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<ISlipwayExtraRepository, SlipwayExtraRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
+            services.AddHostedService<CacheLoader>();
+
             services.AddSwaggerGen(_ =>
             {
                 _.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Slipway API", Version = "v1" });
@@ -146,13 +148,22 @@ namespace com.b_velop.Slipways.GrQl
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
         }
 
-        private static void UpdateDatabase(IApplicationBuilder app)
+        private static void UpdateDatabase(
+            IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<SlipwaysContext>();
-            //context.Database.Migrate();
+            try
+            {
+                context.Database.Migrate();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }
