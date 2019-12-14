@@ -16,7 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using IdentityServer4.AccessTokenValidation;
 using GraphQL.DataLoader;
