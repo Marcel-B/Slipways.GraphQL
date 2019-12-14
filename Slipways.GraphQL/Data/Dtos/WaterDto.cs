@@ -1,9 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace com.b_velop.Slipways.GrQl.Data.Dtos
 {
-    public class Water
+    public class WaterDto
     {
+        [JsonPropertyName("id")]
+        public Guid Id { get; set; }
+
         [JsonPropertyName("shortname")]
         public string Shortname { get; set; }
 

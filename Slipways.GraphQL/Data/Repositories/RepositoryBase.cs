@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace com.b_velop.Slipways.GrQl.Data.Repositories
@@ -13,7 +12,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {
         protected SlipwaysContext Db;
-        private ILogger<RepositoryBase<T>> _logger;
+        protected ILogger<RepositoryBase<T>> _logger;
 
         public RepositoryBase(
             SlipwaysContext db,
@@ -36,6 +35,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public virtual async Task<T> InsertAsync(
             T entity)
         {
+            entity.Created = DateTime.Now;
             var result = await Db.Set<T>().AddAsync(entity);
             _ = Db.SaveChanges();
             return result.Entity;
@@ -52,7 +52,22 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public virtual T Update(
             T entity)
         {
+            entity.Updated = DateTime.Now;
             var result = Db.Set<T>().Update(entity);
+            _ = Db.SaveChanges();
+            return result.Entity;
+        }
+
+        public virtual async Task<T> DeleteAsync(
+            Guid id)
+        {
+            var tmp = await Db.Set<T>().FirstOrDefaultAsync(_ => _.Id == id);
+            if (tmp == null)
+            {
+                _logger.LogWarning(5555, $"Can't delete Entity with ID '{id}'. Entity not exsists");
+                return null;
+            }
+            var result = Db.Set<T>().Remove(tmp);
             _ = Db.SaveChanges();
             return result.Entity;
         }

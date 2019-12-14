@@ -37,14 +37,12 @@ namespace com.b_velop.Slipways.GrQl.Services
         private async void DoWork(
             object state)
         {
-            using (var scope = _services.CreateScope())
-            {
-                _logger.LogInformation("Reload cache");
-                var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
-                var rep = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
-                var waters = await rep.Water.SelectAllAsync();
-                cache.Set(Cache.Waters, waters);
-            }
+            using var scope = _services.CreateScope();
+            _logger.LogInformation("Reload cache");
+            var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
+            var rep = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
+            var waters = await rep.Water.SelectAllAsync();
+            cache.Set(Cache.Waters, waters);
         }
 
         public Task StopAsync(
