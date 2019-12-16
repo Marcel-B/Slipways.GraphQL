@@ -24,6 +24,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.City);
             Field(_ => _.Phone, nullable: true);
             Field(_ => _.Url, nullable: true);
+            Field(_ => _.Email, nullable: true);
             Field(_ => _.Latitude);
             Field(_ => _.Longitude);
 
