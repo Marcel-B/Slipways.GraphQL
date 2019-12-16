@@ -74,6 +74,7 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.AddHostedService<CacheLoader>();
+            services.AddHostedService<BackupService>();
 
             services.AddSwaggerGen(_ =>
             {
