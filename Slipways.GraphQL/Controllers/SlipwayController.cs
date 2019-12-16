@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using com.b_velop.Slipways.GrQl.Data.Dtos;
 using com.b_velop.Slipways.GrQl.Data.Models;
 using com.b_velop.Slipways.GrQl.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -61,7 +62,10 @@ namespace Slipways.GrQl.Controllers
         public string Contra { get; set; }
 
         [JsonPropertyName("extras")]
-        public IEnumerable<Guid> Extras { get; set; }
+        public IEnumerable<ExtraDto> Extras { get; set; }
+
+        [JsonPropertyName("water")]
+        public WaterDto Water { get; set; }
     }
 
     [Route("api/[controller]")]
@@ -132,7 +136,7 @@ namespace Slipways.GrQl.Controllers
                             {
                                 Id = Guid.NewGuid(),
                                 Created = DateTime.Now,
-                                ExtraFk = extra,
+                                ExtraFk = extra.Id,
                                 SlipwayFk = result.Id,
                             };
                             extras.Add(slipwayExtra);
