@@ -1,5 +1,4 @@
 ﻿using com.b_velop.Slipways.GrQl.Data;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
