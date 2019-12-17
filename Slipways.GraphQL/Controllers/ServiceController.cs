@@ -48,7 +48,7 @@ namespace com.b_velop.Slipways.GrQl.Controllers
         }
 
         [HttpPost]
-        //[Authorize("allin")]
+        [Authorize("allin")]
         public async Task<ActionResult> PostAsync(
            ServiceDto serviceDto)
         {
