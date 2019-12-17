@@ -41,8 +41,18 @@ namespace com.b_velop.Slipways.GrQl.Services
             _logger.LogInformation("Reload cache");
             var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
             var rep = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
-            var waters = await rep.Water.SelectAllAsync();
-            cache.Set(Cache.Waters, waters);
+
+            cache.Remove(Cache.Waters);
+            _ = await rep.Water.SelectAllAsync();
+
+            cache.Remove(Cache.Manufacturer);
+            _ = await rep.Manufacturer.SelectAllAsync();
+
+            cache.Remove(Cache.Stations);
+            _ = await rep.Station.SelectAllAsync();
+
+            cache.Remove(Cache.Extras);
+            _ = await rep.Extra.SelectAllAsync();
         }
 
         public Task StopAsync(

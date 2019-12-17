@@ -20,7 +20,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             Key = Cache.Manufacturer;
         }
 
-
         public async Task<ILookup<Guid, Manufacturer>> GetManufacturerByServiceIdAsync(
             IEnumerable<Guid> serviceIds,
             CancellationToken cancellationToken)
