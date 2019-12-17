@@ -39,7 +39,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
                         Name = manufacturer.Name,
                         Updated = manufacturer.Updated,
                         Created = manufacturer.Created,
-                        ServiceFk = manufacturerService.ManufacturerFk
+                        ServiceFk = manufacturerService.ServiceFk
                     });
             }
             return result.ToLookup(_ => _.ServiceFk);
