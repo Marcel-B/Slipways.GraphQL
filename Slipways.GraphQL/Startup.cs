@@ -69,6 +69,7 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<IExtraRepository, ExtraRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+            services.AddScoped<IManufacturerServicesRepository, ManufacturerServicesRepository>();
             services.AddScoped<IPortRepository, PortRepository>();
             services.AddScoped<ISlipwayExtraRepository, SlipwayExtraRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();

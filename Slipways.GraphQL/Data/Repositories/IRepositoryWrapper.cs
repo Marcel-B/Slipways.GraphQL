@@ -10,5 +10,6 @@
         IManufacturerRepository Manufacturer { get; }
         IPortRepository Port { get; }
         ISlipwayExtraRepository SlipwayExtra { get; }
+        IManufacturerServicesRepository ManufacturerServices { get; }
     }
 }
