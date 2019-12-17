@@ -7,7 +7,9 @@ namespace com.b_velop.Slipways.GrQl.Data.Dtos
 {
     public class ServiceDto
     {
-        public ServiceDto() { }
+        public ServiceDto() {
+
+        }
 
         public ServiceDto(
             Service s)
@@ -31,8 +33,8 @@ namespace com.b_velop.Slipways.GrQl.Data.Dtos
             if (s.Manufacturers == null)
                 return;
 
-            foreach (var manufacturer in s.Manufacturers)
-                Manufacturers.Add(new ManufacturerDto(manufacturer));
+            //foreach (var manufacturer in s.Manufacturers)
+            //    Manufacturers.Add(new ManufacturerDto(manufacturer));
         }
 
         [JsonPropertyName("id")]
@@ -67,6 +69,6 @@ namespace com.b_velop.Slipways.GrQl.Data.Dtos
 
 
         [JsonPropertyName("manufacturers")]
-        public HashSet<ManufacturerDto> Manufacturers { get; set; }
+        public IEnumerable<ManufacturerDto> Manufacturers { get; set; }
     }
 }

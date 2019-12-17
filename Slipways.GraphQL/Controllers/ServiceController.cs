@@ -16,6 +16,7 @@ using Prometheus;
 namespace com.b_velop.Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ServiceController : Controller
     {
         private IRepositoryWrapper _rep;
@@ -47,7 +48,7 @@ namespace com.b_velop.Slipways.GrQl.Controllers
         }
 
         [HttpPost]
-        [Authorize("allin")]
+        //[Authorize("allin")]
         public async Task<ActionResult> PostAsync(
            ServiceDto serviceDto)
         {
@@ -84,7 +85,7 @@ namespace com.b_velop.Slipways.GrQl.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(6666, $"Error occurred while insert Slipway", e);
+                    _logger.LogError(6666, $"Error occurred while insert Service", e);
                     return new StatusCodeResult(500);
                 }
             }
