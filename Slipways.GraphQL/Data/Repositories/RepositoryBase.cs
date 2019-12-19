@@ -44,9 +44,28 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
         public virtual async Task<int> InsertRangeAsync(
             IEnumerable<T> entity)
         {
+            foreach (var et in entity)
+            {
+                et.Created = DateTime.Now;
+            }
             await Db.Set<T>().AddRangeAsync(entity);
             var count = Db.SaveChanges();
             return count;
+        }
+
+        public virtual int UpdateRange(
+            IEnumerable<T> entities)
+        {
+            int cnt = 0;
+            foreach (var entity in entities)
+            {
+                entity.Updated = DateTime.Now;
+                var result = Db.Set<T>().Update(entity);
+                if (result != null)
+                    cnt++;
+            }
+            _ = Db.SaveChanges();
+            return cnt;
         }
 
         public virtual T Update(

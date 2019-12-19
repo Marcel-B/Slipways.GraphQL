@@ -155,6 +155,48 @@ namespace Slipways.GrQl.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Authorize("allin")]
+        public ActionResult PutAsync(
+            Guid id,
+            SlipwayDto slipwayDto)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_PUT_api_slipway_seconds", "Histogram").NewTimer())
+            {
+                try
+                {
+                    var slipway = new Slipway(slipwayDto);
+                    slipway.Id = Guid.NewGuid();
+
+                    var result = _rep.Slipway.Update(slipway);
+                    if (result != null)
+                    {
+                        var extras = new HashSet<SlipwayExtra>();
+                        foreach (var extra in slipwayDto.Extras)
+                        {
+                            var slipwayExtra = new SlipwayExtra
+                            {
+                                Id = Guid.NewGuid(),
+                                Created = DateTime.Now,
+                                ExtraFk = extra.Id,
+                                SlipwayFk = result.Id,
+                            };
+                            extras.Add(slipwayExtra);
+                        }
+                        _ =  _rep.SlipwayExtra.UpdateRange(extras);
+                    }
+                    slipwayDto.Id = slipway.Id;
+                    slipwayDto.Created = result.Created;
+                    return new JsonResult(slipway, _options);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(6666, $"Error occurred while update Slipway", e);
+                    return new StatusCodeResult(500);
+                }
+            }
+        }
+
         [HttpDelete("{id}")]
         [Authorize("allin")]
         public async Task<ActionResult> DeleteSlipwayAsync(

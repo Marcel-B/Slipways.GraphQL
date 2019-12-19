@@ -9,6 +9,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
     {
         Task<T> InsertAsync(T entity);
         Task<int> InsertRangeAsync(IEnumerable<T> entity);
+        int UpdateRange(IEnumerable<T> entities);
         Task<IEnumerable<T>> SelectAllAsync();
         Task<IEnumerable<T>> SelectByConditionAsync(Expression<Func<T, bool>> expression);
         Task<T> SelectByIdAsync(Guid id);
