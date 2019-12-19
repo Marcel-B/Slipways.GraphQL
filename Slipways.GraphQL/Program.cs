@@ -72,7 +72,7 @@ namespace com.b_velop.Slipways.GrQl
 
                         if (hostingContet.HostingEnvironment.IsStaging())
                         {
-                            pw = secretProvider.GetSecret("dev_slipways_db");
+                            pw = secretProvider.GetSecret("dev_slipway_db");
                         }
                         else if (hostingContet.HostingEnvironment.IsProduction())
                         {
