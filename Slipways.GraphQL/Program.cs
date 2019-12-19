@@ -13,11 +13,13 @@ namespace com.b_velop.Slipways.GrQl
 {
     public class Program
     {
+        static string env = "";
         private static NLog.Logger logger;
         public static void Main(string[] args)
         {
             var file = string.Empty;
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Staging")
+            env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (env == "Staging")
                 file = "dev-nlog.config";
             else
                 file = "nlog.config";
@@ -70,11 +72,11 @@ namespace com.b_velop.Slipways.GrQl
                         var database = Environment.GetEnvironmentVariable("DATABASE");
                         var pw = string.Empty;
 
-                        if (!hostingContet.HostingEnvironment.IsProduction())
+                        if (env != "Production")
                         {
                             pw = secretProvider.GetSecret("dev_slipway_db");
                         }
-                        else if (hostingContet.HostingEnvironment.IsProduction())
+                        else if (env == "Production")
                         {
                             pw = secretProvider.GetSecret("sqlserver");
                         }

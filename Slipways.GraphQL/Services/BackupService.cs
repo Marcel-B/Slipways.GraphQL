@@ -37,24 +37,31 @@ namespace com.b_velop.Slipways.GrQl.Services
         private async void DoWork(
             object state)
         {
-            using var scope = _services.CreateScope();
-            _logger.LogInformation("Backup Database");
-            var ctx = scope.ServiceProvider.GetRequiredService<SlipwaysContext>();
-            var slipways = await ctx.Slipways.ToListAsync();
-            var sb = new StringBuilder();
-
-            var dir = new DirectoryInfo("./backUp");
-            if (!dir.Exists)
-                dir.Create();
-
-            sb.AppendLine($"Id;Name;Street;Postalcode;City;Longitude;Latitude;Costs;Pro;Contra;Comment;Rating;WaterFk;Created;Updated");
-            foreach (var slipway in slipways)
+            try
             {
-                sb.Append($"{slipway.Id};{slipway.Name};{slipway.Street};{slipway.Postalcode};{slipway.City};{slipway.Longitude};{slipway.Latitude};{slipway.Costs};{slipway.Pro ?? string.Empty};{slipway.Contra ?? string.Empty};{slipway.Comment?.Replace(';', '-') ?? string.Empty};{slipway.Rating};{slipway.WaterFk};{slipway.Created};");
-                if (slipway.Updated == null) sb.AppendLine("");
-                else sb.AppendLine($"{slipway.Updated}");
+                using var scope = _services.CreateScope();
+                _logger.LogInformation("Backup Database");
+                var ctx = scope.ServiceProvider.GetRequiredService<SlipwaysContext>();
+                var slipways = await ctx.Slipways.ToListAsync();
+                var sb = new StringBuilder();
+
+                var dir = new DirectoryInfo("./backUp");
+                if (!dir.Exists)
+                    dir.Create();
+
+                sb.AppendLine($"Id;Name;Street;Postalcode;City;Longitude;Latitude;Costs;Pro;Contra;Comment;Rating;WaterFk;Created;Updated");
+                foreach (var slipway in slipways)
+                {
+                    sb.Append($"{slipway.Id};{slipway.Name};{slipway.Street};{slipway.Postalcode};{slipway.City};{slipway.Longitude};{slipway.Latitude};{slipway.Costs};{slipway.Pro ?? string.Empty};{slipway.Contra ?? string.Empty};{slipway.Comment?.Replace(';', '-') ?? string.Empty};{slipway.Rating};{slipway.WaterFk};{slipway.Created};");
+                    if (slipway.Updated == null) sb.AppendLine("");
+                    else sb.AppendLine($"{slipway.Updated}");
+                }
+                await File.WriteAllTextAsync("./backUp/slipways.csv", sb.ToString());
             }
-            await File.WriteAllTextAsync("./backUp/slipways.csv", sb.ToString());
+            catch (Exception e)
+            {
+                _logger.LogError(6666, "Error occurred while BackUp database", e);
+            }
         }
 
         public Task StopAsync(
