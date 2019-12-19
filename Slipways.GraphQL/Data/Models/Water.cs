@@ -1,15 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace com.b_velop.Slipways.GraphQL.Data.Models
+namespace com.b_velop.Slipways.GrQl.Data.Models
 {
-    public class Water : IEntity
+    public class Water : Entity
     {
-        [Key]
-        [JsonPropertyName("id")]
-        public Guid Id { get; set; }
-
         [JsonPropertyName("shortname")]
         public string Shortname { get; set; }
 

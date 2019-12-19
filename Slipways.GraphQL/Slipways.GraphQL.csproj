@@ -2,13 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>com.b_velop.Slipways.GraphQL</RootNamespace>
+    <RootNamespace>com.b_velop.Slipways.GrQl</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'com.b_velop.Slipways.GraphQL' ">
+    <StartAction>Project</StartAction>
+    <EnvironmentVariables>
+      <Variable name="API_RESOURCE" value="slipways.api" />
+      <Variable name="AUTHORITY" value="https://identity.qaybe.de" />
+      <Variable name="ASPNETCORE_ENVIRONMENT" value="Development" />
+      <Variable name="CON_STR" value="Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!" />
+    </EnvironmentVariables>
+    <ApplicationURL>http://localhost:5000/ui/playground</ApplicationURL>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="2.4.0" />
-    <PackageReference Include="GraphQL.Authorization" Version="2.1.29" />
+    <PackageReference Include="GraphQL.Core.Authorization" Version="2.1.1" />
+    <PackageReference Include="GraphQL.Server.Core" Version="3.4.0" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="GraphQL.Server.Transports.WebSockets" Version="3.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,12 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\GraphQLAuthorization\" />
-    <Folder Include="Data\GraphQLTypes\" />
-    <Folder Include="Data\Models\" />
-    <Folder Include="Services\" />
-    <Folder Include="Data\Dtos\" />
     <Folder Include="Data\GraphQLSchema\" />
-    <Folder Include="Data\Repositories\" />
     <Folder Include="Data\GraphQLQueries\" />
   </ItemGroup>
   <ItemGroup>

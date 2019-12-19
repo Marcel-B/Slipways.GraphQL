@@ -1,15 +1,18 @@
-﻿using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
+﻿using System;
+using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
+using GraphQL.DataLoader;
 using GraphQL.Types;
 
-namespace com.b_velop.Slipways.GraphQL.Data.GraphQLTypes
+namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 {
     public class StationType : ObjectGraphType<Station>
     {
         public StationType(
+            IDataLoaderContextAccessor accessor,
             IRepositoryWrapper rep)
         {
-            Name = "Station";
+            Name = nameof(Station);
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>)).Description("Eindeutige unveränderliche ID.");
             Field(_ => _.Number).Description("Pegelnummer");
@@ -23,7 +26,11 @@ namespace com.b_velop.Slipways.GraphQL.Data.GraphQLTypes
             FieldAsync<WaterType, Water>(
                 nameof(Station.Water),
                 description: "Angaben zum Gewässer",
-                resolve: async ctx => await rep.Water.SelectByIdAsync(ctx.Source.WaterFk));
+                resolve: async ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", rep.Water.GetWatersByIdAsync);
+                    return await loader.LoadAsync(ctx.Source.WaterFk);
+                });
         }
     }
 }

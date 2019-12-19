@@ -1,5 +1,6 @@
 using System;
-using com.b_velop.Slipways.GraphQL.Data;
+using com.b_velop.Slipways.GrQl.Data;
+using com.b_velop.Slipways.GrQl.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,21 +9,26 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using Prometheus;
 
-namespace com.b_velop.Slipways.GraphQL
+namespace com.b_velop.Slipways.GrQl
 {
     public class Program
     {
         private static NLog.Logger logger;
         public static void Main(string[] args)
         {
-            var file = "nlog.config";
+            var file = string.Empty;
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Staging")
+                file = "dev-nlog.config";
+            else
+                file = "nlog.config";
+
             var metricPusher = new MetricPusher(new MetricPusherOptions
             {
                 Endpoint = "https://push.qaybe.de/metrics",
                 Job = "slipwaysql",
                 Instance = Environment.MachineName
             });
-            
+
             metricPusher.Start();
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
@@ -56,12 +62,32 @@ namespace com.b_velop.Slipways.GraphQL
                     })
                 .ConfigureServices((hostingContet, services) =>
                     {
-                        var pw = Environment.GetEnvironmentVariable("PW");
-                        var str = $"Server=sqlserver,1433;Database=Slipways;User Id=sa;Password={pw}";
+                        var secretProvider = new SecretProvider();
+
+                        var port = Environment.GetEnvironmentVariable("PORT");
+                        var server = Environment.GetEnvironmentVariable("SERVER");
+                        var user = Environment.GetEnvironmentVariable("USER");
+                        var database = Environment.GetEnvironmentVariable("DATABASE");
+                        var pw = string.Empty;
+
+                        if (!hostingContet.HostingEnvironment.IsProduction())
+                        {
+                            pw = secretProvider.GetSecret("dev_slipway_db");
+                        }
+                        else if (hostingContet.HostingEnvironment.IsProduction())
+                        {
+                            pw = secretProvider.GetSecret("sqlserver");
+                        }
+                        else
+                        {
+                            pw = "foo123bar!";
+                        }
+
+                        var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
 #if DEBUG
-                        str = "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
+                        str = $"Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
-                        services.AddDbContext<SlipwaysContext>(_ => _.UseSqlServer(str));
+                        services.AddDbContext<SlipwaysContext>(_ => _.UseSqlServer(str), ServiceLifetime.Transient);
                     })
                 .UseNLog();
     }

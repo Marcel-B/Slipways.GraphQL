@@ -1,10 +1,10 @@
 ﻿using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Dtos;
+using com.b_velop.Slipways.GrQl.Data.Dtos;
 using Microsoft.Extensions.Logging;
 
-namespace com.b_velop.Slipways.GraphQL.Services
+namespace com.b_velop.Slipways.GrQl.Services
 {
     public class WsvService : IWsvService
     {

@@ -1,31 +1,26 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using com.b_velop.Slipways.GraphQL.Data;
-using com.b_velop.Slipways.GraphQL.Data.GraphQLSchema;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using com.b_velop.Slipways.GrQl.Data;
+using com.b_velop.Slipways.GrQl.Data.GraphQLSchema;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using com.b_velop.Slipways.GraphQL.Middlewares;
-using com.b_velop.Slipways.GraphQL.Services;
+using com.b_velop.Slipways.GrQl.Services;
 using GraphQL;
-using GraphQL.Authorization;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
-using GraphQL.Validation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Prometheus;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authorization;
+using IdentityServer4.AccessTokenValidation;
+using GraphQL.DataLoader;
 
-namespace com.b_velop.Slipways.GraphQL
+namespace com.b_velop.Slipways.GrQl
 {
     public class Startup
     {
@@ -44,7 +39,6 @@ namespace com.b_velop.Slipways.GraphQL
             IServiceCollection services)
         {
             services.AddMemoryCache();
-            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddHttpClient<IWsvService, WsvService>(_ =>
             {
@@ -55,35 +49,37 @@ namespace com.b_velop.Slipways.GraphQL
             var authority = Environment.GetEnvironmentVariable("AUTHORITY");
             var apiResource = Environment.GetEnvironmentVariable("API_RESOURCE");
 
-
-            //services.AddAuthentication("Bearer")
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = authority;
-            //        // if (WebHostEnvironment.IsDevelopment())
-            //        //     options.RequireHttpsMetadata = false;
-            //        // else
-            //        options.RequireHttpsMetadata = true;
-            //        options.ApiName = apiResource;
-            //    });
-
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+            services.AddSingleton<DataLoaderDocumentListener>();
             services.AddScoped<AppSchema>();
 
             services.AddGraphQL(options =>
             {
                 options.ExposeExceptions = true;
                 options.EnableMetrics = true;
-            }).AddGraphTypes(ServiceLifetime.Scoped);
+            })
+               .AddWebSockets()
+               .AddDataLoader()
+               .AddGraphTypes(ServiceLifetime.Scoped);
 
             services.AddScoped<IWaterRepository, WaterRepository>();
             services.AddScoped<IStationRepository, StationRepository>();
             services.AddScoped<ISlipwayRepository, SlipwayRepository>();
+            services.AddScoped<IExtraRepository, ExtraRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+            services.AddScoped<IManufacturerServicesRepository, ManufacturerServicesRepository>();
+            services.AddScoped<IPortRepository, PortRepository>();
+            services.AddScoped<ISlipwayExtraRepository, SlipwayExtraRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+
+            services.AddHostedService<CacheLoader>();
+            services.AddHostedService<BackupService>();
 
             services.AddSwaggerGen(_ =>
             {
-                _.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "Slipway API", Version = "v1" });
+                _.SwaggerDoc(name: "v2", new OpenApiInfo { Title = "Slipway API", Version = "v2" });
             });
             services.Configure<KestrelServerOptions>(options =>
             {
@@ -91,38 +87,41 @@ namespace com.b_velop.Slipways.GraphQL
             });
 
             services.AddControllers();
-
-            services.AddMvcCore(options =>
+            services.AddAuthorization(options =>
             {
-                var policy = ScopePolicy.Create("slipways.writer");
-                options.Filters.Add(new AuthorizeFilter(policy));
-            }).AddAuthorization(options =>
-            {
-                options.AddPolicy("myPolicy", builder =>
+                options.AddPolicy("reader", builder =>
                 {
-                    builder.RequireScope("slipways.writer");
+                    builder.RequireScope("slipways.api.reader");
+                });
+                options.AddPolicy("allin", builder =>
+                {
+                    builder.RequireScope("slipways.api.allaccess");
                 });
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                  .AddJwtBearer(options =>
-                  {
-                      // base-address of your identityserver
-                      options.Authority = authority;
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+            .AddIdentityServerAuthentication(options =>
+            {
+                // base-address of your identityserver
+                options.Authority = authority;
+                options.RequireHttpsMetadata = true;
+                // name of the API resource
+                options.ApiName = apiResource;
+            });
 
-                      // name of the API resource
-                      options.Audience = apiResource;
-                  });
         }
 
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env)
         {
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseRouting();
-            app.UseGraphQLAuth();
+
+            app.UseWebSockets();
+
             app.UseMetricServer();
             app.UseHttpMetrics();
             app.UseMetricsMiddleware();
@@ -135,28 +134,36 @@ namespace com.b_velop.Slipways.GraphQL
             app.UseSwagger();
             app.UseSwaggerUI(_ =>
             {
-                _.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Slipways API v1");
+                _.SwaggerEndpoint(url: "/swagger/v2/swagger.json", name: "Slipways API v2");
             });
             UpdateDatabase(app);
 
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers()
-                .RequireAuthorization("myPolicy");
+                endpoints.MapControllers();
             });
 
-            app.UseGraphQL<AppSchema>();
+            // use HTTP middleware for ChatSchema at path /graphql
+            app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
         }
 
-        private static void UpdateDatabase(IApplicationBuilder app)
+        private static void UpdateDatabase(
+            IApplicationBuilder app)
         {
             using var serviceScope = app.ApplicationServices
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<SlipwaysContext>();
-            context.Database.Migrate();
+            try
+            {
+                context.Database.Migrate();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }

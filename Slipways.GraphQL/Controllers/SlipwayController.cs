@@ -1,30 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using com.b_velop.Slipways.GrQl.Data.Dtos;
+using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 
-namespace Slipways.GraphQL.Controllers
+namespace Slipways.GrQl.Controllers
 {
     public class SlipwayDto
     {
-        public string Name { get; set; }
-        public string City { get; set; }
-        public double Longitude { get; set; }
+        [JsonPropertyName("id")]
+        public Guid Id { get; set; }
+
+        [JsonPropertyName("created")]
+        public DateTime Created { get; set; }
+
+        [JsonPropertyName("updated")]
+        public DateTime? Updated { get; set; }
+
+        [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
-        public Guid Water { get; set; }
+
+        [JsonPropertyName("longitude")]
+        public double Longitude { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("waterFk")]
+        public Guid WaterFk { get; set; }
+
+        [JsonPropertyName("rating")]
+        public int Rating { get; set; }
+
+        [JsonPropertyName("comment")]
+        public string Comment { get; set; }
+
+        [JsonPropertyName("street")]
+        public string Street { get; set; }
+
+        [JsonPropertyName("postalcode")]
+        public string Postalcode { get; set; }
+
+        [JsonPropertyName("city")]
+        public string City { get; set; }
+
+        [JsonPropertyName("costs")]
+        public decimal Costs { get; set; }
+
+        [JsonPropertyName("pro")]
+        public string Pro { get; set; }
+
+        [JsonPropertyName("contra")]
+        public string Contra { get; set; }
+
+        [JsonPropertyName("extras")]
+        public IEnumerable<ExtraDto> Extras { get; set; }
+
+        [JsonPropertyName("water")]
+        public WaterDto Water { get; set; }
     }
 
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class SlipwayController : ControllerBase
     {
+        private readonly JsonSerializerOptions _options;
         private readonly IRepositoryWrapper _rep;
         private readonly ILogger<SlipwayController> _logger;
 
@@ -32,12 +80,19 @@ namespace Slipways.GraphQL.Controllers
             IRepositoryWrapper rep,
             ILogger<SlipwayController> logger)
         {
+            _options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+                IgnoreNullValues = true
+            };
             _rep = rep;
             _logger = logger;
         }
 
         // GET: api/slipway
         [HttpGet]
+        [Authorize("reader")]
         public async Task<IEnumerable<Slipway>> GetAsync()
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_slipway_seconds", "Histogram").NewTimer())
@@ -49,6 +104,7 @@ namespace Slipways.GraphQL.Controllers
 
         // GET api/slipway/8177a148-5674-4b8f-8ded-050907f640f3
         [HttpGet("{id}")]
+        [Authorize("reader")]
         public async Task<ActionResult<Slipway>> GetAsync(
             Guid id)
         {
@@ -59,22 +115,105 @@ namespace Slipways.GraphQL.Controllers
         }
 
         [HttpPost]
+        [Authorize("allin")]
         public async Task<ActionResult> PostAsync(
             SlipwayDto slipwayDto)
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_POST_api_slipway_seconds", "Histogram").NewTimer())
             {
-                var slipway = new Slipway
+                try
                 {
-                    Id = Guid.NewGuid(),
-                    City = slipwayDto.City,
-                    Name = slipwayDto.Name,
-                    Longitude = slipwayDto.Longitude,
-                    Latitude = slipwayDto.Latitude,
-                    WaterFk = slipwayDto.Water
-                };
-                var result = await _rep.Slipway.InsertAsync(slipway);
-                return Ok();
+                    var slipway = new Slipway(slipwayDto);
+                    slipway.Id = Guid.NewGuid();
+
+                    var result = await _rep.Slipway.InsertAsync(slipway);
+                    if (result != null)
+                    {
+                        var extras = new HashSet<SlipwayExtra>();
+                        foreach (var extra in slipwayDto.Extras)
+                        {
+                            var slipwayExtra = new SlipwayExtra
+                            {
+                                Id = Guid.NewGuid(),
+                                Created = DateTime.Now,
+                                ExtraFk = extra.Id,
+                                SlipwayFk = result.Id,
+                            };
+                            extras.Add(slipwayExtra);
+                        }
+                        _ = await _rep.SlipwayExtra.InsertRangeAsync(extras);
+                    }
+                    slipwayDto.Id = slipway.Id;
+                    slipwayDto.Created = result.Created;
+                    return new JsonResult(slipway, _options);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(6666, $"Error occurred while insert Slipway", e);
+                    return new StatusCodeResult(500);
+                }
+            }
+        }
+
+        [HttpPut("{id}")]
+        [Authorize("allin")]
+        public ActionResult PutAsync(
+            Guid id,
+            SlipwayDto slipwayDto)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_PUT_api_slipway_seconds", "Histogram").NewTimer())
+            {
+                try
+                {
+                    var slipway = new Slipway(slipwayDto);
+                    slipway.Id = Guid.NewGuid();
+
+                    var result = _rep.Slipway.Update(slipway);
+                    if (result != null)
+                    {
+                        var extras = new HashSet<SlipwayExtra>();
+                        foreach (var extra in slipwayDto.Extras)
+                        {
+                            var slipwayExtra = new SlipwayExtra
+                            {
+                                Id = Guid.NewGuid(),
+                                Created = DateTime.Now,
+                                ExtraFk = extra.Id,
+                                SlipwayFk = result.Id,
+                            };
+                            extras.Add(slipwayExtra);
+                        }
+                        _ =  _rep.SlipwayExtra.UpdateRange(extras);
+                    }
+                    slipwayDto.Id = slipway.Id;
+                    slipwayDto.Created = result.Created;
+                    return new JsonResult(slipway, _options);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(6666, $"Error occurred while update Slipway", e);
+                    return new StatusCodeResult(500);
+                }
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize("allin")]
+        public async Task<ActionResult> DeleteSlipwayAsync(
+            Guid id)
+        {
+            using (Metrics.CreateHistogram($"slipwaysql_duration_DELETE_api_slipway_seconds", "Histogram").NewTimer())
+            {
+                try
+                {
+                    var result = await _rep.Slipway.DeleteAsync(id);
+                    return new JsonResult(result, _options);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(6666, $"Error occurred while deleting Slipway with id '{id}'", e);
+                    return new StatusCodeResult(500);
+                }
             }
         }
     }

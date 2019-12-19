@@ -1,7 +1,7 @@
-﻿using com.b_velop.Slipways.GraphQL.Data.Models;
+﻿using com.b_velop.Slipways.GrQl.Data.Models;
 using GraphQL.Types;
 
-namespace com.b_velop.Slipways.GraphQL.Data.GraphQLInputTypes
+namespace com.b_velop.Slipways.GrQl.Data.GraphQLInputTypes
 {
     public class SlipwayInputType : InputObjectGraphType<Slipway>
     {

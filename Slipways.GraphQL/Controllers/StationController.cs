@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GraphQL.Data.Models;
-using com.b_velop.Slipways.GraphQL.Data.Repositories;
+using com.b_velop.Slipways.GrQl.Data.Models;
+using com.b_velop.Slipways.GrQl.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,11 +11,10 @@ using Prometheus;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace com.b_velop.Slipways.GraphQL.Controllers
+namespace com.b_velop.Slipways.GrQl.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class StationController : Controller
     {
         private readonly IRepositoryWrapper _rep;
@@ -31,6 +30,7 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
 
         // GET: api/values
         [HttpGet]
+        [Authorize("reader")]
         public async Task<IEnumerable<Station>> GetAsync()
         {
             using (Metrics.CreateHistogram($"slipwaysql_duration_GET_api_station_seconds", "Histogram").NewTimer())
@@ -42,6 +42,7 @@ namespace com.b_velop.Slipways.GraphQL.Controllers
 
         // GET api/values/8177a148-5674-4b8f-8ded-050907f640f3
         [HttpGet("{id}")]
+        [Authorize("reader")]
         public async Task<ActionResult<Station>> GetAsync(
             Guid id)
         {
