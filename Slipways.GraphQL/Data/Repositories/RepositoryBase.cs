@@ -53,6 +53,21 @@ namespace com.b_velop.Slipways.GrQl.Data.Repositories
             return count;
         }
 
+        public virtual int UpdateRange(
+            IEnumerable<T> entities)
+        {
+            int cnt = 0;
+            foreach (var entity in entities)
+            {
+                entity.Updated = DateTime.Now;
+                var result = Db.Set<T>().Update(entity);
+                if (result != null)
+                    cnt++;
+            }
+            _ = Db.SaveChanges();
+            return cnt;
+        }
+
         public virtual T Update(
             T entity)
         {
