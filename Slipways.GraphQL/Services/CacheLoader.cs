@@ -37,29 +37,29 @@ namespace com.b_velop.Slipways.GrQl.Services
         private async void DoWork(
             object state)
         {
-            try
-            {
-                using var scope = _services.CreateScope();
-                _logger.LogInformation("Reload cache");
-                var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
-                var rep = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
+            //try
+            //{
+            //    using var scope = _services.CreateScope();
+            //    _logger.LogInformation("Reload cache");
+            //    var cache = scope.ServiceProvider.GetRequiredService<IMemoryCache>();
+            //    var rep = scope.ServiceProvider.GetRequiredService<IRepositoryWrapper>();
 
-                cache.Remove(Cache.Waters);
-                _ = await rep.Water.SelectAllAsync();
+            //    cache.Remove(Cache.Waters);
+            //    _ = await rep.Water.SelectAllAsync();
 
-                cache.Remove(Cache.Manufacturer);
-                _ = await rep.Manufacturer.SelectAllAsync();
+            //    cache.Remove(Cache.Manufacturer);
+            //    _ = await rep.Manufacturer.SelectAllAsync();
 
-                cache.Remove(Cache.Stations);
-                _ = await rep.Station.SelectAllAsync();
+            //    cache.Remove(Cache.Stations);
+            //    _ = await rep.Station.SelectAllAsync();
 
-                cache.Remove(Cache.Extras);
-                _ = await rep.Extra.SelectAllAsync();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(6666, $"Error while updating cache", e);
-            }
+            //    cache.Remove(Cache.Extras);
+            //    _ = await rep.Extra.SelectAllAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    _logger.LogError(6666, $"Error while updating cache", e);
+            //}
         }
 
         public Task StopAsync(
