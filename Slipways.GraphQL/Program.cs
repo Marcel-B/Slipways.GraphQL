@@ -16,7 +16,12 @@ namespace com.b_velop.Slipways.GrQl
         private static NLog.Logger logger;
         public static void Main(string[] args)
         {
-            var file = "nlog.config";
+            var file = string.Empty;
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Staging")
+                file = "dev-nlog.config";
+            else
+                file = "nlog.config";
+
             var metricPusher = new MetricPusher(new MetricPusherOptions
             {
                 Endpoint = "https://push.qaybe.de/metrics",
@@ -58,10 +63,29 @@ namespace com.b_velop.Slipways.GrQl
                 .ConfigureServices((hostingContet, services) =>
                     {
                         var secretProvider = new SecretProvider();
-                        var pw = secretProvider.GetSecret("sqlserver");
-                        var str = $"Server=sqlserver,1433;Database=Slipways;User Id=sa;Password={pw}";
+
+                        var port = Environment.GetEnvironmentVariable("PORT");
+                        var server = Environment.GetEnvironmentVariable("SERVER");
+                        var user = Environment.GetEnvironmentVariable("USER");
+                        var database = Environment.GetEnvironmentVariable("DATABASE");
+                        var pw = string.Empty;
+
+                        if (hostingContet.HostingEnvironment.IsStaging())
+                        {
+                            pw = secretProvider.GetSecret("dev_slipways_db");
+                        }
+                        else if (hostingContet.HostingEnvironment.IsProduction())
+                        {
+                            pw = secretProvider.GetSecret("sqlserver");
+                        }
+                        else
+                        {
+                            pw = "foo123bar!";
+                        }
+
+                        var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
 #if DEBUG
-                        str = "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
+                        str = $"Server=localhost,1433;Database=Slipways;User Id=sa;Password={pw}";
 #endif
                         services.AddDbContext<SlipwaysContext>(_ => _.UseSqlServer(str), ServiceLifetime.Transient);
                     })
