@@ -70,7 +70,7 @@ namespace com.b_velop.Slipways.GrQl
                         var database = Environment.GetEnvironmentVariable("DATABASE");
                         var pw = string.Empty;
 
-                        if (hostingContet.HostingEnvironment.IsStaging())
+                        if (!hostingContet.HostingEnvironment.IsProduction())
                         {
                             pw = secretProvider.GetSecret("dev_slipway_db");
                         }
@@ -85,7 +85,7 @@ namespace com.b_velop.Slipways.GrQl
 
                         var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
 #if DEBUG
-                        str = $"Server=localhost,1433;Database=Slipways;User Id=sa;Password={pw}";
+                        str = $"Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
                         services.AddDbContext<SlipwaysContext>(_ => _.UseSqlServer(str), ServiceLifetime.Transient);
                     })
