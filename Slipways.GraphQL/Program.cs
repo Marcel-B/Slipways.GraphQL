@@ -13,7 +13,7 @@ namespace com.b_velop.Slipways.GrQl
 {
     public class Program
     {
-        static string env = "";
+        static string env = "nlog.config";
         private static NLog.Logger logger;
         public static void Main(string[] args)
         {
@@ -21,8 +21,6 @@ namespace com.b_velop.Slipways.GrQl
             env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env == "Staging")
                 file = "dev-nlog.config";
-            else
-                file = "nlog.config";
 
             var metricPusher = new MetricPusher(new MetricPusherOptions
             {
