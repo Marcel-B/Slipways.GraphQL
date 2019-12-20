@@ -63,7 +63,7 @@ namespace com.b_velop.Slipways.GrQl
                 .ConfigureServices((hostingContet, services) =>
                     {
                         var stage = hostingContet.HostingEnvironment.EnvironmentName;
-                        logger.Log(NLog.LogLevel.Info, $"Fancy Environemnt: {stage}");
+                        //logger.Log(NLog.LogLevel.Info, $"Fancy Environemnt: {stage}");
                         var secretProvider = new SecretProvider();
 
                         var port = Environment.GetEnvironmentVariable("PORT");
