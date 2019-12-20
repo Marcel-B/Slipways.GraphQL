@@ -1,4 +1,4 @@
-﻿using com.b_velop.Slipways.GrQl.Data.Models;
+﻿using com.b_velop.Slipways.Data.Models;
 using GraphQL.Types;
 
 namespace com.b_velop.Slipways.GrQl.Data.GraphQLInputTypes

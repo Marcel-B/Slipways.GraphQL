@@ -1,7 +1,5 @@
 using System;
-using com.b_velop.Slipways.GrQl.Data;
 using com.b_velop.Slipways.GrQl.Data.GraphQLSchema;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
 using com.b_velop.Slipways.GraphQL.Middlewares;
 using com.b_velop.Slipways.GrQl.Services;
 using GraphQL;
@@ -19,6 +17,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using IdentityServer4.AccessTokenValidation;
 using GraphQL.DataLoader;
+using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Repositories;
+using com.b_velop.Slipways.Data;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -39,12 +40,6 @@ namespace com.b_velop.Slipways.GrQl
             IServiceCollection services)
         {
             services.AddMemoryCache();
-
-            services.AddHttpClient<IWsvService, WsvService>(_ =>
-            {
-                _.BaseAddress = new Uri("https://www.pegelonline.wsv.de");
-                _.Timeout = TimeSpan.FromSeconds(10);
-            });
 
             var authority = Environment.GetEnvironmentVariable("AUTHORITY");
             var apiResource = Environment.GetEnvironmentVariable("API_RESOURCE");
@@ -102,13 +97,10 @@ namespace com.b_velop.Slipways.GrQl
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
             .AddIdentityServerAuthentication(options =>
             {
-                // base-address of your identityserver
                 options.Authority = authority;
                 options.RequireHttpsMetadata = true;
-                // name of the API resource
                 options.ApiName = apiResource;
             });
-
         }
 
         public void Configure(
@@ -119,9 +111,7 @@ namespace com.b_velop.Slipways.GrQl
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseWebSockets();
-
             app.UseMetricServer();
             app.UseHttpMetrics();
             app.UseMetricsMiddleware();
@@ -137,9 +127,8 @@ namespace com.b_velop.Slipways.GrQl
                 _.SwaggerEndpoint(url: "/swagger/v2/swagger.json", name: "Slipways API v2");
             });
 
-            if (!env.IsProduction())
-                UpdateDatabase(app);
-
+            //if (!env.IsProduction())
+            //    UpdateDatabase(app);
 
             app.UseEndpoints(endpoints =>
             {

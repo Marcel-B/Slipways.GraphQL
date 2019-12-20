@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
-using com.b_velop.Slipways.GrQl.Infrastructure;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 

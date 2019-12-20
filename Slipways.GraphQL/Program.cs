@@ -1,5 +1,5 @@
 using System;
-using com.b_velop.Slipways.GrQl.Data;
+using com.b_velop.Slipways.Data;
 using com.b_velop.Slipways.GrQl.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
