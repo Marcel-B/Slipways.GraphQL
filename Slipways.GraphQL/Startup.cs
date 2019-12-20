@@ -136,7 +136,9 @@ namespace com.b_velop.Slipways.GrQl
             {
                 _.SwaggerEndpoint(url: "/swagger/v2/swagger.json", name: "Slipways API v2");
             });
-            UpdateDatabase(app);
+
+            if (!env.IsProduction())
+                UpdateDatabase(app);
 
 
             app.UseEndpoints(endpoints =>
