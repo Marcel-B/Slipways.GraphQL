@@ -49,6 +49,7 @@ namespace com.b_velop.Slipways.GrQl.Data.Models
 
         public string City { get; set; }
 
+        [Column(TypeName = "decimal(5, 2)")]
         public decimal Costs { get; set; }
 
         public string Pro { get; set; }

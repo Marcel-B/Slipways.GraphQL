@@ -22,14 +22,17 @@ namespace com.b_velop.Slipways.GrQl
             if (env != "Production")
                 file = "dev-nlog.config";
 
-            var metricPusher = new MetricPusher(new MetricPusherOptions
+            if (env == "Production")
             {
-                Endpoint = "https://push.qaybe.de/metrics",
-                Job = "slipwaysql",
-                Instance = Environment.MachineName
-            });
+                var metricPusher = new MetricPusher(new MetricPusherOptions
+                {
+                    Endpoint = "https://push.qaybe.de/metrics",
+                    Job = "slipwaysql",
+                    Instance = Environment.MachineName
+                });
 
-            metricPusher.Start();
+                metricPusher.Start();
+            }
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try
@@ -63,13 +66,14 @@ namespace com.b_velop.Slipways.GrQl
                 .ConfigureServices((hostingContet, services) =>
                     {
                         var stage = hostingContet.HostingEnvironment.EnvironmentName;
-                        //logger.Log(NLog.LogLevel.Info, $"Fancy Environemnt: {stage}");
+                        logger?.Log(NLog.LogLevel.Info, $"Fancy Environemnt: {stage}");
                         var secretProvider = new SecretProvider();
 
                         var port = Environment.GetEnvironmentVariable("PORT");
                         var server = Environment.GetEnvironmentVariable("SERVER");
                         var user = Environment.GetEnvironmentVariable("USER");
                         var database = Environment.GetEnvironmentVariable("DATABASE");
+
                         var pw = string.Empty;
 
                         if (env != "Production")
