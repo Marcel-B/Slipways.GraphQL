@@ -13,11 +13,11 @@ namespace com.b_velop.Slipways.GrQl
 {
     public class Program
     {
-        static string env = "nlog.config";
+        static string env = "Staging";
         private static NLog.Logger logger;
         public static void Main(string[] args)
         {
-            var file = string.Empty;
+            var file = "nlog.config";
             env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env != "Production")
                 file = "dev-nlog.config";
