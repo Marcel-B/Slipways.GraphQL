@@ -19,7 +19,7 @@ namespace com.b_velop.Slipways.GrQl
         {
             var file = string.Empty;
             env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (env == "Staging")
+            if (env != "Production")
                 file = "dev-nlog.config";
 
             var metricPusher = new MetricPusher(new MetricPusherOptions
