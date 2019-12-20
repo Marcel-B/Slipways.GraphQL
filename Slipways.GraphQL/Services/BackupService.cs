@@ -5,7 +5,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Security;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +31,7 @@ namespace com.b_velop.Slipways.GrQl.Services
         {
             _logger.LogInformation("CacheLoader service running");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
+            _timer = new Timer(DoWork, null, TimeSpan.FromMinutes(15),
                 TimeSpan.FromDays(1));
             return Task.CompletedTask;
         }
@@ -37,37 +39,48 @@ namespace com.b_velop.Slipways.GrQl.Services
         private async void DoWork(
             object state)
         {
-            //try
-            //{
-            //    using var scope = _services.CreateScope();
-            //    _logger.LogInformation("Backup Database");
-            //    var ctx = scope.ServiceProvider.GetRequiredService<SlipwaysContext>();
-            //    var slipways = await ctx.Slipways.ToListAsync();
-            //    var sb = new StringBuilder();
-
-            //    var dir = new DirectoryInfo("./backUp");
-            //    if (!dir.Exists)
-            //        dir.Create();
-
-            //    sb.AppendLine($"Id;Name;Street;Postalcode;City;Longitude;Latitude;Costs;Pro;Contra;Comment;Rating;WaterFk;Created;Updated");
-            //    foreach (var slipway in slipways)
-            //    {
-            //        sb.Append($"{slipway.Id};{slipway.Name};{slipway.Street};{slipway.Postalcode};{slipway.City};{slipway.Longitude};{slipway.Latitude};{slipway.Costs};{slipway.Pro ?? string.Empty};{slipway.Contra ?? string.Empty};{slipway.Comment?.Replace(';', '-') ?? string.Empty};{slipway.Rating};{slipway.WaterFk};{slipway.Created};");
-            //        if (slipway.Updated == null) sb.AppendLine("");
-            //        else sb.AppendLine($"{slipway.Updated}");
-            //    }
-            //    await File.WriteAllTextAsync("./backUp/slipways.csv", sb.ToString());
-            //}
-            //catch (Exception e)
-            //{
-            //    _logger.LogError(6666, "Error occurred while BackUp database", e);
-            //}
+            try
+            {
+                using var scope = _services.CreateScope();
+                _logger?.LogInformation("Backup Database");
+                var ctx = scope.ServiceProvider.GetRequiredService<SlipwaysContext>();
+                var slipways = await ctx.Slipways.ToListAsync();
+                var dir = new DirectoryInfo("./backUp");
+                if (!dir.Exists)
+                    dir.Create();
+                var slipwaysJson = JsonSerializer.Serialize(slipways, new JsonSerializerOptions { WriteIndented = false, IgnoreNullValues = true });
+                await File.WriteAllTextAsync("./backUp/slipways.json", slipwaysJson.ToString());
+            }
+            catch (JsonException e)
+            {
+                _logger?.LogError(6666, "Error occurred while Serialize object", e);
+            }
+            catch(InvalidOperationException e)
+            {
+                _logger?.LogError(6666, "Error occurred while get Required Service", e);
+            }
+            catch(ArgumentNullException e)
+            {
+                _logger?.LogError(6666, "Error occurred whith Directory", e);
+            }
+            catch (SecurityException e)
+            {
+                _logger?.LogError(6666, "Error occurred whith Directory ", e);
+            }
+            catch (ArgumentException e)
+            {
+                _logger?.LogError(6666, "Error occurred whith Directory", e);
+            }
+            catch (Exception e)
+            {
+                _logger?.LogError(6666, "Error occurred while BackUp database", e);
+            }
         }
 
         public Task StopAsync(
             CancellationToken stoppingToken)
         {
-            _logger.LogInformation("CacheLoader Service is stopping.");
+            _logger?.LogInformation("CacheLoader Service is stopping.");
             _timer?.Change(Timeout.Infinite, 0);
             return Task.CompletedTask;
         }
