@@ -1,7 +1,7 @@
 ﻿using System;
+using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Models;
 using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
-using com.b_velop.Slipways.GrQl.Data.Models;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
 using GraphQL.Types;
 using Prometheus;
 

@@ -1,5 +1,5 @@
 using System;
-using com.b_velop.Slipways.GrQl.Data;
+using com.b_velop.Slipways.Data;
 using com.b_velop.Slipways.GrQl.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,14 +22,17 @@ namespace com.b_velop.Slipways.GrQl
             if (env != "Production")
                 file = "dev-nlog.config";
 
-            var metricPusher = new MetricPusher(new MetricPusherOptions
+            if (env == "Production")
             {
-                Endpoint = "https://push.qaybe.de/metrics",
-                Job = "slipwaysql",
-                Instance = Environment.MachineName
-            });
+                var metricPusher = new MetricPusher(new MetricPusherOptions
+                {
+                    Endpoint = "https://push.qaybe.de/metrics",
+                    Job = "slipwaysql",
+                    Instance = Environment.MachineName
+                });
 
-            metricPusher.Start();
+                metricPusher.Start();
+            }
 
             logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try
@@ -59,37 +62,6 @@ namespace com.b_velop.Slipways.GrQl
                 .ConfigureWebHostDefaults(webBuilder =>
                     {
                         webBuilder.UseStartup<Startup>();
-                    })
-                .ConfigureServices((hostingContet, services) =>
-                    {
-                        var stage = hostingContet.HostingEnvironment.EnvironmentName;
-                        //logger.Log(NLog.LogLevel.Info, $"Fancy Environemnt: {stage}");
-                        var secretProvider = new SecretProvider();
-
-                        var port = Environment.GetEnvironmentVariable("PORT");
-                        var server = Environment.GetEnvironmentVariable("SERVER");
-                        var user = Environment.GetEnvironmentVariable("USER");
-                        var database = Environment.GetEnvironmentVariable("DATABASE");
-                        var pw = string.Empty;
-
-                        if (env != "Production")
-                        {
-                            pw = secretProvider.GetSecret("dev_slipway_db");
-                        }
-                        else if (env == "Production")
-                        {
-                            pw = secretProvider.GetSecret("sqlserver");
-                        }
-                        else
-                        {
-                            pw = "foo123bar!";
-                        }
-
-                        var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
-#if DEBUG
-                        str = $"Server=db,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
-#endif
-                        services.AddDbContext<SlipwaysContext>(_ => _.UseSqlServer(str), ServiceLifetime.Transient);
                     })
                 .UseNLog();
     }

@@ -8,9 +8,9 @@ WORKDIR /src
 # Copy csproj and restore as distinct layers
 COPY Slipways.GraphQL/Slipways.GraphQL.csproj Slipways/
 
-#COPY NuGet.config GraphQL/
+COPY NuGet.config GraphQL/
 
-RUN dotnet restore Slipways/Slipways.GraphQL.csproj  #--configfile ./GraphQL/NuGet.config
+RUN dotnet restore Slipways/Slipways.GraphQL.csproj  --configfile ./GraphQL/NuGet.config
 
 # Copy everything else and build
 COPY ./Slipways.GraphQL/ Slipways/
