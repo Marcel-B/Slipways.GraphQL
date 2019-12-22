@@ -13,7 +13,7 @@
       <Variable name="ASPNETCORE_ENVIRONMENT" value="Development" />
       <Variable name="CON_STR" value="Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!" />
     </EnvironmentVariables>
-    <ApplicationURL>http://localhost:5000/ui/playground</ApplicationURL>
+    <ApplicationURL>http://localhost:80/ui/playground</ApplicationURL>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

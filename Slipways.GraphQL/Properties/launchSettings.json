@@ -23,7 +23,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000/ui/playground"
+      "applicationUrl": "http://localhost:80/ui/playground"
     },
     "com.b_velop.Slipways.GraphQL": {
       "commandName": "Project",
@@ -34,7 +34,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
       },
-      "applicationUrl": "http://localhost:5000/ui/playground"
+      "applicationUrl": "http://localhost:80/ui/playground"
     }
   }
 }
