@@ -117,28 +117,8 @@ namespace com.b_velop.Slipways.GrQl
                 app.UseDeveloperExceptionPage();
             }
 
-            if (!env.IsProduction())
-               UpdateDatabase(app);
-
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-        }
-
-        private static void UpdateDatabase(
-            IApplicationBuilder app)
-        {
-            using var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope();
-            using var context = serviceScope.ServiceProvider.GetService<SlipwaysContext>();
-            try
-            {
-                context.Database.Migrate();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
         }
     }
 }
