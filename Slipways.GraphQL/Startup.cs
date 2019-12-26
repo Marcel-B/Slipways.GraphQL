@@ -136,8 +136,6 @@ namespace com.b_velop.Slipways.GrQl
             {
                 _.SwaggerEndpoint(url: "/swagger/v2/swagger.json", name: "Slipways API v2");
             });
-            UpdateDatabase(app);
-
 
             app.UseEndpoints(endpoints =>
             {
@@ -147,23 +145,6 @@ namespace com.b_velop.Slipways.GrQl
             // use HTTP middleware for ChatSchema at path /graphql
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-        }
-
-        private static void UpdateDatabase(
-            IApplicationBuilder app)
-        {
-            using var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope();
-            using var context = serviceScope.ServiceProvider.GetService<SlipwaysContext>();
-            try
-            {
-                context.Database.Migrate();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.StackTrace);
-            }
         }
     }
 }
