@@ -1,11 +1,7 @@
-﻿using com.b_velop.Slipways.GrQl.Data.GraphQLInputTypes;
-using com.b_velop.Slipways.GrQl.Data.Models;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
-using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using Microsoft.Extensions.Logging;
 using Prometheus;
-using System;
+using com.b_velop.Slipways.Data.Contracts;
 
 namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
 {

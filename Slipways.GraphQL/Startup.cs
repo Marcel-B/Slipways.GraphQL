@@ -1,9 +1,6 @@
 using System;
-using com.b_velop.Slipways.GrQl.Data;
 using com.b_velop.Slipways.GrQl.Data.GraphQLSchema;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
 using com.b_velop.Slipways.GraphQL.Middlewares;
-using com.b_velop.Slipways.GrQl.Services;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
@@ -15,10 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authorization;
-using IdentityServer4.AccessTokenValidation;
 using GraphQL.DataLoader;
+using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Repositories;
+using com.b_velop.Slipways.Data;
+using com.b_velop.Slipways.GrQl.Infrastructure;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -38,16 +36,13 @@ namespace com.b_velop.Slipways.GrQl
         public void ConfigureServices(
             IServiceCollection services)
         {
-            services.AddMemoryCache();
-
-            services.AddHttpClient<IWsvService, WsvService>(_ =>
+            services.AddControllers();
+            var cache = Environment.GetEnvironmentVariable("CACHE");
+            services.AddStackExchangeRedisCache(options =>
             {
-                _.BaseAddress = new Uri("https://www.pegelonline.wsv.de");
-                _.Timeout = TimeSpan.FromSeconds(10);
+                options.Configuration = cache;
+                options.InstanceName = "Slipways";
             });
-
-            var authority = Environment.GetEnvironmentVariable("AUTHORITY");
-            var apiResource = Environment.GetEnvironmentVariable("API_RESOURCE");
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
@@ -74,75 +69,62 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<ISlipwayExtraRepository, SlipwayExtraRepository>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
-            services.AddHostedService<CacheLoader>();
-            services.AddHostedService<BackupService>();
-
-            services.AddSwaggerGen(_ =>
+            services.AddDbContext<SlipwaysContext>(options =>
             {
-                _.SwaggerDoc(name: "v2", new OpenApiInfo { Title = "Slipway API", Version = "v2" });
+                var secretProvider = new SecretProvider();
+
+                var port = Environment.GetEnvironmentVariable("PORT");
+                var server = Environment.GetEnvironmentVariable("SERVER");
+                var user = Environment.GetEnvironmentVariable("USER");
+                var database = Environment.GetEnvironmentVariable("DATABASE");
+
+                var pw = string.Empty;
+
+                if (WebHostEnvironment.IsStaging())
+                {
+                    pw = secretProvider.GetSecret("dev_slipway_db");
+                }
+                else if (WebHostEnvironment.IsProduction())
+                {
+                    pw = secretProvider.GetSecret("sqlserver");
+                }
+                else
+                {
+                    pw = "foo123bar!";
+                }
+
+                var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
+#if DEBUG
+                str = $"Server=db,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
+#endif
+                options.UseSqlServer(str);
             });
             services.Configure<KestrelServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
             });
-
-            services.AddControllers();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("reader", builder =>
-                {
-                    builder.RequireScope("slipways.api.reader");
-                });
-                options.AddPolicy("allin", builder =>
-                {
-                    builder.RequireScope("slipways.api.allaccess");
-                });
-            });
-
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-            .AddIdentityServerAuthentication(options =>
-            {
-                // base-address of your identityserver
-                options.Authority = authority;
-                options.RequireHttpsMetadata = true;
-                // name of the API resource
-                options.ApiName = apiResource;
-            });
-
         }
 
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env)
         {
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseWebSockets();
-
-            app.UseMetricServer();
-            app.UseHttpMetrics();
-            app.UseMetricsMiddleware();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseSwagger();
-            app.UseSwaggerUI(_ =>
-            {
-                _.SwaggerEndpoint(url: "/swagger/v2/swagger.json", name: "Slipways API v2");
-            });
-
+            app.UseRouting();
+            app.UseWebSockets();
+            app.UseMetricServer();
+            app.UseHttpMetrics();
+            app.UseMetricsMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapMetrics();
             });
+         
 
-            // use HTTP middleware for ChatSchema at path /graphql
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
         }

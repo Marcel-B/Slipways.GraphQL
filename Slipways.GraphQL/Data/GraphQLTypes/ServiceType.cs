@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using com.b_velop.Slipways.GrQl.Data.Models;
-using com.b_velop.Slipways.GrQl.Data.Repositories;
+using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Models;
 using GraphQL.DataLoader;
 using GraphQL.Types;
 
