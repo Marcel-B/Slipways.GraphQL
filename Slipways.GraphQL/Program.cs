@@ -13,28 +13,25 @@ namespace com.b_velop.Slipways.GrQl
 {
     public class Program
     {
-        static string env = "Staging";
-        private static NLog.Logger logger;
-        public static void Main(string[] args)
+        public static void Main(
+            string[] args)
         {
             var file = "nlog.config";
-            env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env != "Production")
                 file = "dev-nlog.config";
+            var job = env == "Production" ? "SlipwaysGraphQL" : "DevSlipwaysGraphQL";
 
-            if (env == "Production")
+
+            var metricPusher = new MetricPusher(new MetricPusherOptions
             {
-                var metricPusher = new MetricPusher(new MetricPusherOptions
-                {
-                    Endpoint = "https://push.qaybe.de/metrics",
-                    Job = "slipwaysql",
-                    Instance = Environment.MachineName
-                });
+                Endpoint = "https://push.qaybe.de/metrics",
+                Job = job,
+                Instance = job
+            });
+            metricPusher.Start();
 
-                metricPusher.Start();
-            }
-
-            logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
+            var logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try
             {
                 logger.Debug("init main");

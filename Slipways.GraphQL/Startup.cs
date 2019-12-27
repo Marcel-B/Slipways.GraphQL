@@ -36,16 +36,18 @@ namespace com.b_velop.Slipways.GrQl
         public void ConfigureServices(
             IServiceCollection services)
         {
-            services.AddMemoryCache();
+            var cache = Environment.GetEnvironmentVariable("CACHE");
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = cache;
+                options.InstanceName = "Slipways";
+            });
+
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
             services.AddSingleton<DataLoaderDocumentListener>();
             services.AddScoped<AppSchema>();
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = "cache";
-                options.InstanceName = "Slipways";
-            });
+
             services.AddGraphQL(options =>
             {
                 options.ExposeExceptions = true;

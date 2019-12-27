@@ -42,8 +42,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
-    <PackageReference Include="prometheus-net.AspNetCore" Version="3.3.0" />
-    <PackageReference Include="Slipways.Data" Version="2.1.32" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Slipways.Data" Version="2.1.35" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc5" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.0" />
