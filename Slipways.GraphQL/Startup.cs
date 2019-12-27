@@ -36,6 +36,7 @@ namespace com.b_velop.Slipways.GrQl
         public void ConfigureServices(
             IServiceCollection services)
         {
+            services.AddControllers();
             var cache = Environment.GetEnvironmentVariable("CACHE");
             services.AddStackExchangeRedisCache(options =>
             {
@@ -108,16 +109,21 @@ namespace com.b_velop.Slipways.GrQl
             IApplicationBuilder app,
             IWebHostEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
             app.UseRouting();
             app.UseWebSockets();
             app.UseMetricServer();
             app.UseHttpMetrics();
             app.UseMetricsMiddleware();
-
-            if (env.IsDevelopment())
+            app.UseEndpoints(endpoints =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                endpoints.MapControllers();
+                endpoints.MapMetrics();
+            });
+         
 
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
