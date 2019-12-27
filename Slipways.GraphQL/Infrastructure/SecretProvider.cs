@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.FileProviders;
+using System;
 using System.IO;
 
 namespace com.b_velop.Slipways.GrQl.Infrastructure
@@ -20,7 +21,7 @@ namespace com.b_velop.Slipways.GrQl.Infrastructure
                     return streamReader.ReadToEnd();
                 }
             }
-            return string.Empty;
+            return Environment.GetEnvironmentVariable(key);
         }
     }
 }

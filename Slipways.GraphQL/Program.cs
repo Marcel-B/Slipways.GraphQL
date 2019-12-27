@@ -1,9 +1,5 @@
 using System;
-using com.b_velop.Slipways.Data;
-using com.b_velop.Slipways.GrQl.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
@@ -21,7 +17,6 @@ namespace com.b_velop.Slipways.GrQl
             if (env != "Production")
                 file = "dev-nlog.config";
             var job = env == "Production" ? "SlipwaysGraphQL" : "DevSlipwaysGraphQL";
-
 
             var metricPusher = new MetricPusher(new MetricPusherOptions
             {
