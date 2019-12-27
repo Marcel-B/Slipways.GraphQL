@@ -17,6 +17,7 @@ using com.b_velop.Slipways.Data.Contracts;
 using com.b_velop.Slipways.Data.Repositories;
 using com.b_velop.Slipways.Data;
 using com.b_velop.Slipways.GrQl.Infrastructure;
+using com.b_velop.Slipways.Data.Extensions;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -38,11 +39,7 @@ namespace com.b_velop.Slipways.GrQl
         {
             services.AddControllers();
             var cache = Environment.GetEnvironmentVariable("CACHE");
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = cache;
-                options.InstanceName = "Slipways";
-            });
+            services.AddSlipwaysData(cache);
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
@@ -57,17 +54,6 @@ namespace com.b_velop.Slipways.GrQl
                .AddWebSockets()
                .AddDataLoader()
                .AddGraphTypes(ServiceLifetime.Scoped);
-
-            services.AddScoped<IWaterRepository, WaterRepository>();
-            services.AddScoped<IStationRepository, StationRepository>();
-            services.AddScoped<ISlipwayRepository, SlipwayRepository>();
-            services.AddScoped<IExtraRepository, ExtraRepository>();
-            services.AddScoped<IServiceRepository, ServiceRepository>();
-            services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
-            services.AddScoped<IManufacturerServicesRepository, ManufacturerServicesRepository>();
-            services.AddScoped<IPortRepository, PortRepository>();
-            services.AddScoped<ISlipwayExtraRepository, SlipwayExtraRepository>();
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.AddDbContext<SlipwaysContext>(options =>
             {
