@@ -13,8 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 using GraphQL.DataLoader;
-using com.b_velop.Slipways.Data.Contracts;
-using com.b_velop.Slipways.Data.Repositories;
 using com.b_velop.Slipways.Data;
 using com.b_velop.Slipways.GrQl.Infrastructure;
 using com.b_velop.Slipways.Data.Extensions;
