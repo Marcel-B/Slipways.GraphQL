@@ -13,8 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 using GraphQL.DataLoader;
-using com.b_velop.Slipways.Data.Contracts;
-using com.b_velop.Slipways.Data.Repositories;
 using com.b_velop.Slipways.Data;
 using com.b_velop.Slipways.GrQl.Infrastructure;
 using com.b_velop.Slipways.Data.Extensions;
@@ -38,8 +36,6 @@ namespace com.b_velop.Slipways.GrQl
             IServiceCollection services)
         {
             services.AddControllers();
-            var cache = Environment.GetEnvironmentVariable("CACHE");
-            services.AddSlipwaysData(cache);
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
@@ -55,36 +51,34 @@ namespace com.b_velop.Slipways.GrQl
                .AddDataLoader()
                .AddGraphTypes(ServiceLifetime.Scoped);
 
-            services.AddDbContext<SlipwaysContext>(options =>
+            var secretProvider = new SecretProvider();
+
+            var port = Environment.GetEnvironmentVariable("PORT");
+            var server = Environment.GetEnvironmentVariable("SERVER");
+            var user = Environment.GetEnvironmentVariable("USER");
+            var database = Environment.GetEnvironmentVariable("DATABASE");
+
+            var pw = string.Empty;
+
+            if (WebHostEnvironment.IsStaging())
             {
-                var secretProvider = new SecretProvider();
+                pw = secretProvider.GetSecret("dev_slipway_db");
+            }
+            else if (WebHostEnvironment.IsProduction())
+            {
+                pw = secretProvider.GetSecret("sqlserver");
+            }
+            else
+            {
+                pw = "foo123bar!";
+            }
 
-                var port = Environment.GetEnvironmentVariable("PORT");
-                var server = Environment.GetEnvironmentVariable("SERVER");
-                var user = Environment.GetEnvironmentVariable("USER");
-                var database = Environment.GetEnvironmentVariable("DATABASE");
-
-                var pw = string.Empty;
-
-                if (WebHostEnvironment.IsStaging())
-                {
-                    pw = secretProvider.GetSecret("dev_slipway_db");
-                }
-                else if (WebHostEnvironment.IsProduction())
-                {
-                    pw = secretProvider.GetSecret("sqlserver");
-                }
-                else
-                {
-                    pw = "foo123bar!";
-                }
-
-                var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
+            var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
 #if DEBUG
-                str = $"Server=db,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
+            str = $"Server=db,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
-                options.UseSqlServer(str);
-            });
+            services.AddSlipwaysData(str);
+
             services.Configure<KestrelServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
@@ -109,7 +103,7 @@ namespace com.b_velop.Slipways.GrQl
                 endpoints.MapControllers();
                 endpoints.MapMetrics();
             });
-         
+
 
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
