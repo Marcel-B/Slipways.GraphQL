@@ -1,4 +1,5 @@
 ﻿using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
 using GraphQL.DataLoader;
 using GraphQL.Types;
@@ -11,9 +12,9 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
     {
         public ExtraType(
             IDataLoaderContextAccessor accessor,
-            IRepositoryWrapper rep)
+            IRepositoryWrapper repository)
         {
-            Name =  nameof(Extra);
+            Name = nameof(Extra);
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Created);
@@ -21,12 +22,12 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Name);
 
             FieldAsync<ListGraphType<SlipwayType>, IEnumerable<Slipway>>(
-                "Slipways",
-                "Slipways",
-                resolve: async ctx =>
+                Cache.Slipways,
+                Cache.Slipways,
+                resolve: async context =>
                 {
-                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByExtraIds", rep.Slipway.GetSlipwaysByExtraIdAsync);
-                    return await loader.LoadAsync(ctx.Source.Id);
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByExtraIds", repository.Slipway.GetSlipwaysByExtraIdAsync);
+                    return await loader.LoadAsync(context.Source.Id);
                 });
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
 using GraphQL.DataLoader;
 using GraphQL.Types;
@@ -11,7 +12,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
     {
         public ServiceType(
             IDataLoaderContextAccessor accessor,
-            IRepositoryWrapper rep)
+            IRepositoryWrapper repository)
         {
             Name = nameof(Service);
 
@@ -29,12 +30,12 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Longitude);
 
             FieldAsync<ListGraphType<ManufacturerType>, IEnumerable<Manufacturer>>(
-                "Manufacturers",
-                "",
-                resolve: async ctx =>
+                Cache.Manufacturers,
+                Cache.Manufacturers,
+                resolve: async context =>
                 {
-                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Manufacturer>("GetManufacturerByServiceId", rep.Manufacturer.GetManufacturerByServiceIdAsync);
-                    return await loader.LoadAsync(ctx.Source.Id);
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Manufacturer>("GetManufacturerByServiceId", repository.Manufacturer.GetManufacturerByServiceIdAsync);
+                    return await loader.LoadAsync(context.Source.Id);
                 });
         }
     }

@@ -9,7 +9,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
     public class PortType : ObjectGraphType<Port>
     {
         public PortType(
-            IRepositoryWrapper rep,
+            IRepositoryWrapper repository,
             IDataLoaderContextAccessor accessor)
         {
             Name = nameof(Port);
@@ -31,10 +31,10 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             FieldAsync<WaterType, Water>(
                 nameof(Water),
                 "",
-                resolve: async ctx =>
+                resolve: async context =>
                 {
-                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", rep.Water.GetWatersByIdAsync);
-                    return await loader.LoadAsync(ctx.Source.WaterFk);
+                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);
+                    return await loader.LoadAsync(context.Source.WaterFk);
                 });
         }
     }

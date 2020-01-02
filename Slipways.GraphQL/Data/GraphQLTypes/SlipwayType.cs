@@ -1,4 +1,5 @@
 ﻿using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
 using GraphQL.DataLoader;
 using GraphQL.Types;
@@ -11,7 +12,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
     {
         public SlipwayType(
             IDataLoaderContextAccessor accessor,
-            IRepositoryWrapper rep)
+            IRepositoryWrapper repository)
         {
             Name = nameof(Slipway);
 
@@ -35,17 +36,17 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 description: "Angaben zum Gewässer",
                 resolve: async ctx =>
                 {
-                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", rep.Water.GetWatersByIdAsync);
+                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);
                     return await loader.LoadAsync(ctx.Source.WaterFk);
                 });
 
             FieldAsync<ListGraphType<ExtraType>, IEnumerable<Extra>>(
-                "Extras",
-                "Extras",
-                resolve: async ctx =>
+                Cache.Extras,
+                Cache.Extras,
+                resolve: async context =>
                 {
-                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Extra>("GetExtrasBySlipwayId", rep.Extra.GetExtrasBySlipwayIdAsync);
-                    return await loader.LoadAsync(ctx.Source.Id);
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Extra>("GetExtrasBySlipwayId", repository.Extra.GetExtrasBySlipwayIdAsync);
+                    return await loader.LoadAsync(context.Source.Id);
                 });
         }
     }

@@ -58,24 +58,24 @@ namespace com.b_velop.Slipways.GrQl
             var user = Environment.GetEnvironmentVariable("USER");
             var database = Environment.GetEnvironmentVariable("DATABASE");
 
-            var pw = string.Empty;
+            var password = string.Empty;
 
             if (WebHostEnvironment.IsStaging())
             {
-                pw = secretProvider.GetSecret("dev_slipway_db");
+                password = secretProvider.GetSecret("dev_slipway_db");
             }
             else if (WebHostEnvironment.IsProduction())
             {
-                pw = secretProvider.GetSecret("sqlserver");
+                password = secretProvider.GetSecret("sqlserver");
             }
             else
             {
-                pw = "foo123bar!";
+                password = "foo123bar!";
             }
 
-            var str = $"Server={server},{port};Database={database};User Id={user};Password={pw}";
+            var str = $"Server={server},{port};Database={database};User Id={user};Password={password}";
 #if DEBUG
-            str = $"Server=db,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
+            str = $"Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
             services.AddSlipwaysData(str);
 
@@ -103,7 +103,6 @@ namespace com.b_velop.Slipways.GrQl
                 endpoints.MapControllers();
                 endpoints.MapMetrics();
             });
-
 
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());

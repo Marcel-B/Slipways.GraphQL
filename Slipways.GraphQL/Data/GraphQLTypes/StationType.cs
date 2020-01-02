@@ -10,7 +10,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
     {
         public StationType(
             IDataLoaderContextAccessor accessor,
-            IRepositoryWrapper rep)
+            IRepositoryWrapper repository)
         {
             Name = nameof(Station);
 
@@ -26,10 +26,10 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             FieldAsync<WaterType, Water>(
                 nameof(Station.Water),
                 description: "Angaben zum Gewässer",
-                resolve: async ctx =>
+                resolve: async context =>
                 {
-                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", rep.Water.GetWatersByIdAsync);
-                    return await loader.LoadAsync(ctx.Source.WaterFk);
+                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);
+                    return await loader.LoadAsync(context.Source.WaterFk);
                 });
         }
     }
