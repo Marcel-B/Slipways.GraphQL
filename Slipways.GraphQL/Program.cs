@@ -16,16 +16,6 @@ namespace com.b_velop.Slipways.GrQl
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (env != "Production")
                 file = "dev-nlog.config";
-            var job = env == "Production" ? "SlipwaysGraphQL" : "DevSlipwaysGraphQL";
-
-            var metricPusher = new MetricPusher(new MetricPusherOptions
-            {
-                Endpoint = "https://push.qaybe.de/metrics",
-                Job = job,
-                Instance = job
-            });
-            metricPusher.Start();
-
             var logger = NLogBuilder.ConfigureNLog(file).GetCurrentClassLogger();
             try
             {
