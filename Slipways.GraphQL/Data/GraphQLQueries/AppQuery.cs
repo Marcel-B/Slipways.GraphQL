@@ -10,48 +10,68 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
     public class AppQuery : ObjectGraphType
     {
         public AppQuery(
-            IRepositoryWrapper rep)
+            IRepositoryWrapper repositories)
         {
-            using (Metrics.CreateHistogram("slipwaysql_duration_graphql_query_seconds", "").NewTimer())
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_waters_seconds", "").NewTimer())
             {
                 FieldAsync<ListGraphType<WaterType>>(
                  "waters",
-                 resolve: async ctx => await rep.Water.SelectAllAsync());
+                 resolve: async context => await repositories.Water.SelectAllAsync());
+            }
 
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_stations_seconds", "").NewTimer())
+            {
                 FieldAsync<ListGraphType<StationType>>(
                     "stations",
-                    resolve: async ctx => await rep.Station.SelectAllAsync());
+                    resolve: async context => await repositories.Station.SelectAllAsync());
+            }
 
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_slipways_seconds", "").NewTimer())
+            {
                 FieldAsync<ListGraphType<SlipwayType>>(
                     "slipways",
-                    resolve: async ctx => await rep.Slipway.SelectAllAsync());
+                    resolve: async context => await repositories.Slipway.SelectAllAsync());
+            }
 
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_seconds", "").NewTimer())
+            {
                 FieldAsync<ListGraphType<ExtraType>>(
                     "extras",
-                    resolve: async ctx => await rep.Extra.SelectAllAsync());
+                    resolve: async context => await repositories.Extra.SelectAllAsync());
+            }
 
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_ports_seconds", "").NewTimer())
+            {
                 FieldAsync<ListGraphType<PortType>>(
                    "ports",
-                   resolve: async ctx => await rep.Port.SelectAllAsync());
+                   resolve: async context => await repositories.Port.SelectAllAsync());
+            }
 
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_services_seconds", "").NewTimer())
+            {
                 FieldAsync<ListGraphType<ServiceType>>(
                     "services",
-                    resolve: async ctx => await rep.Service.SelectAllAsync());
+                    resolve: async context => await repositories.Service.SelectAllAsync());
+            }
 
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_manufacturers_seconds", "").NewTimer())
+            {
                 FieldAsync<ListGraphType<ManufacturerType>>(
                     "manufacturers",
-                    resolve: async ctx => await rep.Manufacturer.SelectAllAsync());
+                    resolve: async context => await repositories.Manufacturer.SelectAllAsync());
+            }
 
-
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_slipway_seconds", "").NewTimer())
+            {
                 FieldAsync<SlipwayType>(
                     nameof(Slipway),
                     "Select Slipway by ID",
                     new QueryArguments(
                     new QueryArgument<NonNullGraphType<IdGraphType>> { Name = nameof(Slipway.Id), Description = "The unique identifier of the unit" }),
-                    resolve: async ctx =>
+                    resolve: async context =>
                     {
-                        var id = ctx.GetArgument<Guid>(nameof(Slipway.Id));
-                        var slipway = await rep.Slipway.SelectByIdAsync(id);
+                        var id = context.GetArgument<Guid>(nameof(Slipway.Id));
+                        var slipway = await repositories.Slipway.SelectByIdAsync(id);
                         return slipway;
                     });
             }
