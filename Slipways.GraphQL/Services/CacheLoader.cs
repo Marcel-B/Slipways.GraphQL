@@ -28,7 +28,7 @@ namespace com.b_velop.Slipways.GrQl.Services
             CancellationToken stoppingToken)
         {
             _logger.LogInformation("CacheLoader service running");
-            await InitDatabaseAsync();
+            //await InitDatabaseAsync();
             _timer = new Timer(DoWork, null, TimeSpan.FromSeconds(15), TimeSpan.FromMinutes(1));
         }
 

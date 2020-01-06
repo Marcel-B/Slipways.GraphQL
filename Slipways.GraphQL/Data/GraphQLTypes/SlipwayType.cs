@@ -47,7 +47,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Port>("GetPortsById", repository.Port.GetPortsByIdAsync);
-                    return await loader.LoadAsync(context.Source.PortFk);
+                    return await loader.LoadAsync(context.Source.PortFk ?? Guid.Empty);
                 });
 
             FieldAsync<ListGraphType<ExtraType>, IEnumerable<Extra>>(
