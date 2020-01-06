@@ -42,7 +42,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 });
 
             FieldAsync<PortType, Port>(
-                nameof(Port.Name),
+                nameof(Port),
                 description: "Angaben zum Hafen",
                 resolve: async context =>
                 {
