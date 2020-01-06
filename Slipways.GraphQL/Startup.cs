@@ -14,6 +14,7 @@ using Prometheus;
 using GraphQL.DataLoader;
 using com.b_velop.Slipways.GrQl.Infrastructure;
 using com.b_velop.Slipways.Data.Extensions;
+using com.b_velop.Slipways.GrQl.Services;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -38,6 +39,8 @@ namespace com.b_velop.Slipways.GrQl
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
             services.AddSingleton<DataLoaderDocumentListener>();
+            services.AddScoped<IInitializer, Initializer>();
+            services.AddHostedService<CacheLoader>();
             services.AddScoped<AppSchema>();
 
             services.AddGraphQL(options =>
