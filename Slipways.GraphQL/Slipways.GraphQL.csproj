@@ -51,6 +51,7 @@
     <Folder Include="Data\GraphQLAuthorization\" />
     <Folder Include="Data\GraphQLSchema\" />
     <Folder Include="Data\GraphQLQueries\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Data\stations.json">
