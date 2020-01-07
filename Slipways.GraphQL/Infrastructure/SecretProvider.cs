@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.FileProviders;
+﻿using com.b_velop.Slipways.GrQl.Contracts;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.IO;
 

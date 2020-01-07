@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using com.b_velop.Slipways.Data;
 using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.GrQl.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -48,10 +50,17 @@ namespace com.b_velop.Slipways.GrQl.Infrastructure
         public async Task InitCache<T>(
             string name) where T : class, IEntity
         {
-            _logger.LogInformation($"Init cache for '{name}'");
-            var all = await _context.Set<T>().ToListAsync();
-            _logger.LogInformation($"Got '{all.Count}' values for '{name}'");
-            _memoryCache.Set(name, all.ToHashSet());
+            try
+            {
+                //_logger.LogInformation($"Init cache for '{name}'");
+                var all = await _context.Set<T>().ToListAsync();
+                //_logger.LogInformation($"Got '{all.Count}' values for '{name}'");
+                _memoryCache.Set(name, all.ToHashSet());
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(6666, $"Unexpected error occurred while initialize Cache for '{name}'", e);
+            }
         }
     }
 }
