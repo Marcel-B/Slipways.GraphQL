@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using com.b_velop.Slipways.Data.Contracts;
+using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
 using GraphQL.DataLoader;
 using GraphQL.Types;
@@ -34,6 +36,15 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);
+                    return await loader.LoadAsync(context.Source.WaterFk);
+                });
+
+            FieldAsync<ListGraphType<SlipwayType>, IEnumerable<Slipway>>(
+                Cache.Slipways,
+                "",
+                resolve: async context =>
+                {
+                    var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByPortIds", repository.Slipway.GetSlipwaysByPortIdAsync);
                     return await loader.LoadAsync(context.Source.WaterFk);
                 });
         }

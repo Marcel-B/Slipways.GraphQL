@@ -31,13 +31,23 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Latitude);
             Field(_ => _.Longitude);
 
+
             FieldAsync<WaterType, Water>(
                 nameof(Station.Water),
                 description: "Angaben zum Gewässer",
-                resolve: async ctx =>
+                resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);
-                    return await loader.LoadAsync(ctx.Source.WaterFk);
+                    return await loader.LoadAsync(context.Source.WaterFk);
+                });
+
+            FieldAsync<PortType, Port>(
+                nameof(Port),
+                description: "Angaben zum Hafen",
+                resolve: async context =>
+                {
+                    var loader = accessor.Context.GetOrAddBatchLoader<Guid, Port>("GetPortsById", repository.Port.GetPortsByIdAsync);
+                    return await loader.LoadAsync(context.Source.PortFk ?? Guid.Empty);
                 });
 
             FieldAsync<ListGraphType<ExtraType>, IEnumerable<Extra>>(

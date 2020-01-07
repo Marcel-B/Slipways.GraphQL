@@ -15,6 +15,7 @@ using GraphQL.DataLoader;
 using com.b_velop.Slipways.GrQl.Infrastructure;
 using com.b_velop.Slipways.Data.Extensions;
 using com.b_velop.Slipways.GrQl.Services;
+using com.b_velop.Slipways.GrQl.Contracts;
 
 namespace com.b_velop.Slipways.GrQl
 {

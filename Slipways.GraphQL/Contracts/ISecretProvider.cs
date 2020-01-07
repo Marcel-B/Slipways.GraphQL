@@ -1,4 +1,4 @@
-﻿namespace com.b_velop.Slipways.GrQl.Infrastructure
+﻿namespace com.b_velop.Slipways.GrQl.Contracts
 {
     public interface ISecretProvider
     {
