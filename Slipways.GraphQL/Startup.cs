@@ -79,7 +79,7 @@ namespace com.b_velop.Slipways.GrQl
 #if DEBUG
             str = $"Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!";
 #endif
-            services.AddSlipwaysData(str);
+            services.AddSlipwaysData(str, ServiceLifetime.Transient);
 
             services.Configure<KestrelServerOptions>(options =>
             {

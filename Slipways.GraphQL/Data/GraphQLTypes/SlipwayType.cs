@@ -24,10 +24,10 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.City);
             Field(_ => _.Postalcode);
             Field(_ => _.Costs);
-            Field(_ => _.Comment);
+            Field(_ => _.Comment, nullable: true);
             Field(_ => _.Rating);
-            Field(_ => _.Pro);
-            Field(_ => _.Contra);
+            Field(_ => _.Pro, nullable: true);
+            Field(_ => _.Contra, nullable: true);
             Field(_ => _.Latitude);
             Field(_ => _.Longitude);
 
