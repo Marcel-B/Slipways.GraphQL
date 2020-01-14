@@ -16,6 +16,7 @@ using com.b_velop.Slipways.GrQl.Infrastructure;
 using com.b_velop.Slipways.Data.Extensions;
 using com.b_velop.Slipways.GrQl.Services;
 using com.b_velop.Slipways.GrQl.Contracts;
+using GraphQL.Server.Ui.Voyager;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -108,6 +109,7 @@ namespace com.b_velop.Slipways.GrQl
 
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            app.UseGraphQLVoyager(options: new GraphQLVoyagerOptions());
         }
     }
 }
