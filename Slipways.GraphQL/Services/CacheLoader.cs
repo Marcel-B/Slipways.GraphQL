@@ -49,6 +49,7 @@ namespace com.b_velop.Slipways.GrQl.Services
                 await initializer.InitCache<Manufacturer>(Cache.Manufacturers);
                 await initializer.InitCache<ManufacturerService>(Cache.ManufacturerServices);
                 await initializer.InitCache<Service>(Cache.Services);
+                await initializer.InitCache<Port>(Cache.Ports);
 
                 _logger.LogInformation("Reload cache done");
             }
