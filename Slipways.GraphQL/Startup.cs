@@ -1,9 +1,14 @@
-using System;
-using com.b_velop.Slipways.GrQl.Data.GraphQLSchema;
+using com.b_velop.Slipways.Data.Extensions;
 using com.b_velop.Slipways.GraphQL.Middlewares;
+using com.b_velop.Slipways.GrQl.Contracts;
+using com.b_velop.Slipways.GrQl.Data.GraphQLSchema;
+using com.b_velop.Slipways.GrQl.Infrastructure;
+using com.b_velop.Slipways.GrQl.Services;
 using GraphQL;
+using GraphQL.DataLoader;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
+using GraphQL.Server.Ui.Voyager;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -11,11 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
-using GraphQL.DataLoader;
-using com.b_velop.Slipways.GrQl.Infrastructure;
-using com.b_velop.Slipways.Data.Extensions;
-using com.b_velop.Slipways.GrQl.Services;
-using com.b_velop.Slipways.GrQl.Contracts;
+using System;
 
 namespace com.b_velop.Slipways.GrQl
 {
@@ -108,6 +109,7 @@ namespace com.b_velop.Slipways.GrQl
 
             app.UseGraphQL<AppSchema>("/graphql");
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            app.UseGraphQLVoyager(options: new GraphQLVoyagerOptions());
         }
     }
 }
