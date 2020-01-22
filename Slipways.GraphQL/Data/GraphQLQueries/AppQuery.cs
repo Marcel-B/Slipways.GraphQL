@@ -2,6 +2,7 @@
 using com.b_velop.Slipways.Data.Contracts;
 using com.b_velop.Slipways.Data.Models;
 using com.b_velop.Slipways.GrQl.Data.GraphQLTypes;
+using com.b_velop.Slipways.GrQl.Data.Models;
 using GraphQL.Types;
 using Prometheus;
 
@@ -73,6 +74,23 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
                         var id = context.GetArgument<Guid>(nameof(Slipway.Id));
                         var slipway = await repositories.Slipway.SelectByIdAsync(id);
                         return slipway;
+                    });
+            }
+
+            using (Metrics.CreateHistogram("slipways_gql_duration_graphql_query_appdata_seconds", "").NewTimer())
+            {
+                FieldAsync<AppDataType>(
+                    nameof(AppData),
+                    "Select Application Data",
+                    resolve: async context =>
+                    {
+                        var appData = new AppData();
+                        appData.Slipways = await repositories.Slipway.SelectAllAsync();
+                        appData.Waters = await repositories.Water.SelectAllAsync();
+                        appData.Stations = await repositories.Station.SelectAllAsync();
+                        appData.Services = await repositories.Service.SelectAllAsync();
+                        appData.Ports = await repositories.Port.SelectAllAsync(); 
+                        return appData;
                     });
             }
         }

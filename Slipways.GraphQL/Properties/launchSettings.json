@@ -1,40 +1,20 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:60717",
-      "sslPort": 44378
-    }
-  },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "com.b_velop.Slipways.GrQl": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:80/ui/playground"
+      "applicationUrl": "http://localhost:5001"
     },
     "com.b_velop.Slipways.GraphQL": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "API_RESOURCE": "slipways.api",
-        "AUTHORITY": "https://identity.qaybe.de",
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "CON_STR": "Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:80/ui/playground"
+      "applicationUrl": "http://localhost:5004"
     }
   }
 }

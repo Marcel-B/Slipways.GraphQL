@@ -7,13 +7,7 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'com.b_velop.Slipways.GraphQL' ">
     <StartAction>Project</StartAction>
-    <EnvironmentVariables>
-      <Variable name="API_RESOURCE" value="slipways.api" />
-      <Variable name="AUTHORITY" value="https://identity.qaybe.de" />
-      <Variable name="ASPNETCORE_ENVIRONMENT" value="Development" />
-      <Variable name="CON_STR" value="Server=localhost,1433;Database=Slipways;User Id=sa;Password=foo123bar!" />
-    </EnvironmentVariables>
-    <ApplicationURL>http://localhost:80/ui/playground</ApplicationURL>
+    <ApplicationURL>http://localhost:5004</ApplicationURL>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -30,22 +24,21 @@
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="3.4.0" />
     <PackageReference Include="GraphQL.Server.Transports.WebSockets" Version="3.4.0" />
     <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="3.4.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
     <PackageReference Include="NLog.StructuredLogging.Json" Version="4.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.4.0" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.0" />
     <PackageReference Include="Slipways.Data" Version="2.1.60" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +46,7 @@
     <Folder Include="Data\GraphQLSchema\" />
     <Folder Include="Data\GraphQLQueries\" />
     <Folder Include="Services\" />
+    <Folder Include="Data\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Data\stations.json">
