@@ -1,6 +1,6 @@
 ﻿using com.b_velop.Slipways.Data.Contracts;
-using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
+using com.b_velop.Slipways.GrQl.Infrastructure;
 using GraphQL.DataLoader;
 using GraphQL.Types;
 using System;
@@ -22,8 +22,8 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Name);
 
             FieldAsync<ListGraphType<SlipwayType>, IEnumerable<Slipway>>(
-                Cache.Slipways,
-                Cache.Slipways,
+                TypeName.Slipways,
+                "The Slipways which have this Extra",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByExtraIds", repository.Slipway.GetSlipwaysByExtraIdAsync);
