@@ -22,10 +22,12 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Agency).Description("Wasserstraßen- und Schifffahrtsamt");
             Field(_ => _.Longitude).Description("Längengrad in WGS84 Dezimalnotation");
             Field(_ => _.Latitude).Description("Breitengrad in WGS84 Dezimalnotation");
+            Field(_ => _.Created);
+            Field(_ => _.Updated, nullable: true);
 
             FieldAsync<WaterType, Water>(
                 nameof(Station.Water),
-                description: "Angaben zum Gewässer",
+                description: "The Water on which the measuring Station is located",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);

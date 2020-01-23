@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using com.b_velop.Slipways.Data.Contracts;
-using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
+using com.b_velop.Slipways.GrQl.Infrastructure;
 using GraphQL.DataLoader;
 using GraphQL.Types;
 
@@ -19,10 +19,11 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Shortname);
             Field(_ => _.Longname);
+            Field(_ => _.Updated, nullable: true);
 
             FieldAsync<ListGraphType<SlipwayType>, IEnumerable<Slipway>>(
-                Cache.Slipways,
-                Cache.Slipways,
+                TypeName.Slipways,
+                "All Slipways that are located on these Waters",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Slipway>("GetSlipwaysByWaterId", repository.Slipway.GetSlipwayByWaterIdAsync);
@@ -30,8 +31,8 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 });
 
             FieldAsync<ListGraphType<StationType>, IEnumerable<Station>>(
-                Cache.Stations,
-                Cache.Stations,
+                TypeName.Stations,
+                "All Stations that are located on these Waters",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Station>("GetStationsByWaterId", repository.Station.GetStationsByWaterIdAsync);
@@ -39,8 +40,8 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 });
 
             FieldAsync<ListGraphType<PortType>, IEnumerable<Port>>(
-                "Ports",
-                "Ports",
+                TypeName.Ports,
+                "All Ports that are located on these Waters",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Port>("GetPortsByWaterId", repository.Port.GetPortsByWaterIdAsync);

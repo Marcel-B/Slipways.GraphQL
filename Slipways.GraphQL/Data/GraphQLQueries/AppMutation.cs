@@ -7,9 +7,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
 {
     public class AppMutation : ObjectGraphType
     {
-        public AppMutation(
-            IRepositoryWrapper rep,
-            ILogger<AppMutation> logger)
+        public AppMutation()
         {
             using (Metrics.CreateHistogram("slipwaysql_duration_graphql_mutation_seconds", "").NewTimer())
             {
