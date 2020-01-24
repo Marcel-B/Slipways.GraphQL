@@ -98,6 +98,8 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLQueries
                             Waters = await repositories.Water.SelectAllAsync(),
                             Stations = await repositories.Station.SelectAllAsync(),
                             Services = await repositories.Service.SelectAllAsync(),
+                            Extras = await repositories.Extra.SelectAllAsync(),
+                            Manufacturers = await repositories.Manufacturer.SelectAllAsync(),
                             Ports = await repositories.Port.SelectAllAsync()
                         };
                         return appData;
