@@ -1,6 +1,6 @@
 ﻿using com.b_velop.Slipways.Data.Contracts;
-using com.b_velop.Slipways.Data.Helper;
 using com.b_velop.Slipways.Data.Models;
+using com.b_velop.Slipways.GrQl.Infrastructure;
 using GraphQL.DataLoader;
 using GraphQL.Types;
 using System;
@@ -18,14 +18,14 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 
             Field(_ => _.Id, type: typeof(NonNullGraphType<IdGraphType>));
             Field(_ => _.Created);
-            Field(_ => _.Updated, nullable: true);
             Field(_ => _.Name);
             Field(_ => _.Street);
             Field(_ => _.City);
             Field(_ => _.Postalcode);
             Field(_ => _.Costs);
-            Field(_ => _.Comment, nullable: true);
             Field(_ => _.Rating);
+            Field(_ => _.Updated, nullable: true);
+            Field(_ => _.Comment, nullable: true);
             Field(_ => _.Pro, nullable: true);
             Field(_ => _.Contra, nullable: true);
             Field(_ => _.Latitude);
@@ -34,7 +34,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 
             FieldAsync<WaterType, Water>(
                 nameof(Station.Water),
-                description: "Angaben zum Gewässer",
+                description: "The Water where the Slipway is located",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Water>("GetWatersById", repository.Water.GetWatersByIdAsync);
@@ -43,7 +43,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
 
             FieldAsync<PortType, Port>(
                 nameof(Port),
-                description: "Angaben zum Hafen",
+                description: "A Port where the Slipway is located",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddBatchLoader<Guid, Port>("GetPortsById", repository.Port.GetPortsByIdAsync);
@@ -51,8 +51,8 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
                 });
 
             FieldAsync<ListGraphType<ExtraType>, IEnumerable<Extra>>(
-                Cache.Extras,
-                Cache.Extras,
+                TypeName.Extras,
+                "Extras which the Slipway has to offer",
                 resolve: async context =>
                 {
                     var loader = accessor.Context.GetOrAddCollectionBatchLoader<Guid, Extra>("GetExtrasBySlipwayId", repository.Extra.GetExtrasBySlipwayIdAsync);
