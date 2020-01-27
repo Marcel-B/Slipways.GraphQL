@@ -39,7 +39,7 @@
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.4.0" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
-    <PackageReference Include="Slipways.Data" Version="2.1.61" />
+    <PackageReference Include="Slipways.Data" Version="2.1.62" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\GraphQLAuthorization\" />
