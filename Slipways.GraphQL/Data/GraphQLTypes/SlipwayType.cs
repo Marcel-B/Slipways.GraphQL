@@ -28,6 +28,7 @@ namespace com.b_velop.Slipways.GrQl.Data.GraphQLTypes
             Field(_ => _.Comment, nullable: true);
             Field(_ => _.Pro, nullable: true);
             Field(_ => _.Contra, nullable: true);
+            Field(_ => _.Country, nullable: true);
             Field(_ => _.Latitude);
             Field(_ => _.Longitude);
 
