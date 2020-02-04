@@ -38,12 +38,10 @@
     </PackageReference>
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="3.4.0" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="3.4.0" />
-    <PackageReference Include="Slipways.Data" Version="2.1.62" />
+    <PackageReference Include="Slipways.Data" Version="2.1.64" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\GraphQLAuthorization\" />
-    <Folder Include="Data\GraphQLSchema\" />
-    <Folder Include="Data\GraphQLQueries\" />
     <Folder Include="Services\" />
     <Folder Include="Data\Models\" />
   </ItemGroup>
